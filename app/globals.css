@@ -156,7 +156,6 @@ body {
     margin-left: var(--sidebar-width);
     flex: 1;
     padding: var(--content-padding);
-    max-width: 1400px;
 }
 
 .demo-section {
@@ -224,6 +223,24 @@ body {
     .demo-grid.four-cols,
     .demo-grid.two-cols {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 1600px) {
+    .content {
+        padding: 2.5rem 3rem;
+    }
+
+    .demo-grid.two-cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .demo-grid.four-cols {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .structure-comparison {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
