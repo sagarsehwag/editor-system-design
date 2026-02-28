@@ -64,7 +64,7 @@ export default function ProseMirrorSidebar({
             <Link href="/" className="prosemirror-back-link">
               ← Back to demos
             </Link>
-            <h1>📦 ProseMirror</h1>
+            <h1>📦 Prosemirror</h1>
             <p className="subtitle">Core concepts</p>
           </div>
           <button

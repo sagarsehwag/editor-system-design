@@ -50,7 +50,7 @@ export default function ProseMirrorPositions() {
     const editor = liveEditorRef.current;
     if (editor && activeSubTab === 'selection' && !editor.hasChildNodes()) {
       editor.innerHTML =
-        '<p><strong>ProseMirror</strong> uses positions — integer offsets into a flat token sequence.</p>' +
+        '<p><strong>Prosemirror</strong> uses positions — integer offsets into a flat token sequence.</p>' +
         '<p>Select text here to see <em>anchor</em> and <em>head</em> update in real time. Cursor = anchor = head.</p>' +
         '<blockquote><p>Blockquotes, paragraphs, and other block nodes each add structure. Positions increment at boundaries.</p></blockquote>' +
         '<p>The quick brown fox jumps over the lazy dog. Try selecting across paragraphs to see how positions span blocks.</p>' +

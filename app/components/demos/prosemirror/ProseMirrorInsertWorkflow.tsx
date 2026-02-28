@@ -116,7 +116,7 @@ export default function ProseMirrorInsertWorkflow() {
     <div className="structure-panel">
       <div className="panel-header">
         <h3>📚 Immutable Tree + Fragment</h3>
-        <span className="badge badge-purple">ProseMirror</span>
+        <span className="badge badge-purple">Prosemirror</span>
       </div>
 
       <div className="code-snippet">

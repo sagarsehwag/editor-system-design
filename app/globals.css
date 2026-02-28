@@ -145,6 +145,19 @@ body {
         display: none;
     }
 
+    .sidebar.sidebar-collapsed .nav-section-header {
+        justify-content: center;
+        padding: 0.75rem;
+    }
+
+    .sidebar.sidebar-collapsed .nav-section-header span:not(.nav-icon) {
+        display: none;
+    }
+
+    .sidebar.sidebar-collapsed .nav-sublist {
+        display: none;
+    }
+
     .content.sidebar-hidden {
         margin-left: var(--sidebar-collapsed-width);
     }
@@ -245,6 +258,81 @@ body {
     flex: 1;
     color: inherit;
     text-decoration: none;
+}
+
+/* Unified sidebar: ProseMirror + Rich Text Editor tabs */
+.unified-nav-sections {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-section {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-section:last-of-type {
+    border-bottom: none;
+}
+
+.nav-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border-left: 3px solid transparent;
+}
+
+.nav-section-header:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.nav-section-header.active {
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--accent-blue);
+    border-left-color: var(--accent-blue);
+}
+
+.nav-sublist {
+    padding: 0.25rem 0 0.75rem;
+}
+
+.nav-sublist .nav-item {
+    position: relative;
+    padding: 0.6rem 1.5rem 0.6rem 2rem;
+    border-left: none;
+}
+
+.nav-sublist .nav-item .nav-icon {
+    font-size: 1.1rem;
+}
+
+.nav-sublist .nav-item .nav-link span:not(.nav-icon) {
+    font-size: 0.9rem;
+}
+
+.nav-sublist .nav-item.active {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+}
+
+.nav-sublist .nav-item.active .nav-link {
+    color: inherit;
+}
+
+.nav-sublist .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 1rem;
+    background: var(--accent-blue);
+    border-radius: 0 2px 2px 0;
 }
 
 .sidebar-footer {

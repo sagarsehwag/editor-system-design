@@ -1,6 +1,7 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import RenderingApproaches from '../components/demos/RenderingApproaches';
 import ContentEditableDemo from '../components/demos/ContentEditableDemo';
 import SelectionInspector from '../components/demos/SelectionInspector';
@@ -19,7 +20,24 @@ const demoComponents: Record<string, React.ComponentType> = {
 
 export default function Home() {
   const searchParams = useSearchParams();
-  const demoFromUrl = searchParams.get('demo') || 'rendering';
+  const router = useRouter();
+  const demoFromUrl = searchParams.get('demo');
+
+  // ProseMirror is main — redirect / to /prosemirror when no demo (fallback if middleware skipped)
+  useEffect(() => {
+    if (!demoFromUrl) {
+      router.replace('/prosemirror');
+    }
+  }, [demoFromUrl, router]);
+
+  if (!demoFromUrl) {
+    return (
+      <div className="demo-section active" style={{ padding: '2rem' }}>
+        <p>Redirecting to Prosemirror…</p>
+      </div>
+    );
+  }
+
   const activeDemo = demoFromUrl in demoComponents ? demoFromUrl : 'rendering';
   const ActiveComponent = demoComponents[activeDemo];
 

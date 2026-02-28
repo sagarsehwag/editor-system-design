@@ -1,41 +1,22 @@
 'use client';
 
 import { useState, useCallback, Suspense } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
-import Sidebar from '../components/layout/Sidebar';
+import UnifiedSidebar from '../components/layout/UnifiedSidebar';
 
 function MainLayoutInner({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = useCallback(() => {
     setSidebarOpen((prev) => !prev);
   }, []);
 
-  const activeDemo =
-    pathname === '/prosemirror'
-      ? 'prosemirror'
-      : searchParams.get('demo') || 'rendering';
-
-  // ProseMirror route has its own sidebar — don't render main sidebar
-  if (pathname === '/prosemirror') {
-    return <>{children}</>;
-  }
-
   return (
     <>
-      <Sidebar
-        activeDemo={activeDemo}
-        onNavigate={() => {}}
-        isOpen={sidebarOpen}
-        onToggle={toggleSidebar}
-        useRouter
-      />
+      <UnifiedSidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
       <main className={`content ${sidebarOpen ? 'sidebar-visible' : 'sidebar-hidden'}`}>
         {children}
       </main>

@@ -20,7 +20,7 @@ export default function ProseMirror({ activeTab }: ProseMirrorProps) {
   return (
     <section id="prosemirror" className="demo-section active">
       <div className="demo-header">
-        <h2>ProseMirror</h2>
+        <h2>Prosemirror</h2>
         <p className="demo-subtitle">
           The schema-based editor toolkit — document model, positions, transforms, and why it enables
           undo &amp; collaborative editing

@@ -8,7 +8,7 @@ export default function ProseMirrorPlugins() {
       <div className='prosemirror-section plugins-intro'>
         <h3>What is a Plugin?</h3>
         <p>
-          <strong>Plugins</strong> extend ProseMirror with custom state, props,
+          <strong>Plugins</strong> extend Prosemirror with custom state, props,
           and behavior. Each plugin can store its own state, react to
           transactions, add keybindings, and attach UI. They&apos;re passed to{' '}
           <code>{`EditorState.create({ plugins: [...] })`}</code>.
@@ -71,7 +71,7 @@ const count = state.pluginState(myPlugin)?.count;`}</code>
       <div className='prosemirror-section'>
         <h4>Common Plugins</h4>
         <p>
-          ProseMirror ships with core plugins. Import from{' '}
+          Prosemirror ships with core plugins. Import from{' '}
           <code>prosemirror-history</code>, <code>prosemirror-keymap</code>, and
           similar packages.
         </p>

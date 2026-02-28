@@ -1,0 +1,192 @@
+'use client';
+
+import React, { useCallback, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+import type { ProseMirrorTab } from '../demos/ProseMirror';
+
+const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
+  { id: 'overview', icon: '📋', label: 'Overview' },
+  { id: 'schema', icon: '📄', label: 'Model' },
+  { id: 'state', icon: '📦', label: 'State' },
+  { id: 'transform', icon: '🔄', label: 'Transform' },
+  { id: 'view', icon: '👁', label: 'View' },
+  { id: 'positions', icon: '📍', label: 'Positions & Selection' },
+  { id: 'plugins', icon: '🧩', label: 'Plugins' },
+  { id: 'immutable', icon: '📎', label: 'Miscellaneous' },
+];
+
+const RICH_TEXT_DEMOS: { id: string; icon: string; label: string }[] = [
+  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches' },
+  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive' },
+  { id: 'selection', icon: '📍', label: 'Selection Inspector' },
+  { id: 'state', icon: '🏗️', label: 'State Model & Formatting' },
+  { id: 'update-loop', icon: '🔄', label: 'Update Loop' },
+  { id: 'node-structures', icon: '🔗', label: 'Node Structures' },
+];
+
+interface UnifiedSidebarProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const isProseMirror = pathname === '/prosemirror';
+  const activeProseMirrorSection =
+    (searchParams.get('section') as ProseMirrorTab) || 'overview';
+  const activeDemo = searchParams.get('demo') || 'rendering';
+
+  const handleLinkClick = useCallback(() => {
+    if (window.innerWidth <= 768) {
+      onToggle();
+    }
+  }, [onToggle]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onToggle();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onToggle]);
+
+  return (
+    <>
+      <button
+        className={`sidebar-toggle ${isOpen ? 'open' : 'sidebar-closed'}`}
+        onClick={onToggle}
+        aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
+        aria-expanded={isOpen}
+      >
+        <span className="hamburger-line" />
+        <span className="hamburger-line" />
+        <span className="hamburger-line" />
+      </button>
+
+      {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
+
+      <nav
+        className={`sidebar unified-sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}
+      >
+        <div className="sidebar-header">
+          <span className="sidebar-collapsed-logo" aria-hidden>
+            📦
+          </span>
+          <div className="sidebar-header-content">
+            <h1>📦 Prosemirror</h1>
+            <p className="subtitle">System Design Demos</p>
+          </div>
+          <button
+            className="sidebar-collapse-btn"
+            onClick={onToggle}
+            aria-label={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+          >
+            {isOpen ? (
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            ) : (
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            )}
+          </button>
+        </div>
+
+        <div className="unified-nav-sections">
+          {/* ProseMirror - Main nav */}
+          <div className="nav-section">
+            <Link
+              href="/prosemirror"
+              className={`nav-section-header ${isProseMirror ? 'active' : ''}`}
+            >
+              <span className="nav-icon">📦</span>
+              <span>Prosemirror</span>
+            </Link>
+            {isProseMirror && (
+              <ul className="nav-list nav-sublist">
+                {PROSEMIRROR_SECTIONS.map((item) => (
+                  <li
+                    key={item.id}
+                    className={`nav-item ${
+                      activeProseMirrorSection === item.id ? 'active' : ''
+                    }`}
+                    onClick={handleLinkClick}
+                  >
+                    <Link
+                      href={`/prosemirror?section=${item.id}`}
+                      className="nav-link"
+                    >
+                      <span className="nav-icon">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Rich Text Editor - Tab */}
+          <div className="nav-section">
+            <Link
+              href="/?demo=rendering"
+              className={`nav-section-header ${!isProseMirror ? 'active' : ''}`}
+            >
+              <span className="nav-icon">📝</span>
+              <span>Rich Text Editor</span>
+            </Link>
+            {!isProseMirror && (
+              <ul className="nav-list nav-sublist">
+                {RICH_TEXT_DEMOS.map((item) => (
+                  <li
+                    key={item.id}
+                    className={`nav-item ${activeDemo === item.id ? 'active' : ''}`}
+                    onClick={handleLinkClick}
+                  >
+                    <Link
+                      href={`/?demo=${item.id}`}
+                      className="nav-link"
+                    >
+                      <span className="nav-icon">{item.icon}</span>
+                      <span>{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        <div className="sidebar-footer">
+          <p className="tip">💡 Open DevTools (F12) to inspect elements!</p>
+        </div>
+      </nav>
+    </>
+  );
+}

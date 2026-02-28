@@ -18,7 +18,7 @@ export default function ProseMirrorImmutable() {
       <div className="prosemirror-section">
         <h3>Structural Sharing</h3>
         <p>
-          When you apply a transaction, ProseMirror creates a <strong>new</strong> document — but it
+          When you apply a transaction, Prosemirror creates a <strong>new</strong> document — but it
           doesn&apos;t copy everything. Unchanged nodes are <strong>reused by reference</strong>. Only
           the <strong>changed node and its ancestors</strong> (up to the root) are recreated, because
           each ancestor holds a new children array.
@@ -108,7 +108,7 @@ export default function ProseMirrorImmutable() {
 
         <h4>Animated Insert Workflow</h4>
         <p>
-          Like the &quot;Map with Child Array&quot; demo in NodeStructures, but aligned with ProseMirror&apos;s
+          Like the &quot;Map with Child Array&quot; demo in NodeStructures, but aligned with Prosemirror&apos;s
           model: <strong>immutable tree</strong> with <strong>Fragment</strong> for children. No index
           shifting — we create new immutable values along the changed path; siblings stay shared.
         </p>
@@ -116,11 +116,11 @@ export default function ProseMirrorImmutable() {
 
         <h4>Algorithm Complexity</h4>
         <p>
-          ProseMirror&apos;s immutable tree with structural sharing gives predictable complexity. New nodes
+          Prosemirror&apos;s immutable tree with structural sharing gives predictable complexity. New nodes
           are created only along the changed path.
         </p>
         <div className="comparison-table-container">
-          <h3>📊 ProseMirror Complexity</h3>
+          <h3>📊 Prosemirror Complexity</h3>
           <table className="comparison-table">
             <thead>
               <tr>

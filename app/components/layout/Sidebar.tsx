@@ -17,7 +17,7 @@ const navItems: NavItem[] = [
   { id: 'state', icon: '🏗️', label: 'State Model & Formatting', href: '/?demo=state' },
   { id: 'update-loop', icon: '🔄', label: 'Update Loop', href: '/?demo=update-loop' },
   { id: 'node-structures', icon: '🔗', label: 'Node Structures', href: '/?demo=node-structures' },
-  { id: 'prosemirror', icon: '📦', label: 'ProseMirror', href: '/prosemirror' },
+  { id: 'prosemirror', icon: '📦', label: 'Prosemirror', href: '/prosemirror' },
 ];
 
 interface SidebarProps {

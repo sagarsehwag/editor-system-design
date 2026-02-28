@@ -1,15 +1,16 @@
 <p align="center">
-  <img src="screenshots/01-rendering-approaches.png" alt="Rich Text Editor System Design" width="800" />
+  <img src="screenshots/01-rendering-approaches.png" alt="Editor System Design - Prosemirror" width="800" />
 </p>
 
-<h1 align="center">Rich Text Editor — System Design</h1>
+<h1 align="center">Editor System Design — Prosemirror</h1>
 
 <p align="center">
-  <strong>Interactive visual demos that explain how rich text editors work under the hood</strong>
+  <strong>Interactive visual demos that explain how rich text editors work, with Prosemirror at the core</strong>
 </p>
 
 <p align="center">
-  <a href="#demos">Demos</a> •
+  <a href="#prosemirror">Prosemirror</a> •
+  <a href="#rich-text-editor-demos">Rich Text Editor Demos</a> •
   <a href="#why-this-exists">Why This Exists</a> •
   <a href="#tech-stack">Tech Stack</a> •
   <a href="#getting-started">Getting Started</a> •
@@ -25,13 +26,26 @@
 
 ---
 
-## Why This Exists
+## Prosemirror
 
-Ever wondered what happens when you press a key in Google Docs, Notion, or Slack? How does **Lexical**, **Slate**, or **Draft.js** turn keystrokes into styled, structured content?
+The main navigation focuses on **Prosemirror** — Marijn Haverbeke's toolkit for building editors. Explore core concepts with interactive demos:
 
-This project is a **hands-on teaching tool** built for a frontend system design session. Instead of slides, every concept is an interactive demo you can touch, break, and inspect.
+| Section | What You'll Learn |
+|---------|-------------------|
+| Overview | EditorState, selection, transactions — single source of truth |
+| Model | Schema, node types, content expressions |
+| State | doc, selection, storedMarks, plugins |
+| Transform | Steps, ReplaceStep, mapping, invert |
+| View | DOM representation, props, decoration |
+| Positions & Selection | Integer offsets, anchor/head, live selection demo |
+| Plugins | Extending Prosemirror with custom state and behavior |
+| Miscellaneous | Immutable tree, structural sharing, algorithm complexity |
 
-It covers the 6 core building blocks that power every modern rich text editor:
+---
+
+## Rich Text Editor Demos
+
+A companion tab with foundational concepts that power every modern editor:
 
 | # | Topic | What You'll Learn |
 |---|-------|-------------------|
@@ -44,53 +58,11 @@ It covers the 6 core building blocks that power every modern rich text editor:
 
 ---
 
-## Demos
+## Why This Exists
 
-### 1. Rendering Approaches Comparison
+Ever wondered what happens when you press a key in Google Docs, Notion, or Slack? How does **Lexical**, **Slate**, **Draft.js**, or **Prosemirror** turn keystrokes into styled, structured content?
 
-Compare 4 ways to render editable text — `<textarea>`, DOM + Fake Cursor, `contentEditable`, and `<canvas>` — each with live, interactive examples and a side-by-side feature comparison table.
-
-<img src="screenshots/01-rendering-approaches.png" alt="Rendering Approaches" width="800" />
-
----
-
-### 2. ContentEditable Deep Dive
-
-Type, format (`Ctrl+B/I/U`), and watch the live DOM output update in real-time. Includes a text node quiz and a cursor behavior demo across different text sizes.
-
-<img src="screenshots/02-contenteditable.png" alt="ContentEditable Deep Dive" width="800" />
-
----
-
-### 3. Selection Inspector
-
-A live, real-time view of the browser's `Selection` object — `anchorNode`, `focusNode`, offsets, and direction. One-click demos for backwards and cross-node selections.
-
-<img src="screenshots/03-selection-inspector.png" alt="Selection Inspector" width="800" />
-
----
-
-### 4. State Model & Formatting
-
-Type in the editor and see the content parsed into a Lexical-style JSON state model in real-time. Demonstrates why flat text nodes with format arrays beat nested HTML tags.
-
-<img src="screenshots/04-state-model.png" alt="State Model & Formatting" width="800" />
-
----
-
-### 5. Update Loop & Reconciliation
-
-An animated, step-by-step walkthrough of the editor update loop: intercept → command → clone → modify → reconcile → patch. Adjustable speed with play/pause controls. Shows why reconciliation beats naive `innerHTML` replacement.
-
-<img src="screenshots/05-update-loop.png" alt="Update Loop & Reconciliation" width="800" />
-
----
-
-### 6. Node Data Structures
-
-Side-by-side animated comparison of **Map + Array** (Draft.js, Slate) vs **Map + Linked List** (Lexical). Watch array index shifting vs O(1) pointer updates in real time, with a full complexity comparison table.
-
-<img src="screenshots/06-node-structures.png" alt="Node Data Structures" width="800" />
+This project is a **hands-on teaching tool** built for a frontend system design session. Instead of slides, every concept is an interactive demo you can touch, break, and inspect.
 
 ---
 
@@ -121,7 +93,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and explore the demos using the sidebar navigation.
+Open [http://localhost:3000](http://localhost:3000) — you'll land on **Prosemirror** by default. Use the sidebar to switch between Prosemirror sections and Rich Text Editor demos.
 
 ---
 
@@ -131,17 +103,32 @@ Open [http://localhost:3000](http://localhost:3000) and explore the demos using 
 app/
 ├── components/
 │   ├── layout/
-│   │   └── Sidebar.tsx              # Sidebar navigation with 6 demo sections
+│   │   ├── UnifiedSidebar.tsx        # Prosemirror + Rich Text Editor nav
+│   │   ├── ProseMirrorSidebar.tsx    # Legacy Prosemirror sidebar
+│   │   └── Sidebar.tsx               # Legacy demo sidebar
 │   └── demos/
+│       ├── prosemirror/              # Prosemirror core concepts
+│       │   ├── ProseMirrorOverview.tsx
+│       │   ├── ProseMirrorSchema.tsx
+│       │   ├── ProseMirrorState.tsx
+│       │   ├── ProseMirrorTransactions.tsx
+│       │   ├── ProseMirrorView.tsx
+│       │   ├── ProseMirrorPositions.tsx
+│       │   ├── ProseMirrorPlugins.tsx
+│       │   └── ProseMirrorImmutable.tsx
 │       ├── RenderingApproaches.tsx   # textarea vs DOM vs contentEditable vs canvas
 │       ├── ContentEditableDemo.tsx   # Native formatting, DOM output, text nodes
 │       ├── SelectionInspector.tsx    # Live Selection API visualization
-│       ├── StateModel.tsx           # JSON state model with formatting
-│       ├── UpdateLoop.tsx           # Animated update loop flowchart
-│       └── NodeStructures.tsx       # Array vs Linked List comparison
-├── globals.css                      # Dark theme, all component styles
-├── layout.tsx                       # Root layout with metadata
-└── page.tsx                         # Client-side routing between demos
+│       ├── StateModel.tsx            # JSON state model with formatting
+│       ├── UpdateLoop.tsx            # Animated update loop flowchart
+│       └── NodeStructures.tsx        # Array vs Linked List comparison
+├── globals.css                       # Dark theme, all component styles
+├── layout.tsx                        # Root layout with metadata
+└── (main)/
+    ├── layout.tsx                    # Main layout with UnifiedSidebar
+    ├── page.tsx                     # Rich Text Editor demos
+    └── prosemirror/
+        └── page.tsx                  # Prosemirror demos
 ```
 
 ---
@@ -150,10 +137,10 @@ app/
 
 These demos are informed by the internals of:
 
+- [**Prosemirror**](https://prosemirror.net/) — Marijn Haverbeke's toolkit for building editors (positions, transforms, immutable tree)
 - [**Lexical**](https://lexical.dev/) — Meta's extensible text editor framework (linked list node model, reconciliation)
 - [**Slate**](https://docs.slatejs.org/) — A customizable framework for building rich text editors (array-based children)
 - [**Draft.js**](https://draftjs.org/) — Meta's legacy rich text editor (ContentState, entity maps)
-- [**ProseMirror**](https://prosemirror.net/) — Marijn Haverbeke's toolkit for building editors
 - [**Google Docs**](https://docs.google.com/) — Canvas-based rendering approach
 
 ---

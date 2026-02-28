@@ -8,7 +8,7 @@ export default function ProseMirrorSchema() {
       <div className="prosemirror-section schema-intro">
         <h3>Model</h3>
         <p>
-          Every ProseMirror document conforms to a <strong>schema</strong>. It defines which node
+          Every Prosemirror document conforms to a <strong>schema</strong>. It defines which node
           types exist, what they can contain, and which marks are allowed. Invalid content is discarded.
         </p>
       </div>
@@ -16,7 +16,7 @@ export default function ProseMirrorSchema() {
       <div className="prosemirror-section">
         <h4>Example Document First</h4>
         <p>
-          Here&apos;s what a ProseMirror document actually looks like — the real data shape. We&apos;ll
+          Here&apos;s what a Prosemirror document actually looks like — the real data shape. We&apos;ll
           explain how the schema defines and enforces this structure below.
         </p>
         <div className="code-snippet doc-json-snippet">
@@ -83,7 +83,7 @@ export default function ProseMirrorSchema() {
         <h4>How It Works</h4>
         <p>
           Each node type has a <strong>rule</strong> that says what it can contain. When you add or paste
-          content, ProseMirror checks: does this match the rule? If not, it gets rejected or fixed.
+          content, Prosemirror checks: does this match the rule? If not, it gets rejected or fixed.
         </p>
 
         <div className="schema-invalid-valid">
@@ -258,7 +258,7 @@ code_block: { content: "text*", group: "block", marks: "" }`}</code>
         <ul className="schema-learn-list">
           <li><strong>Content expressions</strong> — Regex-like: <code>+</code> one or more, <code>*</code> zero or more, <code>|</code> choice.</li>
           <li><strong>Node groups</strong> — <code>group: &quot;block&quot;</code> lets you write <code>block+</code> instead of listing types.</li>
-          <li><strong>Order matters</strong> — When filling required content, ProseMirror uses the first type in the expression.</li>
+          <li><strong>Order matters</strong> — When filling required content, Prosemirror uses the first type in the expression.</li>
           <li><strong>block+ for doc</strong> — Require at least one block so empty nodes don&apos;t collapse in the browser.</li>
           <li><strong>Required types</strong> — Every schema must define a top-level node (default <code>doc</code>) and a <code>text</code> type.</li>
           <li><strong>DOM is derived</strong> — The view renders from state. State is never parsed from the DOM.</li>
