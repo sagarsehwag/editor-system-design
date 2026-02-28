@@ -34,6 +34,7 @@ jobs:
         run: npm run build
         env:
           GITHUB_ACTIONS: true
+          BASE_PATH: /prosemirror-mechanics
 
       - name: Prepare artifact for GitHub Pages
         run: |

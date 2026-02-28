@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sagarsehwag.github.io/editor-system-design"),
+  metadataBase: new URL("https://sagarsehwag.github.io/prosemirror-mechanics"),
   title: "Editor Mechanics · ProseMirror",
   description:
     "How ProseMirror and rich text editors work. Interactive demos for schema, state, transforms, view, positions, plugins, contentEditable, selection, state models, and more.",

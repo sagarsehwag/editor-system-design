@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="screenshots/07-prosemirror.png" alt="Editor System Design - Prosemirror" width="800" />
+  <img src="screenshots/07-prosemirror.png" alt="Editor Mechanics · ProseMirror" width="800" />
 </p>
 
-<h1 align="center">Editor System Design — Prosemirror</h1>
+<h1 align="center">Editor Mechanics · ProseMirror</h1>
 
 <p align="center">
-  <strong>Interactive visual demos that explain how rich text editors work, with Prosemirror at the core</strong>
+  <strong>How ProseMirror and rich text editors work</strong>
 </p>
 
 <p align="center">
-  <a href="https://sagarsehwag.github.io/editor-system-design/">Live Demo</a> •
+  <a href="https://sagarsehwag.github.io/prosemirror-mechanics/">Live Demo</a> •
   <a href="#prosemirror">Prosemirror</a> •
   <a href="#rich-text-editor-demos">Rich Text Editor Demos</a> •
   <a href="#why-this-exists">Why This Exists</a> •
@@ -98,8 +98,8 @@ Zero external UI libraries. Every demo, animation, and visualization is built fr
 
 ```bash
 # Clone the repository
-git clone https://github.com/sagarsehwag/editor-system-design.git
-cd editor-system-design
+git clone https://github.com/sagarsehwag/prosemirror-mechanics.git
+cd prosemirror-mechanics
 
 # Install dependencies
 npm install
