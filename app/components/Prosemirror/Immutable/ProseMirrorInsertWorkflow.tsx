@@ -23,9 +23,6 @@ export default function ProseMirrorInsertWorkflow() {
 
     const p2Row = diagram.querySelector('[data-node="p2"]') as HTMLElement;
     const fragmentEl = diagram.querySelector('[data-fragment="p2"]') as HTMLElement;
-    const t1 = diagram.querySelector('[data-text="t1"]') as HTMLElement;
-    const t2 = diagram.querySelector('[data-text="t2"]') as HTMLElement;
-    const t3 = diagram.querySelector('[data-text="t3"]') as HTMLElement;
 
     if (!p2Row || !fragmentEl) {
       setDisabled(false);
@@ -138,7 +135,7 @@ interface ProseMirrorNode {
           <div className="pm-workflow-children">
             <div className="pm-workflow-row" data-node="p1">
               <span className="pm-workflow-node">p</span>
-              <span className="pm-workflow-text" data-text="p1-t">"One"</span>
+              <span className="pm-workflow-text" data-text="p1-t">&quot;One&quot;</span>
             </div>
             <div className="pm-workflow-row" data-node="p2">
               <span className="pm-workflow-node">p</span>
@@ -153,7 +150,7 @@ interface ProseMirrorNode {
             </div>
             <div className="pm-workflow-row" data-node="p3">
               <span className="pm-workflow-node">p</span>
-              <span className="pm-workflow-text" data-text="p3-t">"Three"</span>
+              <span className="pm-workflow-text" data-text="p3-t">&quot;Three&quot;</span>
             </div>
           </div>
         </div>

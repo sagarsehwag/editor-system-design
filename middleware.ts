@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Next.js middleware requires request param
 export function middleware(request: NextRequest) {
-
   return NextResponse.next();
 }

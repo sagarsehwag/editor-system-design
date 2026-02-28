@@ -3,7 +3,7 @@
    ======================================== */
 
 .prosemirror-page {
-    padding-bottom: var(--gap-xl);
+    padding-bottom: var(--gap-sm);
 }
 
 .prosemirror-tabs {

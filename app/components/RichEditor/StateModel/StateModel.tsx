@@ -124,7 +124,7 @@ export default function StateModel() {
   }, [parseContentToState]);
 
   useEffect(() => {
-    updateStateDisplay();
+    queueMicrotask(updateStateDisplay);
   }, [updateStateDisplay]);
 
   const handleInput = () => {

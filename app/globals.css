@@ -440,6 +440,83 @@ body {
 }
 
 /* ========================================
+   Next Button (bottom of page)
+   ======================================== */
+
+.next-button-wrapper {
+    margin-top: var(--gap-sm);
+    padding-top: var(--gap-md);
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* Desktop: right-aligned, compact */
+.next-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--accent-blue);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--transition-fast);
+}
+
+.next-button:hover {
+    background: #2563eb;
+}
+
+.next-button-arrow {
+    font-size: 1.1rem;
+}
+
+/* Desktop: right-align for navigation flow */
+@media (min-width: 1025px) {
+    .next-button-wrapper {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+/* Tablet: center-aligned, slightly larger */
+@media (max-width: 1024px) {
+    .next-button-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--gap-sm);
+        padding-top: var(--gap-sm);
+    }
+
+    .next-button {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Mobile: full-width, larger tap target */
+@media (max-width: 768px) {
+    .next-button-wrapper {
+        margin-top: var(--gap-sm);
+        padding-top: var(--gap-sm);
+    }
+
+    .next-button {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        min-height: 48px;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .next-button-arrow {
+        font-size: 1.15rem;
+    }
+}
+
+/* ========================================
    Mobile Responsive Sidebar
    ======================================== */
 
