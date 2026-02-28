@@ -1,6 +1,7 @@
 'use client';
 
-import { useSearchParamsClient } from '../../hooks/useSearchParams';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import ProseMirror, { type ProseMirrorTab } from '../../components/Prosemirror';
 
 const VALID_SECTIONS: ProseMirrorTab[] = [
@@ -14,9 +15,9 @@ const VALID_SECTIONS: ProseMirrorTab[] = [
   'immutable',
 ];
 
-export default function ProseMirrorPage() {
-  const searchParams = useSearchParamsClient();
-  const sectionFromUrl = searchParams.get('section') || 'overview';
+function ProseMirrorContent() {
+  const searchParams = useSearchParams();
+  const sectionFromUrl = searchParams.get('tab') || 'overview';
   const activeTab = VALID_SECTIONS.includes(sectionFromUrl as ProseMirrorTab)
     ? (sectionFromUrl as ProseMirrorTab)
     : 'overview';
@@ -25,5 +26,13 @@ export default function ProseMirrorPage() {
     <div className="prosemirror-page">
       <ProseMirror activeTab={activeTab} />
     </div>
+  );
+}
+
+export default function ProseMirrorPage() {
+  return (
+    <Suspense fallback={<div className="prosemirror-page" style={{ minHeight: '60vh' }} />}>
+      <ProseMirrorContent />
+    </Suspense>
   );
 }

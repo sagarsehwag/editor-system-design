@@ -1,7 +1,11 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Suspense } from 'react';
 import UnifiedSidebar from '../components/layout/UnifiedSidebar';
+
+function SidebarFallback() {
+  return <nav className="sidebar unified-sidebar sidebar-collapsed" aria-hidden />;
+}
 
 export default function MainLayout({
   children,
@@ -16,7 +20,9 @@ export default function MainLayout({
 
   return (
     <>
-      <UnifiedSidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
+      <Suspense fallback={<SidebarFallback />}>
+        <UnifiedSidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
+      </Suspense>
       <main className={`content ${sidebarOpen ? 'sidebar-visible' : 'sidebar-hidden'}`}>
         {children}
       </main>

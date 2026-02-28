@@ -92,7 +92,7 @@ export default function ProseMirrorSidebar({
               className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
               onClick={handleLinkClick}
             >
-              <Link href={`/prosemirror?section=${item.id}`} className="nav-link">
+              <Link href={`/prosemirror?tab=${item.id}`} className="nav-link">
                 <span className="nav-icon">{item.icon}</span>
                 <span>{item.label}</span>
               </Link>

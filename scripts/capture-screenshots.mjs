@@ -47,13 +47,13 @@ async function main() {
   const page = await context.newPage();
 
   const captures = [
-    { name: '01-rendering-approaches', url: `${BASE_URL}/?demo=rendering` },
-    { name: '02-contenteditable', url: `${BASE_URL}/?demo=contenteditable` },
-    { name: '03-selection-inspector', url: `${BASE_URL}/?demo=selection` },
-    { name: '04-state-model', url: `${BASE_URL}/?demo=state` },
-    { name: '05-update-loop', url: `${BASE_URL}/?demo=update-loop` },
-    { name: '06-node-structures', url: `${BASE_URL}/?demo=node-structures` },
-    { name: '07-prosemirror', url: `${BASE_URL}/prosemirror` },
+    { name: '01-rendering-approaches', url: `${BASE_URL}/rich-text-editor?tab=rendering` },
+    { name: '02-contenteditable', url: `${BASE_URL}/rich-text-editor?tab=contenteditable` },
+    { name: '03-selection-inspector', url: `${BASE_URL}/rich-text-editor?tab=selection` },
+    { name: '04-state-model', url: `${BASE_URL}/rich-text-editor?tab=state` },
+    { name: '05-update-loop', url: `${BASE_URL}/rich-text-editor?tab=update-loop` },
+    { name: '06-node-structures', url: `${BASE_URL}/rich-text-editor?tab=node-structures` },
+    { name: '07-prosemirror', url: `${BASE_URL}/` },
   ];
 
   for (const { name, url } of captures) {

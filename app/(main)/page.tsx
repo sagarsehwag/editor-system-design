@@ -1,47 +1,38 @@
 'use client';
 
-import { useSearchParamsClient } from '../hooks/useSearchParams';
-import { useEffect } from 'react';
-import {
-  RenderingApproaches,
-  ContentEditableDemo,
-  SelectionInspector,
-  StateModel,
-  UpdateLoop,
-  NodeStructures,
-} from '../components/RichEditor';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import ProseMirror, { type ProseMirrorTab } from '../components/Prosemirror';
 
-const demoComponents: Record<string, React.ComponentType> = {
-  rendering: RenderingApproaches,
-  contenteditable: ContentEditableDemo,
-  selection: SelectionInspector,
-  state: StateModel,
-  'update-loop': UpdateLoop,
-  'node-structures': NodeStructures,
-};
+const VALID_SECTIONS: ProseMirrorTab[] = [
+  'overview',
+  'schema',
+  'state',
+  'transform',
+  'view',
+  'positions',
+  'plugins',
+  'immutable',
+];
+
+function ProseMirrorContent() {
+  const searchParams = useSearchParams();
+  const sectionFromUrl = searchParams.get('tab') || 'overview';
+  const activeTab = VALID_SECTIONS.includes(sectionFromUrl as ProseMirrorTab)
+    ? (sectionFromUrl as ProseMirrorTab)
+    : 'overview';
+
+  return (
+    <div className="prosemirror-page">
+      <ProseMirror activeTab={activeTab} />
+    </div>
+  );
+}
 
 export default function Home() {
-  const searchParams = useSearchParamsClient();
-  const demoFromUrl = searchParams.get('demo');
-
-  // ProseMirror is main — redirect / to /prosemirror when no demo (client-side, works on static export)
-  useEffect(() => {
-    if (!demoFromUrl) {
-      // Relative path works: /editor-system-design/ → /editor-system-design/prosemirror
-      window.location.replace('prosemirror');
-    }
-  }, [demoFromUrl]);
-
-  if (!demoFromUrl) {
-    return (
-      <div className="demo-section active" style={{ padding: '2rem' }}>
-        <p>Redirecting to Prosemirror…</p>
-      </div>
-    );
-  }
-
-  const activeDemo = demoFromUrl in demoComponents ? demoFromUrl : 'rendering';
-  const ActiveComponent = demoComponents[activeDemo];
-
-  return ActiveComponent ? <ActiveComponent /> : null;
+  return (
+    <Suspense fallback={<div className="prosemirror-page" style={{ minHeight: '60vh' }} />}>
+      <ProseMirrorContent />
+    </Suspense>
+  );
 }

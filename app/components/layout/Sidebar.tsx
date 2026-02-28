@@ -11,12 +11,12 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches', href: '/?demo=rendering' },
-  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive', href: '/?demo=contenteditable' },
-  { id: 'selection', icon: '📍', label: 'Selection Inspector', href: '/?demo=selection' },
-  { id: 'state', icon: '🏗️', label: 'State Model & Formatting', href: '/?demo=state' },
-  { id: 'update-loop', icon: '🔄', label: 'Update Loop', href: '/?demo=update-loop' },
-  { id: 'node-structures', icon: '🔗', label: 'Node Structures', href: '/?demo=node-structures' },
+  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches', href: '/rich-text-editor?tab=rendering' },
+  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive', href: '/rich-text-editor?tab=contenteditable' },
+  { id: 'selection', icon: '📍', label: 'Selection Inspector', href: '/rich-text-editor?tab=selection' },
+  { id: 'state', icon: '🏗️', label: 'State Model & Formatting', href: '/rich-text-editor?tab=state' },
+  { id: 'update-loop', icon: '🔄', label: 'Update Loop', href: '/rich-text-editor?tab=update-loop' },
+  { id: 'node-structures', icon: '🔗', label: 'Node Structures', href: '/rich-text-editor?tab=node-structures' },
   { id: 'prosemirror', icon: '📦', label: 'Prosemirror', href: '/prosemirror' },
 ];
 

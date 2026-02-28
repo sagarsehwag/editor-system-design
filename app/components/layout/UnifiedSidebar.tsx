@@ -2,8 +2,7 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useSearchParamsClient } from '../../hooks/useSearchParams';
+import { usePathname, useSearchParams } from 'next/navigation';
 import type { ProseMirrorTab } from '../Prosemirror';
 
 const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
@@ -33,11 +32,13 @@ interface UnifiedSidebarProps {
 
 export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParamsClient();
-  const isProseMirror = pathname === '/prosemirror';
+  const searchParams = useSearchParams();
+  const isProseMirror = pathname === '/' || pathname === '/prosemirror';
+  const isRichTextEditor = pathname === '/rich-text-editor';
+  const prosemirrorBase = pathname === '/prosemirror' ? '/prosemirror' : '/';
   const activeProseMirrorSection =
-    (searchParams.get('section') as ProseMirrorTab) || 'overview';
-  const activeDemo = searchParams.get('demo') || 'rendering';
+    (searchParams.get('tab') as ProseMirrorTab) || 'overview';
+  const activeDemo = searchParams.get('tab') || 'rendering';
 
   const handleLinkClick = useCallback(() => {
     if (window.innerWidth <= 768) {
@@ -124,7 +125,7 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
           {/* ProseMirror - Main nav */}
           <div className="nav-section">
             <Link
-              href="/prosemirror"
+              href={prosemirrorBase}
               className={`nav-section-header ${isProseMirror ? 'active' : ''}`}
             >
               <span className="nav-icon">📦</span>
@@ -141,7 +142,7 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                     onClick={handleLinkClick}
                   >
                     <Link
-                      href={`/prosemirror?section=${item.id}`}
+                      href={`${prosemirrorBase}?tab=${item.id}`}
                       className="nav-link"
                     >
                       <span className="nav-icon">{item.icon}</span>
@@ -156,13 +157,13 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
           {/* Rich Text Editor - Tab */}
           <div className="nav-section">
             <Link
-              href="/?demo=rendering"
-              className={`nav-section-header ${!isProseMirror ? 'active' : ''}`}
+              href="/rich-text-editor?tab=rendering"
+              className={`nav-section-header ${isRichTextEditor ? 'active' : ''}`}
             >
               <span className="nav-icon">📝</span>
               <span>Rich Text Editor</span>
             </Link>
-            {!isProseMirror && (
+            {isRichTextEditor && (
               <ul className="nav-list nav-sublist">
                 {RICH_TEXT_DEMOS.map((item) => (
                   <li
@@ -171,7 +172,7 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                     onClick={handleLinkClick}
                   >
                     <Link
-                      href={`/?demo=${item.id}`}
+                      href={`/rich-text-editor?tab=${item.id}`}
                       className="nav-link"
                     >
                       <span className="nav-icon">{item.icon}</span>
