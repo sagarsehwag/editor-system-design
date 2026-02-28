@@ -2,15 +2,24 @@
 
 import React from 'react';
 import type { ProseMirrorProps, ProseMirrorTab } from './types';
-import ProseMirrorOverview from './ProseMirrorOverview';
-import ProseMirrorSchema from './ProseMirrorSchema';
-import ProseMirrorState from './ProseMirrorState';
-import ProseMirrorView from './ProseMirrorView';
-import ProseMirrorPositions from './ProseMirrorPositions';
-import ProseMirrorImmutable from './ProseMirrorImmutable';
-import ProseMirrorTransactions from './ProseMirrorTransactions';
-import ProseMirrorPlugins from './ProseMirrorPlugins';
-import './styles/index.css';
+import ProseMirrorOverview from './Overview/ProseMirrorOverview';
+import ProseMirrorSchema from './Schema/ProseMirrorSchema';
+import ProseMirrorState from './State/ProseMirrorState';
+import ProseMirrorTransactions from './Transform/ProseMirrorTransactions';
+import ProseMirrorView from './View/ProseMirrorView';
+import ProseMirrorPositions from './Positions/ProseMirrorPositions';
+import ProseMirrorImmutable from './Immutable/ProseMirrorImmutable';
+import ProseMirrorPlugins from './Plugins/ProseMirrorPlugins';
+
+import './shared.css';
+import './Overview/Overview.css';
+import './Schema/Schema.css';
+import './State/State.css';
+import './Transform/Transform.css';
+import './View/View.css';
+import './Positions/Positions.css';
+import './Plugins/Plugins.css';
+import './Immutable/Immutable.css';
 
 export type { ProseMirrorTab, ProseMirrorProps };
 

@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import type { ProseMirrorTab } from '../demos/ProseMirror';
+import type { ProseMirrorTab } from '../Prosemirror';
 
 const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
   { id: 'overview', icon: '📋', label: 'Overview' },

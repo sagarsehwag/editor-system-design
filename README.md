@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="screenshots/01-rendering-approaches.png" alt="Editor System Design - Prosemirror" width="800" />
+  <img src="screenshots/07-prosemirror.png" alt="Editor System Design - Prosemirror" width="800" />
 </p>
 
 <h1 align="center">Editor System Design — Prosemirror</h1>
@@ -30,6 +30,8 @@
 
 The main navigation focuses on **Prosemirror** — Marijn Haverbeke's toolkit for building editors. Explore core concepts with interactive demos:
 
+<img src="screenshots/07-prosemirror.png" alt="Prosemirror" width="600" />
+
 | Section | What You'll Learn |
 |---------|-------------------|
 | Overview | EditorState, selection, transactions — single source of truth |
@@ -55,6 +57,18 @@ A companion tab with foundational concepts that power every modern editor:
 | 4 | State Model | Why editors use structured JSON state instead of raw HTML |
 | 5 | Update Loop | Event → Command → Clone → Modify → Diff → Patch (just like React!) |
 | 6 | Node Structures | Map + Array (Draft.js) vs Map + Linked List (Lexical) |
+
+### Screenshots
+
+| Demo | Screenshot |
+|------|------------|
+| Prosemirror | <img src="screenshots/07-prosemirror.png" alt="Prosemirror" width="600" /> |
+| Rendering Approaches | <img src="screenshots/01-rendering-approaches.png" alt="Rendering Approaches" width="600" /> |
+| ContentEditable | <img src="screenshots/02-contenteditable.png" alt="ContentEditable Deep Dive" width="600" /> |
+| Selection Inspector | <img src="screenshots/03-selection-inspector.png" alt="Selection Inspector" width="600" /> |
+| State Model | <img src="screenshots/04-state-model.png" alt="State Model & Formatting" width="600" /> |
+| Update Loop | <img src="screenshots/05-update-loop.png" alt="Update Loop & Reconciliation" width="600" /> |
+| Node Structures | <img src="screenshots/06-node-structures.png" alt="Node Data Structures" width="600" /> |
 
 ---
 
@@ -106,23 +120,17 @@ app/
 │   │   ├── UnifiedSidebar.tsx        # Prosemirror + Rich Text Editor nav
 │   │   ├── ProseMirrorSidebar.tsx    # Legacy Prosemirror sidebar
 │   │   └── Sidebar.tsx               # Legacy demo sidebar
-│   └── demos/
-│       ├── prosemirror/              # Prosemirror core concepts
-│       │   ├── ProseMirrorOverview.tsx
-│       │   ├── ProseMirrorSchema.tsx
-│       │   ├── ProseMirrorState.tsx
-│       │   ├── ProseMirrorTransactions.tsx
-│       │   ├── ProseMirrorView.tsx
-│       │   ├── ProseMirrorPositions.tsx
-│       │   ├── ProseMirrorPlugins.tsx
-│       │   └── ProseMirrorImmutable.tsx
-│       ├── RenderingApproaches.tsx   # textarea vs DOM vs contentEditable vs canvas
-│       ├── ContentEditableDemo.tsx   # Native formatting, DOM output, text nodes
-│       ├── SelectionInspector.tsx    # Live Selection API visualization
-│       ├── StateModel.tsx            # JSON state model with formatting
-│       ├── UpdateLoop.tsx            # Animated update loop flowchart
-│       └── NodeStructures.tsx        # Array vs Linked List comparison
-├── globals.css                       # Dark theme, all component styles
+│   ├── Prosemirror/                  # Prosemirror core concepts
+│   │   ├── Overview/ProseMirrorOverview.tsx, Overview.css
+│   │   ├── Schema/ProseMirrorSchema.tsx, Schema.css
+│   │   ├── State/, Transform/, View/, Positions/, Plugins/, Immutable/
+│   │   ├── shared.css, types.ts, utils.ts
+│   │   └── index.tsx
+│   └── RichEditor/                  # Rich text editor fundamentals
+│       ├── Rendering/RenderingApproaches.tsx, Rendering.css
+│       ├── ContentEditable/, Selection/, StateModel/, UpdateLoop/, NodeStructures/
+│       └── index.tsx
+├── globals.css                       # Dark theme, shared styles
 ├── layout.tsx                        # Root layout with metadata
 └── (main)/
     ├── layout.tsx                    # Main layout with UnifiedSidebar

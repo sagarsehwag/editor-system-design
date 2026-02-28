@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import ProseMirror, { type ProseMirrorTab } from '../../components/demos/ProseMirror';
+import ProseMirror, { type ProseMirrorTab } from '../../components/Prosemirror';
 
 const VALID_SECTIONS: ProseMirrorTab[] = [
   'overview',

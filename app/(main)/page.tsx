@@ -2,12 +2,14 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import RenderingApproaches from '../components/demos/RenderingApproaches';
-import ContentEditableDemo from '../components/demos/ContentEditableDemo';
-import SelectionInspector from '../components/demos/SelectionInspector';
-import StateModel from '../components/demos/StateModel';
-import UpdateLoop from '../components/demos/UpdateLoop';
-import NodeStructures from '../components/demos/NodeStructures';
+import {
+  RenderingApproaches,
+  ContentEditableDemo,
+  SelectionInspector,
+  StateModel,
+  UpdateLoop,
+  NodeStructures,
+} from '../components/RichEditor';
 
 const demoComponents: Record<string, React.ComponentType> = {
   rendering: RenderingApproaches,

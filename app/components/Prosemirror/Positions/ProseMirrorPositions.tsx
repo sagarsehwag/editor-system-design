@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { POSITION_TOOLTIPS, getProseMirrorPosition } from './utils';
+import { POSITION_TOOLTIPS, getProseMirrorPosition } from '../utils';
 
 const POSITION_TOKENS = [
   '<p>', 'O', 'n', 'e', '</p>', '<bq>', '<p>', 'T', 'w', 'o', '[img]', '</p>', '</bq>',

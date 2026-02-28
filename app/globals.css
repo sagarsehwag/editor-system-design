@@ -158,10 +158,6 @@ body {
         display: none;
     }
 
-    .content.sidebar-hidden {
-        margin-left: var(--sidebar-collapsed-width);
-    }
-
     .sidebar-toggle.sidebar-closed {
         display: none;
     }
@@ -434,14 +430,13 @@ body {
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Desktop default: sidebar takes space */
 .content.sidebar-visible {
     margin-left: var(--sidebar-width);
 }
 
 .content.sidebar-hidden {
-    margin-left: 0;
-    /* Make room for the fixed hamburger toggle (left: 1rem, width: 44px) */
-    padding-left: calc(1rem + 44px + 0.75rem);
+    margin-left: var(--sidebar-collapsed-width);
 }
 
 /* ========================================
@@ -478,15 +473,14 @@ body {
         padding-top: 4.5rem;
     }
 
-    /* -- Content Area -- */
+    /* -- Content Area (mobile only) -- */
+    /* Sidebar overlays; menu icon overlays — no space reserved on left */
     .content,
     .content.sidebar-visible,
     .content.sidebar-hidden {
         margin-left: 0;
         padding: 1.25rem;
         padding-top: 4.5rem;
-        /* Toggle is always visible on mobile — prevent overlap with page title */
-        padding-left: calc(1rem + 44px + 0.75rem);
         min-width: 0;
         overflow-x: hidden;
     }
