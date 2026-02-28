@@ -1,0 +1,192 @@
+/* Plugins tab - unified formatting */
+.plugins-tab {
+  padding-bottom: var(--gap-xl);
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+.plugins-tab .prosemirror-section {
+  margin-bottom: var(--gap-xl);
+  padding: var(--gap-lg);
+}
+
+.plugins-tab .prosemirror-section:last-child {
+  margin-bottom: 0;
+}
+
+.plugins-tab .prosemirror-section h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--gap-md);
+  margin-top: 0;
+}
+
+.plugins-tab .prosemirror-section h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--gap-sm);
+  margin-top: 0;
+}
+
+.plugins-tab .prosemirror-section h4 + p {
+  margin-top: 0;
+}
+
+.plugins-tab .prosemirror-section p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-bottom: var(--gap-md);
+}
+
+.plugins-tab .prosemirror-section p:last-child {
+  margin-bottom: 0;
+}
+
+.plugins-tab .prosemirror-section p code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  color: var(--accent-blue);
+  background: var(--bg-tertiary);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+.plugins-tab .plugins-intro-tagline {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: var(--gap-md);
+  margin-bottom: 0;
+  padding: var(--gap-md);
+  background: rgba(59, 130, 246, 0.06);
+  border-left: 4px solid var(--accent-blue);
+  border-radius: var(--radius-sm);
+}
+
+.plugins-tab .code-snippet {
+  margin-top: var(--gap-md);
+  margin-bottom: var(--gap-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: var(--gap-md);
+  overflow-x: auto;
+}
+
+.plugins-tab .code-snippet pre {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.plugins-tab .code-snippet code {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+}
+
+.plugins-tab .plugins-callout {
+  margin-top: var(--gap-md);
+  padding: var(--gap-md);
+  background: rgba(59, 130, 246, 0.08);
+  border-left: 4px solid var(--accent-blue);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.plugins-tab .plugins-callout strong {
+  color: var(--text-primary);
+}
+
+.plugins-tab .plugins-callout code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  color: var(--accent-blue);
+  background: var(--bg-tertiary);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+/* Plugin spec grid */
+.plugins-tab .plugins-spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--gap-md);
+  margin-top: var(--gap-md);
+}
+
+.plugins-tab .plugins-spec-card {
+  padding: var(--gap-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.plugins-tab .plugins-spec-card code {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-bottom: var(--gap-sm);
+}
+
+.plugins-tab .plugins-spec-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Plugins list */
+.plugins-tab .plugins-list {
+  margin-top: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.plugins-tab .plugins-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: var(--gap-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.plugins-tab .plugins-list-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+}
+
+.plugins-tab .plugins-list-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.plugins-tab .plugins-list-desc code {
+  font-size: 0.8em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .plugins-tab .prosemirror-section {
+    padding: var(--gap-md);
+  }
+
+  .plugins-tab .plugins-spec-grid {
+    grid-template-columns: 1fr;
+  }
+}

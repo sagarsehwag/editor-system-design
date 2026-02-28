@@ -1,20 +1,23 @@
 'use client';
 
 import React, { useCallback, useEffect } from 'react';
+import Link from 'next/link';
 
 interface NavItem {
   id: string;
   icon: string;
   label: string;
+  href: string;
 }
 
 const navItems: NavItem[] = [
-  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches' },
-  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive' },
-  { id: 'selection', icon: '📍', label: 'Selection Inspector' },
-  { id: 'state', icon: '🏗️', label: 'State Model & Formatting' },
-  { id: 'update-loop', icon: '🔄', label: 'Update Loop' },
-  { id: 'node-structures', icon: '🔗', label: 'Node Structures' },
+  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches', href: '/?demo=rendering' },
+  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive', href: '/?demo=contenteditable' },
+  { id: 'selection', icon: '📍', label: 'Selection Inspector', href: '/?demo=selection' },
+  { id: 'state', icon: '🏗️', label: 'State Model & Formatting', href: '/?demo=state' },
+  { id: 'update-loop', icon: '🔄', label: 'Update Loop', href: '/?demo=update-loop' },
+  { id: 'node-structures', icon: '🔗', label: 'Node Structures', href: '/?demo=node-structures' },
+  { id: 'prosemirror', icon: '📦', label: 'ProseMirror', href: '/prosemirror' },
 ];
 
 interface SidebarProps {
@@ -22,21 +25,22 @@ interface SidebarProps {
   onNavigate: (demoId: string) => void;
   isOpen: boolean;
   onToggle: () => void;
+  useRouter?: boolean;
 }
 
-export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle }: SidebarProps) {
+export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useRouter = false }: SidebarProps) {
   const handleNavigate = useCallback(
     (demoId: string) => {
-      onNavigate(demoId);
-      // Close sidebar on mobile after navigation
+      if (!useRouter) {
+        onNavigate(demoId);
+      }
       if (window.innerWidth <= 768) {
         onToggle();
       }
     },
-    [onNavigate, onToggle]
+    [onNavigate, onToggle, useRouter]
   );
 
-  // Close sidebar on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -49,9 +53,8 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle }: Si
 
   return (
     <>
-      {/* Hamburger toggle button - visible only on mobile */}
       <button
-        className={`sidebar-toggle ${isOpen ? 'open' : ''}`}
+        className={`sidebar-toggle ${isOpen ? 'open' : 'sidebar-closed'}`}
         onClick={onToggle}
         aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={isOpen}
@@ -61,13 +64,25 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle }: Si
         <span className="hamburger-line" />
       </button>
 
-      {/* Overlay backdrop - visible on mobile when sidebar is open */}
       {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
 
       <nav className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-header">
-          <h1>📝 Rich Text Editor</h1>
-          <p className="subtitle">System Design Demos</p>
+          <div className="sidebar-header-content">
+            <h1>📝 Rich Text Editor</h1>
+            <p className="subtitle">System Design Demos</p>
+          </div>
+          <button
+            className="sidebar-collapse-btn"
+            onClick={onToggle}
+            aria-label="Close sidebar"
+            title="Close sidebar"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
         <ul className="nav-list">
           {navItems.map((item) => (
@@ -76,8 +91,17 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle }: Si
               className={`nav-item ${activeDemo === item.id ? 'active' : ''}`}
               onClick={() => handleNavigate(item.id)}
             >
-              <span className="nav-icon">{item.icon}</span>
-              <span>{item.label}</span>
+              {useRouter ? (
+                <Link href={item.href} className="nav-link">
+                  <span className="nav-icon">{item.icon}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ) : (
+                <>
+                  <span className="nav-icon">{item.icon}</span>
+                  <span>{item.label}</span>
+                </>
+              )}
             </li>
           ))}
         </ul>

@@ -1,0 +1,238 @@
+/* View tab - unified formatting */
+.view-tab {
+    padding-bottom: var(--gap-xl);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.view-tab .prosemirror-section {
+    margin-bottom: var(--gap-xl);
+    padding: var(--gap-lg);
+}
+
+.view-tab .prosemirror-section:last-child {
+    margin-bottom: 0;
+}
+
+.view-tab .prosemirror-section h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--gap-md);
+    margin-top: 0;
+}
+
+.view-tab .prosemirror-section h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--gap-sm);
+    margin-top: 0;
+}
+
+.view-tab .prosemirror-section p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: var(--gap-md);
+}
+
+.view-tab .prosemirror-section p:last-child {
+    margin-bottom: 0;
+}
+
+.view-tab .prosemirror-section p code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    color: var(--accent-blue);
+    background: var(--bg-tertiary);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+}
+
+.view-tab .code-snippet {
+    margin-top: var(--gap-md);
+    margin-bottom: var(--gap-md);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: var(--gap-md);
+}
+
+.view-tab .code-snippet pre {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.view-tab .code-snippet code {
+    color: var(--text-secondary);
+}
+
+.view-tab .section-note {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: var(--gap-sm);
+    margin-bottom: 0;
+}
+
+.view-tab .view-flow-diagram {
+    margin-top: var(--gap-md);
+    padding: var(--gap-lg);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+
+.view-tab .view-flow-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-sm);
+    margin-bottom: var(--gap-md);
+}
+
+.view-tab .view-flow-row:last-child {
+    margin-bottom: 0;
+}
+
+.view-tab .view-flow-box {
+    padding: var(--gap-sm) var(--gap-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.view-tab .view-flow-arrow {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.view-tab .view-responsibilities-list {
+    margin-top: var(--gap-md);
+    padding-left: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.view-tab .view-responsibilities-list li {
+    margin-bottom: var(--gap-sm);
+}
+
+.view-tab .view-responsibilities-list li:last-child {
+    margin-bottom: 0;
+}
+
+.view-tab .view-responsibilities-list strong {
+    color: var(--text-primary);
+}
+
+.view-tab .view-responsibilities-list code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    color: var(--accent-blue);
+}
+
+/* View sub-tabs - at top */
+.view-tab .view-sub-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: var(--gap-lg);
+    padding-bottom: var(--gap-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.view-tab .view-sub-tab {
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.view-tab .view-sub-tab:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.view-tab .view-sub-tab.active {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+/* View Decorations sub-tab */
+.view-tab .view-decorations .code-snippet {
+    margin-top: var(--gap-md);
+    margin-bottom: var(--gap-md);
+}
+
+.view-tab .view-deco-visual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    margin-top: var(--gap-md);
+}
+
+.view-tab .view-deco-example {
+    padding: var(--gap-sm) var(--gap-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.view-tab .view-deco-label {
+    color: var(--text-muted);
+    margin-right: var(--gap-sm);
+}
+
+.view-tab .view-deco-text {
+    color: var(--text-secondary);
+}
+
+.view-tab .view-deco-highlight mark {
+    background: rgba(234, 179, 8, 0.35);
+    color: var(--text-primary);
+    padding: 0 0.15em;
+    border-radius: 2px;
+}
+
+.view-tab .view-deco-types {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    margin-top: var(--gap-md);
+}
+
+.view-tab .view-deco-type {
+    padding: var(--gap-sm) var(--gap-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+.view-tab .view-deco-type code {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    margin-bottom: 0.25rem;
+}
+
+.view-tab .view-deco-type p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+

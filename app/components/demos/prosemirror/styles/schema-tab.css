@@ -1,0 +1,95 @@
+/* Schema tab - unified formatting */
+.schema-tab {
+    padding-bottom: var(--gap-lg);
+}
+
+.schema-tab .prosemirror-section {
+    margin-bottom: var(--gap-xl);
+    padding: var(--gap-lg);
+}
+
+.schema-tab .prosemirror-section:last-child {
+    margin-bottom: 0;
+}
+
+.schema-tab .prosemirror-section h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--gap-md);
+}
+
+.schema-tab .prosemirror-section h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--gap-sm);
+    margin-top: 0;
+}
+
+.schema-tab .prosemirror-section h5 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: var(--gap-sm);
+}
+
+.schema-tab .prosemirror-section p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin-bottom: var(--gap-md);
+}
+
+.schema-tab .prosemirror-section p code,
+.schema-tab .prosemirror-section li code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    color: var(--accent-blue);
+    background: var(--bg-tertiary);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+}
+
+.schema-tab .code-snippet {
+    margin-top: var(--gap-sm);
+    margin-bottom: var(--gap-md);
+}
+
+.schema-tab .section-note {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: var(--gap-sm);
+}
+
+
+.schema-tab .content-expr-item {
+    padding: var(--gap-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+}
+
+.schema-intro p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.schema-example {
+    margin-top: var(--gap-sm);
+}
+
+.schema-example pre {
+    font-size: 0.8rem;
+}
+
+.schema-tab .doc-json-snippet {
+    margin-top: var(--gap-sm);
+}
+
+.schema-tab .doc-json-snippet pre {
+    font-size: 0.8rem;
+}
+
+.schema-tab .content-expr-grid {
+    margin-top: var(--gap-sm);

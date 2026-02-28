@@ -1,0 +1,346 @@
+/* Transform tab - unified formatting (matches State, View tabs) */
+.transactions-tab {
+  padding-bottom: var(--gap-xl);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.transactions-tab .prosemirror-section {
+  margin-bottom: var(--gap-xl);
+  padding: var(--gap-lg);
+}
+
+.transactions-tab .prosemirror-section:last-child {
+  margin-bottom: 0;
+}
+
+.transactions-tab .prosemirror-section h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--gap-md);
+  margin-top: 0;
+}
+
+.transactions-tab .prosemirror-section h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--gap-sm);
+  margin-top: 0;
+}
+
+.transactions-tab .prosemirror-section h4 + p {
+  margin-top: 0;
+}
+
+.transactions-tab .prosemirror-section p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-bottom: var(--gap-md);
+}
+
+.transactions-tab .prosemirror-section p:last-child {
+  margin-bottom: 0;
+}
+
+.transactions-tab .prosemirror-section p code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  color: var(--accent-blue);
+  background: var(--bg-tertiary);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+.transactions-tab .code-snippet {
+  margin-top: var(--gap-md);
+  margin-bottom: var(--gap-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: var(--gap-md);
+  overflow-x: auto;
+}
+
+.transactions-tab .code-snippet pre {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.transactions-tab .code-snippet code {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+}
+
+.transactions-tab .section-note {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: var(--gap-sm);
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.transactions-tab .section-note strong {
+  color: var(--text-primary);
+}
+
+/* Step → Transform → Transaction hierarchy (horizontal flow) */
+.transactions-tab .transactions-hierarchy {
+  margin-top: var(--gap-md);
+  display: inline-flex;
+  align-items: stretch;
+  padding: 0.25rem 0;
+}
+
+.transactions-tab .tx-hierarchy-flow {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+.transactions-tab .tx-hierarchy-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 120px;
+  padding: var(--gap-md) var(--gap-lg);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.transactions-tab .tx-hierarchy-pill-final {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.transactions-tab .tx-hierarchy-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--accent-blue);
+}
+
+.transactions-tab .tx-hierarchy-pill-final .tx-hierarchy-label {
+  color: var(--accent-blue);
+}
+
+.transactions-tab .tx-hierarchy-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.transactions-tab .tx-hierarchy-arrow {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Update Loop - compact within Transform tab */
+.transactions-tab .update-loop-container {
+  padding: var(--gap-md);
+  margin-top: var(--gap-sm);
+  margin-bottom: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.transactions-tab .update-loop-controls {
+  margin-bottom: var(--gap-md);
+  padding-bottom: var(--gap-md);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.transactions-tab .update-loop-controls .speed-control {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.transactions-tab .update-loop-controls .speed-control input[type="range"] {
+  width: 80px;
+  accent-color: var(--accent-blue);
+}
+
+.transactions-tab .update-loop-diagram {
+  gap: var(--gap-sm);
+  margin-bottom: 0;
+  padding-top: var(--gap-sm);
+}
+
+.transactions-tab .update-step {
+  min-width: 120px;
+  max-width: 160px;
+  padding: var(--gap-sm) var(--gap-md);
+  border-radius: var(--radius-sm);
+  border-color: var(--border-color);
+}
+
+.transactions-tab .update-step.wide {
+  min-width: 160px;
+  max-width: 200px;
+}
+
+.transactions-tab .update-step.completed {
+  border-color: var(--accent-green);
+}
+
+.transactions-tab .step-icon {
+  font-size: 1.35rem;
+  margin-bottom: 0.2rem;
+}
+
+.transactions-tab .step-content h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.transactions-tab .step-content p {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.transactions-tab .flow-arrow {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Callout */
+.transactions-tab .transactions-callout {
+  margin-top: var(--gap-md);
+  padding: var(--gap-md);
+  background: rgba(59, 130, 246, 0.08);
+  border-left: 4px solid var(--accent-blue);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.transactions-tab .transactions-callout strong {
+  color: var(--text-primary);
+}
+
+.transactions-tab .transactions-callout code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  color: var(--accent-blue);
+  background: var(--bg-tertiary);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+/* Transaction structure (fields) */
+.transactions-tab .transactions-structure {
+  margin-top: var(--gap-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.transactions-tab .tx-struct-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--gap-sm) var(--gap-md);
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.transactions-tab .tx-struct-row:last-child {
+  border-bottom: none;
+}
+
+.transactions-tab .tx-struct-key {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-blue);
+  min-width: 100px;
+}
+
+.transactions-tab .tx-struct-arrow {
+  color: var(--text-muted);
+}
+
+.transactions-tab .tx-struct-value {
+  color: var(--text-secondary);
+  min-width: 90px;
+}
+
+.transactions-tab .tx-struct-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* Common step types grid */
+.transactions-tab .tx-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--gap-md);
+  margin-top: var(--gap-md);
+}
+
+.transactions-tab .tx-step-card {
+  padding: var(--gap-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.transactions-tab .tx-step-card code {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--accent-blue);
+  margin-bottom: var(--gap-sm);
+  word-break: break-all;
+}
+
+.transactions-tab .tx-step-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .transactions-tab .prosemirror-section {
+    padding: var(--gap-md);
+  }
+
+  .transactions-tab .tx-struct-row {
+    flex-wrap: wrap;
+  }
+
+  .transactions-tab .tx-struct-desc {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding-left: calc(100px + var(--gap-sm));
+  }
+
+  .transactions-tab .tx-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .transactions-tab .tx-hierarchy-flow {
+    gap: var(--gap-sm);
+  }
+
+  .transactions-tab .tx-hierarchy-pill {
+    min-width: 100px;
+    padding: var(--gap-sm) var(--gap-md);
+  }
+}
