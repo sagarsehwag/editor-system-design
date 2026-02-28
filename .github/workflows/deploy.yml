@@ -37,11 +37,8 @@ jobs:
 
       - name: Prepare artifact for GitHub Pages
         run: |
-          mkdir -p deploy/editor-system-design
-          cp -r out/_next out/prosemirror out/favicon.ico deploy/editor-system-design/
-          cp -r out/screenshots deploy/editor-system-design/ 2>/dev/null || true
-          cp out/404.html out/_not-found.html deploy/editor-system-design/ 2>/dev/null || true
-          cp out/index.html out/prosemirror.html deploy/
+          mkdir -p deploy
+          cp -r out/. deploy/
           touch deploy/.nojekyll
 
       - name: Upload artifact
