@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useSearchParamsClient } from '../hooks/useSearchParams';
 import { useEffect } from 'react';
 import {
@@ -23,15 +22,15 @@ const demoComponents: Record<string, React.ComponentType> = {
 
 export default function Home() {
   const searchParams = useSearchParamsClient();
-  const router = useRouter();
   const demoFromUrl = searchParams.get('demo');
 
-  // ProseMirror is main — redirect / to /prosemirror when no demo (fallback if middleware skipped)
+  // ProseMirror is main — redirect / to /prosemirror when no demo (client-side, works on static export)
   useEffect(() => {
     if (!demoFromUrl) {
-      router.replace('/prosemirror');
+      // Relative path works: /editor-system-design/ → /editor-system-design/prosemirror
+      window.location.replace('prosemirror');
     }
-  }, [demoFromUrl, router]);
+  }, [demoFromUrl]);
 
   if (!demoFromUrl) {
     return (
