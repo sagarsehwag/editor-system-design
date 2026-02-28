@@ -81,11 +81,11 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
       >
         <div className="sidebar-header">
           <span className="sidebar-collapsed-logo" aria-hidden>
-            📦
+            ⚙️
           </span>
           <div className="sidebar-header-content">
-            <h1>📦 Prosemirror</h1>
-            <p className="subtitle">System Design Demos</p>
+            <h1>Editor Mechanics · ProseMirror</h1>
+            <p className="subtitle">How ProseMirror and rich text editors work</p>
           </div>
           <button
             className="sidebar-collapse-btn"

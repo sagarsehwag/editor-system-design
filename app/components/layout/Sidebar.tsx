@@ -71,7 +71,7 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
           <span className="sidebar-collapsed-logo" aria-hidden>📝</span>
           <div className="sidebar-header-content">
             <h1>📝 Rich Text Editor</h1>
-            <p className="subtitle">System Design Demos</p>
+            <p className="subtitle">How ProseMirror and rich text editors work</p>
           </div>
           <button
             className="sidebar-collapse-btn"

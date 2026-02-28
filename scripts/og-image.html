@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1200, height=630" />
+    <title>Editor Mechanics · ProseMirror - OG Image</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        background: #0f0f0f;
+        font-family:
+          'Inter',
+          -apple-system,
+          sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 64px 80px;
+        overflow: hidden;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(59, 130, 246, 0.15);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        color: #3b82f6;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 32px;
+        width: fit-content;
+      }
+      .badge span {
+        font-size: 22px;
+      }
+      h1 {
+        font-size: 56px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        letter-spacing: -0.02em;
+      }
+      .subtitle {
+        font-size: 24px;
+        color: #a0a0a0;
+        line-height: 1.5;
+        max-width: 680px;
+        margin-bottom: 48px;
+      }
+      .code-block {
+        background: #1e1e1e;
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 24px 28px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 18px;
+        color: #a0a0a0;
+        width: fit-content;
+      }
+      .code-block .key {
+        color: #3b82f6;
+      }
+      .code-block .string {
+        color: #22c55e;
+      }
+      .code-block .comment {
+        color: #666;
+      }
+      .footer {
+        position: absolute;
+        bottom: 48px;
+        right: 80px;
+        font-size: 18px;
+        color: #666;
+      }
+      .gradient-line {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #22c55e, #a855f7);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="badge"><span>⚙️</span>ProseMirror</div>
+    <h1>Editor Mechanics · ProseMirror</h1>
+    <p class="subtitle">How ProseMirror and rich text editors work</p>
+    <div class="code-block">
+      <span class="key">schema</span> · <span class="key">state</span> ·
+      <span class="key">transforms</span> · <span class="key">view</span> ·
+      <span class="string">contentEditable</span>
+    </div>
+    <div class="footer">sagarsehwag.github.io/editor-system-design</div>
+    <div class="gradient-line"></div>
+  </body>
+</html>
