@@ -83,8 +83,8 @@ Zero external UI libraries. Every demo, animation, and visualization is built fr
 
 ```bash
 # Clone the repository
-git clone https://github.com/sagarsehwag/rich-text-editor-system-design.git
-cd rich-text-editor-system-design
+git clone https://github.com/sagarsehwag/editor-system-design-prosemirror.git
+cd editor-system-design-prosemirror
 
 # Install dependencies
 npm install
