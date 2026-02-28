@@ -66,8 +66,9 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
 
       {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
 
-      <nav className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+      <nav className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
         <div className="sidebar-header">
+          <span className="sidebar-collapsed-logo" aria-hidden>📝</span>
           <div className="sidebar-header-content">
             <h1>📝 Rich Text Editor</h1>
             <p className="subtitle">System Design Demos</p>
@@ -75,13 +76,19 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
           <button
             className="sidebar-collapse-btn"
             onClick={onToggle}
-            aria-label="Close sidebar"
-            title="Close sidebar"
+            aria-label={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            {isOpen ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            )}
           </button>
         </div>
         <ul className="nav-list">

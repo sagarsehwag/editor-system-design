@@ -24,7 +24,7 @@ function ProseMirrorLayoutInner({ children }: { children: React.ReactNode }) {
   )
     ? (sectionFromUrl as ProseMirrorTab)
     : 'overview';
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = useCallback(() => {
     setSidebarOpen((prev) => !prev);

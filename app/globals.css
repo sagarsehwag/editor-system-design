@@ -28,6 +28,7 @@
 
     /* Spacing */
     --sidebar-width: 280px;
+    --sidebar-collapsed-width: 56px;
     --content-padding: 2rem;
     --card-padding: 1.5rem;
     --gap-sm: 0.5rem;
@@ -88,14 +89,68 @@ body {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Desktop: collapse sidebar when closed */
+/* Desktop: collapsed = icons only, expanded = full */
 @media (min-width: 769px) {
-    .sidebar:not(.sidebar-open) {
-        transform: translateX(-100%);
+    .sidebar.sidebar-collapsed {
+        width: var(--sidebar-collapsed-width);
+    }
+
+    .sidebar.sidebar-collapsed .sidebar-header {
+        padding: 0.75rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar-collapsed-logo {
+        display: none;
+    }
+
+    .sidebar.sidebar-collapsed .sidebar-collapsed-logo {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .sidebar.sidebar-collapsed .sidebar-header-content {
+        display: none;
+    }
+
+    .sidebar.sidebar-collapsed .sidebar-collapse-btn {
+        margin: 0;
+    }
+
+    .sidebar.sidebar-collapsed .nav-list {
+        padding: 0.5rem 0;
+    }
+
+    .sidebar.sidebar-collapsed .nav-item {
+        padding: 0.75rem;
+        justify-content: center;
+    }
+
+    .sidebar.sidebar-collapsed .nav-link {
+        justify-content: center;
+    }
+
+    .sidebar.sidebar-collapsed .nav-link span:not(.nav-icon),
+    .sidebar.sidebar-collapsed .nav-item > span:not(.nav-icon) {
+        display: none;
+    }
+
+    .sidebar.sidebar-collapsed .sidebar-footer {
+        display: none;
+    }
+
+    .sidebar.sidebar-collapsed .prosemirror-back-link {
+        display: none;
+    }
+
+    .content.sidebar-hidden {
+        margin-left: var(--sidebar-collapsed-width);
     }
 
     .sidebar-toggle.sidebar-closed {
-        display: flex;
+        display: none;
     }
 }
 

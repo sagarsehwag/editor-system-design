@@ -48,16 +48,16 @@ export default function ProseMirrorPositions() {
 
   useEffect(() => {
     const editor = liveEditorRef.current;
-    if (editor && !editor.hasChildNodes()) {
+    if (editor && activeSubTab === 'selection' && !editor.hasChildNodes()) {
       editor.innerHTML =
-        '<p>One</p>' +
-        '<blockquote><p>Two</p></blockquote>' +
-        '<p>The quick brown fox jumps over the lazy dog. Try selecting text to see anchor/head positions.</p>' +
-        '<p>Positions: +1 per character, +1 when entering/leaving blocks, +1 for leaf nodes.</p>' +
+        '<p><strong>ProseMirror</strong> uses positions — integer offsets into a flat token sequence.</p>' +
+        '<p>Select text here to see <em>anchor</em> and <em>head</em> update in real time. Cursor = anchor = head.</p>' +
+        '<blockquote><p>Blockquotes, paragraphs, and other block nodes each add structure. Positions increment at boundaries.</p></blockquote>' +
+        '<p>The quick brown fox jumps over the lazy dog. Try selecting across paragraphs to see how positions span blocks.</p>' +
         '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>' +
-        '<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>';
+        '<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>';
     }
-  }, []);
+  }, [activeSubTab]);
 
   useEffect(() => {
     const handleChange = () => {

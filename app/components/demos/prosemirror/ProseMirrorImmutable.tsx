@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import ProseMirrorInsertWorkflow from './ProseMirrorInsertWorkflow';
 
 export default function ProseMirrorImmutable() {
   return (
@@ -104,6 +105,56 @@ export default function ProseMirrorImmutable() {
           Green = same reference in both states. Orange = new allocation. Undo keeps old state cheap
           because it shares &quot;One&quot; and &quot;Three&quot; with current state.
         </p>
+
+        <h4>Animated Insert Workflow</h4>
+        <p>
+          Like the &quot;Map with Child Array&quot; demo in NodeStructures, but aligned with ProseMirror&apos;s
+          model: <strong>immutable tree</strong> with <strong>Fragment</strong> for children. No index
+          shifting — we create new immutable values along the changed path; siblings stay shared.
+        </p>
+        <ProseMirrorInsertWorkflow />
+
+        <h4>Algorithm Complexity</h4>
+        <p>
+          ProseMirror&apos;s immutable tree with structural sharing gives predictable complexity. New nodes
+          are created only along the changed path.
+        </p>
+        <div className="comparison-table-container">
+          <h3>📊 ProseMirror Complexity</h3>
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Complexity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Insert / delete child</td>
+                <td className="good">O(depth)</td>
+              </tr>
+              <tr>
+                <td>Resolve position</td>
+                <td className="medium">O(depth)</td>
+              </tr>
+              <tr>
+                <td>Memory per update</td>
+                <td className="good">O(depth)</td>
+              </tr>
+              <tr>
+                <td>Store undo state</td>
+                <td className="good">O(1) ref</td>
+              </tr>
+              <tr>
+                <td>Index shifting</td>
+                <td className="good">No</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="table-note">
+            <code>depth</code> = tree depth (typically &lt; 20). Structural sharing reuses siblings. Position-based model.
+          </p>
+        </div>
 
         <h4>Why It Matters</h4>
         <ul className="structural-sharing-list">
