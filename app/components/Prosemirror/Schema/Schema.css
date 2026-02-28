@@ -1,6 +1,5 @@
 /* Schema tab - unified formatting */
 .schema-tab {
-    padding-bottom: var(--gap-lg);
 }
 
 .schema-tab .prosemirror-section {

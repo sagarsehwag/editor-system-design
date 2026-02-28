@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import type { ProseMirrorTab } from '../Prosemirror';
 
 const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
@@ -31,6 +31,7 @@ interface UnifiedSidebarProps {
 }
 
 export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isProseMirror = pathname === '/' || pathname === '/prosemirror';
@@ -40,11 +41,15 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
     (searchParams.get('tab') as ProseMirrorTab) || 'overview';
   const activeDemo = searchParams.get('tab') || 'rendering';
 
-  const handleLinkClick = useCallback(() => {
-    if (window.innerWidth <= 768) {
-      onToggle();
-    }
-  }, [onToggle]);
+  const handleNavItemClick = useCallback(
+    (href: string) => {
+      router.push(href);
+      if (window.innerWidth <= 768) {
+        onToggle();
+      }
+    },
+    [router, onToggle]
+  );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -139,15 +144,17 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                     className={`nav-item ${
                       activeProseMirrorSection === item.id ? 'active' : ''
                     }`}
-                    onClick={handleLinkClick}
                   >
-                    <Link
-                      href={`${prosemirrorBase}?tab=${item.id}`}
+                    <button
+                      type="button"
                       className="nav-link"
+                      onClick={() =>
+                        handleNavItemClick(`${prosemirrorBase}?tab=${item.id}`)
+                      }
                     >
                       <span className="nav-icon">{item.icon}</span>
                       <span>{item.label}</span>
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -169,15 +176,17 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                   <li
                     key={item.id}
                     className={`nav-item ${activeDemo === item.id ? 'active' : ''}`}
-                    onClick={handleLinkClick}
                   >
-                    <Link
-                      href={`/rich-text-editor?tab=${item.id}`}
+                    <button
+                      type="button"
                       className="nav-link"
+                      onClick={() =>
+                        handleNavItemClick(`/rich-text-editor?tab=${item.id}`)
+                      }
                     >
                       <span className="nav-icon">{item.icon}</span>
                       <span>{item.label}</span>
-                    </Link>
+                    </button>
                   </li>
                 ))}
               </ul>

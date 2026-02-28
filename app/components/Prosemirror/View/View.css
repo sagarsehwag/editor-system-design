@@ -1,6 +1,5 @@
 /* View tab - unified formatting */
 .view-tab {
-    padding-bottom: var(--gap-xl);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 

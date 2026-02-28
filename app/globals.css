@@ -252,8 +252,15 @@ body {
     align-items: center;
     gap: 0.75rem;
     flex: 1;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
     color: inherit;
     text-decoration: none;
+    text-align: left;
+    cursor: pointer;
 }
 
 /* Unified sidebar: ProseMirror + Rich Text Editor tabs */
@@ -298,8 +305,15 @@ body {
 
 .nav-sublist .nav-item {
     position: relative;
-    padding: 0.6rem 1.5rem 0.6rem 2rem;
+    padding: 0;
     border-left: none;
+}
+
+.nav-sublist .nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.6rem 1.5rem 0.6rem 2rem;
 }
 
 .nav-sublist .nav-item .nav-icon {
@@ -440,13 +454,27 @@ body {
 }
 
 /* ========================================
+   Page wrappers: consistent gap above Next button
+   ======================================== */
+
+.prosemirror-page,
+.rich-text-editor-page {
+    padding-bottom: var(--gap-md);
+    min-width: 0;
+}
+
+/* Zero last content margin so gap comes only from wrapper + next-button */
+.prosemirror-page .demo-section > *:last-child,
+.rich-text-editor-page .demo-section > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
    Next Button (bottom of page)
    ======================================== */
 
 .next-button-wrapper {
-    margin-top: var(--gap-sm);
-    padding-top: var(--gap-md);
-    border-top: 1px solid var(--border-subtle);
+    margin-top: var(--gap-md);
 }
 
 /* Desktop: right-aligned, compact */
@@ -611,6 +639,7 @@ body {
     display: grid;
     gap: var(--gap-lg);
     margin-bottom: var(--gap-xl);
+    min-width: 0;
 }
 
 .demo-grid.four-cols {
@@ -655,6 +684,7 @@ body {
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all var(--transition-normal);
+    min-width: 0;
 }
 
 .demo-card:hover {
@@ -950,6 +980,7 @@ kbd {
     border-radius: var(--radius-lg);
     padding: var(--card-padding);
     margin-top: var(--gap-xl);
+    min-width: 0;
 }
 
 .key-insight h3 {
@@ -1269,6 +1300,8 @@ kbd {
     border-radius: var(--radius-lg);
     padding: var(--card-padding);
     margin-bottom: var(--gap-xl);
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .format-example {
@@ -1280,6 +1313,7 @@ kbd {
     grid-template-columns: 1fr 1fr;
     gap: var(--gap-lg);
     margin-top: var(--gap-lg);
+    min-width: 0;
 }
 
 .approach {
@@ -1287,6 +1321,8 @@ kbd {
     background: var(--bg-tertiary);
     border-radius: var(--radius-md);
     border: 2px solid transparent;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .approach.preferred {
@@ -1305,6 +1341,8 @@ kbd {
     border-radius: var(--radius-sm);
     font-size: 0.8rem;
     overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .approach .pro {
@@ -1329,6 +1367,8 @@ kbd {
     border-radius: var(--radius-lg);
     padding: var(--card-padding);
     margin-bottom: var(--gap-xl);
+    min-width: 0;
+    overflow-x: auto;
 }
 
 .tree {
@@ -2160,6 +2200,25 @@ kbd {
     .shortcut-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    /* -- State Model: Stack on tablet -- */
+    .demo-grid.two-cols {
+        grid-template-columns: 1fr;
+        gap: var(--gap-md);
+    }
+
+    .approach-comparison {
+        grid-template-columns: 1fr;
+        gap: var(--gap-md);
+    }
+
+    .formatting-demo-section {
+        padding: 1.25rem;
+    }
+
+    .tree-visualization {
+        padding: 1.25rem;
+    }
 }
 
 /* ========================================
@@ -2261,14 +2320,26 @@ kbd {
         justify-content: center;
     }
 
+    /* -- State Model: Card header + toolbar -- */
+    .card-header {
+        flex-wrap: wrap;
+        gap: var(--gap-sm);
+    }
+
+    .card-header .toolbar {
+        flex-shrink: 0;
+    }
+
     /* -- Approach Comparison (State Model page) -- */
     .approach-comparison {
         grid-template-columns: 1fr;
+        gap: var(--gap-md);
     }
 
     .approach pre {
         font-size: 0.7rem;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .formatting-demo-section {
@@ -2283,22 +2354,44 @@ kbd {
     }
 
     .tree {
-        min-width: 300px;
+        min-width: 260px;
+        margin: var(--gap-md) 0;
     }
 
     .tree-node > span {
-        font-size: 0.75rem;
-        padding: 0.35rem 0.75rem;
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
     }
 
     .tree-children {
-        gap: var(--gap-md);
+        gap: var(--gap-sm);
     }
 
     .tree-legend {
         flex-wrap: wrap;
         gap: var(--gap-sm);
         justify-content: center;
+        font-size: 0.8rem;
+    }
+
+    /* -- State Model: Editor + Code output -- */
+    .demo-contenteditable.large {
+        min-height: 80px;
+    }
+
+    .code-output.json {
+        font-size: 0.72rem;
+        padding: 0.75rem;
+        max-height: 220px;
+    }
+
+    /* -- State Model: Key insight -- */
+    .key-insight ul {
+        padding-left: 1.25rem;
+    }
+
+    .key-insight li {
+        margin-bottom: 0.5rem;
     }
 
     /* -- Update Loop -- */

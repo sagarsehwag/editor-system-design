@@ -2,10 +2,6 @@
    ProseMirror Demo
    ======================================== */
 
-.prosemirror-page {
-    padding-bottom: var(--gap-sm);
-}
-
 .prosemirror-tabs {
     display: flex;
     flex-wrap: wrap;

@@ -33,8 +33,10 @@ function RichTextEditorContent() {
 
 export default function RichTextEditorPage() {
   return (
-    <Suspense fallback={<div style={{ minHeight: '60vh' }} />}>
-      <RichTextEditorContent />
+    <Suspense fallback={<div className="rich-text-editor-page" style={{ minHeight: '60vh' }} />}>
+      <div className="rich-text-editor-page">
+        <RichTextEditorContent />
+      </div>
     </Suspense>
   );
 }

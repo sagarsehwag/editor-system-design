@@ -1,6 +1,5 @@
 /* Plugins tab - unified formatting */
 .plugins-tab {
-  padding-bottom: var(--gap-xl);
   font-family:
     'Inter',
     -apple-system,

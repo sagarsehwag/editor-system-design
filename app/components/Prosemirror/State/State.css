@@ -1,6 +1,5 @@
 /* State tab - unified formatting */
 .state-tab {
-    padding-bottom: var(--gap-xl);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 

@@ -1,6 +1,5 @@
 /* Immutable tab - unified formatting */
 .immutable-tab {
-    padding-bottom: var(--gap-xl);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 

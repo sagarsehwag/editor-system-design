@@ -1,6 +1,5 @@
 /* Transform tab - unified formatting (matches State, View tabs) */
 .transactions-tab {
-  padding-bottom: var(--gap-xl);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
