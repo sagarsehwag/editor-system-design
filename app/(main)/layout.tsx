@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useCallback, Suspense } from 'react';
+import { useState, useCallback } from 'react';
 import UnifiedSidebar from '../components/layout/UnifiedSidebar';
 
-function MainLayoutInner({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,23 +21,5 @@ function MainLayoutInner({
         {children}
       </main>
     </>
-  );
-}
-
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <Suspense fallback={
-      <main className="content sidebar-visible">
-        <div className="demo-section active" style={{ padding: '2rem' }}>
-          <p>Loading…</p>
-        </div>
-      </main>
-    }>
-      <MainLayoutInner>{children}</MainLayoutInner>
-    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useSearchParamsClient } from '../hooks/useSearchParams';
 import { useEffect } from 'react';
 import {
   RenderingApproaches,
@@ -21,7 +22,7 @@ const demoComponents: Record<string, React.ComponentType> = {
 };
 
 export default function Home() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParamsClient();
   const router = useRouter();
   const demoFromUrl = searchParams.get('demo');
 

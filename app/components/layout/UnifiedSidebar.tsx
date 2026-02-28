@@ -2,7 +2,8 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useSearchParamsClient } from '../../hooks/useSearchParams';
 import type { ProseMirrorTab } from '../Prosemirror';
 
 const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
@@ -32,7 +33,7 @@ interface UnifiedSidebarProps {
 
 export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParamsClient();
   const isProseMirror = pathname === '/prosemirror';
   const activeProseMirrorSection =
     (searchParams.get('section') as ProseMirrorTab) || 'overview';
