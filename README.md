@@ -97,8 +97,8 @@ Zero external UI libraries. Every demo, animation, and visualization is built fr
 
 ```bash
 # Clone the repository
-git clone https://github.com/sagarsehwag/editor-system-design-prosemirror.git
-cd editor-system-design-prosemirror
+git clone https://github.com/sagarsehwag/editor-system-design.git
+cd editor-system-design
 
 # Install dependencies
 npm install
