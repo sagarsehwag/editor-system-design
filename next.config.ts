@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: "",
+  basePath: process.env.GITHUB_ACTIONS ? "/editor-system-design" : "",
   images: {
     unoptimized: true,
   },
