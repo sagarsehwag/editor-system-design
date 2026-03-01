@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
+import { CodeBlock } from '../../CodeBlock';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -117,12 +118,12 @@ export default function ProseMirrorInsertWorkflow() {
       </div>
 
       <div className="code-snippet">
-        <pre>
-          <code>{`// Each node has content: Fragment (immutable)
+        <CodeBlock
+          code={`// Each node has content: Fragment (immutable)
 interface ProseMirrorNode {
   content: Fragment;  // immutable list of children
-}`}</code>
-        </pre>
+}`}
+        />
       </div>
 
       <div className="pm-workflow-diagram" ref={diagramRef}>

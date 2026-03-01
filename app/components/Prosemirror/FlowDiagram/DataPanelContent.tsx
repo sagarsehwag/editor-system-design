@@ -14,7 +14,7 @@ export function DataPanelContent({ selectedTx, activeStep }: DataPanelContentPro
   if (!selectedTx) {
     return (
       <p className="pm-flow-data-placeholder">
-        Type in the editor to see the flow. Hover steps to inspect data.
+        Hover steps to inspect data.
       </p>
     );
   }
@@ -68,6 +68,8 @@ export function DataPanelContent({ selectedTx, activeStep }: DataPanelContentPro
   }
 
   return (
-    <p className="pm-flow-data-placeholder">Hover steps to inspect data.</p>
+    <p className="pm-flow-data-placeholder">
+      Hover steps to inspect data.
+    </p>
   );
 }

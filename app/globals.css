@@ -247,6 +247,16 @@ body {
     font-size: 1.25rem;
 }
 
+.nav-icon-img,
+.nav-icon img {
+    display: block;
+    flex-shrink: 0;
+}
+
+.sidebar-collapsed-logo img {
+    display: block;
+}
+
 .nav-link {
     display: flex;
     align-items: center;

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { CodeBlock } from '../../CodeBlock';
 
 export default function ProseMirrorSchema() {
   return (
@@ -20,8 +21,9 @@ export default function ProseMirrorSchema() {
           explain how the schema defines and enforces this structure below.
         </p>
         <div className="code-snippet doc-json-snippet">
-          <pre>
-            <code>{`{
+          <CodeBlock
+            language="json"
+            code={`{
   "type": "doc",
   "content": [
     {
@@ -43,8 +45,8 @@ export default function ProseMirrorSchema() {
       ]
     }
   ]
-}`}</code>
-          </pre>
+}`}
+          />
         </div>
         <p className="section-note">
           <strong>What you&apos;re seeing:</strong> <code>doc</code> contains blocks (paragraph, blockquote).
@@ -58,8 +60,8 @@ export default function ProseMirrorSchema() {
           This schema defines the rules. Every document like the one above must conform to it.
         </p>
         <div className="code-snippet doc-json-snippet schema-example">
-          <pre>
-            <code>{`const schema = new Schema({
+          <CodeBlock
+            code={`const schema = new Schema({
   nodes: {
     doc:         { content: "block+" },
     paragraph:   { content: "inline*", group: "block" },
@@ -74,8 +76,8 @@ export default function ProseMirrorSchema() {
     em: {},
     link: { attrs: { href: {} } }
   }
-});`}</code>
-          </pre>
+});`}
+          />
         </div>
       </div>
 
@@ -236,16 +238,16 @@ export default function ProseMirrorSchema() {
           </div>
         </div>
         <div className="code-snippet doc-json-snippet">
-          <pre>
-            <code>{`// Paragraph: bold, italic, links allowed
+          <CodeBlock
+            code={`// Paragraph: bold, italic, links allowed
 paragraph:  { content: "inline*", group: "block", marks: "_" }
 
 // Heading: no formatting (clean titles)
 heading:    { content: "inline*", group: "block", marks: "" }
 
 // Code block: plain text only (no bold, links, etc.)
-code_block: { content: "text*", group: "block", marks: "" }`}</code>
-          </pre>
+code_block: { content: "text*", group: "block", marks: "" }`}
+          />
         </div>
         <p className="section-note">
           The value is a space-separated string of mark names or mark groups. Invalid marks are

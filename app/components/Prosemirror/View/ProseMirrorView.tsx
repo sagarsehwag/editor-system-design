@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { CodeBlock } from '../../CodeBlock';
 
 type ViewSubTab = 'overview' | 'decorations';
 
@@ -87,16 +88,16 @@ export default function ProseMirrorView() {
       <div className="prosemirror-section">
         <h4>Creating a View</h4>
         <div className="code-snippet">
-          <pre>
-            <code>{`const view = new EditorView(document.querySelector("#editor"), {
+          <CodeBlock
+            code={`const view = new EditorView(document.querySelector("#editor"), {
   state,
   dispatchTransaction(tr) {
     const newState = state.apply(tr);
     state = newState;
     view.updateState(newState);
   }
-});`}</code>
-          </pre>
+});`}
+          />
         </div>
         <p className="section-note">
           In React, you typically use a wrapper (e.g. <code>useEditorEffect</code> or a ref) to
@@ -128,8 +129,8 @@ export default function ProseMirrorView() {
             </div>
           </div>
           <div className="code-snippet">
-            <pre>
-              <code>{`// Plugin provides decorations via props
+            <CodeBlock
+              code={`// Plugin provides decorations via props
 const plugin = new Plugin({
   props: {
     decorations(state) {
@@ -140,8 +141,8 @@ const plugin = new Plugin({
       ]);
     }
   }
-});`}</code>
-            </pre>
+});`}
+            />
           </div>
           <div className="view-deco-types">
             <div className="view-deco-type">

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { CodeBlock } from '../../CodeBlock';
 
 export default function ProseMirrorState() {
   return (
@@ -62,11 +63,11 @@ export default function ProseMirrorState() {
           <div className="state-flow-box state-flow-box-new">EditorState&apos;</div>
         </div>
         <div className="code-snippet">
-          <pre>
-            <code>{`const tr = state.tr.insertText("hello", 0);
+          <CodeBlock
+            code={`const tr = state.tr.insertText("hello", 0);
 const newState = state.apply(tr);
-// state unchanged; newState has the new doc`}</code>
-          </pre>
+// state unchanged; newState has the new doc`}
+          />
         </div>
         <p className="state-callout">
           <strong>state.tr</strong> — A shortcut for <code>Transaction.create(state)</code>. Returns a
@@ -81,13 +82,13 @@ const newState = state.apply(tr);
           (optionally) an initial document. Plugins and custom selection can be passed too.
         </p>
         <div className="code-snippet">
-          <pre>
-            <code>{`const state = EditorState.create({
+          <CodeBlock
+            code={`const state = EditorState.create({
   schema: mySchema,
   doc: docFromJSON(schema, { type: "doc", content: [...] }),
   plugins: [history(), keymap(...)]
-});`}</code>
-          </pre>
+});`}
+          />
         </div>
         <p className="section-note">
           <code>doc</code> defaults to an empty paragraph if omitted. <code>plugins</code> add
@@ -171,10 +172,10 @@ const newState = state.apply(tr);
           state via <code>plugin.spec.state</code>.
         </p>
         <div className="code-snippet">
-          <pre>
-            <code>{`const historyState = state.pluginState(historyPlugin);
-// or: historyPlugin.getState(state)`}</code>
-          </pre>
+          <CodeBlock
+            code={`const historyState = state.pluginState(historyPlugin);
+// or: historyPlugin.getState(state)`}
+          />
         </div>
         <p className="section-note">
           Plugin state is immutable too. Plugins return new state from their <code>apply</code> function.

@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import type { ProseMirrorTab } from '../Prosemirror';
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const ICON_SRC = `${BASE_PATH}/prosemirror-icon.svg`;
+
 const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
   { id: 'overview', icon: '📋', label: 'Overview' },
   { id: 'schema', icon: '📄', label: 'Model' },
@@ -81,7 +84,7 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
       >
         <div className="sidebar-header">
           <span className="sidebar-collapsed-logo" aria-hidden>
-            ⚙️
+            <img src={ICON_SRC} alt="" width={24} height={24} />
           </span>
           <div className="sidebar-header-content">
             <h1>Editor Mechanics · ProseMirror</h1>
@@ -133,7 +136,9 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
               href={prosemirrorBase}
               className={`nav-section-header ${isProseMirror ? 'active' : ''}`}
             >
-              <span className="nav-icon">📦</span>
+              <span className="nav-icon nav-icon-img">
+                <img src={ICON_SRC} alt="" width={20} height={20} />
+              </span>
               <span>Prosemirror</span>
             </Link>
             {isProseMirror && (

@@ -58,7 +58,7 @@ export default function ProseMirrorFlowDiagram() {
             <span>
               {activeStep !== null && STEPS[activeStep]
                 ? STEPS[activeStep].label
-                : 'Data'}
+                : 'Internals View'}
             </span>
             {transactions.length > 0 && (
               <span className="pm-flow-data-badge">

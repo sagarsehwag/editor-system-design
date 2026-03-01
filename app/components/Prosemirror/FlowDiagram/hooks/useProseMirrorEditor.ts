@@ -2,8 +2,9 @@
 
 import { useCallback, useRef } from 'react';
 import { startTransition } from 'react';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 import { DOMSerializer } from 'prosemirror-model';
 import { schema } from 'prosemirror-schema-basic';
 import { history } from 'prosemirror-history';
@@ -12,6 +13,31 @@ import { baseKeymap } from 'prosemirror-commands';
 import { transactionToJSON } from '../utils';
 import type { TransactionEntry } from '../types';
 import { DEBOUNCE_MS } from '../constants';
+
+const PLACEHOLDER_TEXT = 'Type here to see the flow…';
+
+function placeholderPlugin(text: string) {
+  return new Plugin({
+    props: {
+      decorations(state) {
+        const { $from } = state.selection;
+        const parent = $from.parent;
+        if (
+          parent.isTextblock &&
+          parent.content.size === 0 &&
+          parent.type.name === 'paragraph'
+        ) {
+          return DecorationSet.create(state.doc, [
+            Decoration.node($from.before(), $from.after(), {
+              'data-placeholder': text,
+            }),
+          ]);
+        }
+        return DecorationSet.empty;
+      },
+    },
+  });
+}
 
 type FlushCallback = (
   entries: TransactionEntry[],
@@ -71,7 +97,11 @@ export function useProseMirrorEditor(
     (container: HTMLDivElement) => {
       const state = EditorState.create({
         schema,
-        plugins: [history(), keymap(baseKeymap)],
+        plugins: [
+          placeholderPlugin(PLACEHOLDER_TEXT),
+          history(),
+          keymap(baseKeymap),
+        ],
       });
       const view = new EditorView(container, {
         state,

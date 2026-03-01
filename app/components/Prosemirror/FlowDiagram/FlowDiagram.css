@@ -262,10 +262,30 @@
   min-height: 60px;
   outline: none;
   flex: 1;
+  caret-color: var(--text-primary);
 }
 
 .pm-flow-editor-prosemirror .ProseMirror p {
   margin: 0 0 var(--gap-sm) 0;
+}
+
+.pm-flow-editor-prosemirror .ProseMirror p[data-placeholder] {
+  position: relative;
+}
+
+.pm-flow-editor-prosemirror .ProseMirror p[data-placeholder]::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.pm-flow-data-placeholder {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .pm-flow-editor-prosemirror .ProseMirror p:last-child {
@@ -767,9 +787,6 @@
 
 .pm-flow-data-placeholder {
   margin: 0;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.5;
 }
 
 .pm-flow-data-body::-webkit-scrollbar {

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
+import { CodeBlock } from '../../CodeBlock';
 
 export default function ProseMirrorTransactions() {
   const [txStepState, setTxStepState] = useState<{
@@ -228,14 +229,14 @@ export default function ProseMirrorTransactions() {
           transaction. Chain methods to add steps and update selection.
         </p>
         <div className="code-snippet">
-          <pre>
-            <code>{`const tr = state.tr
+          <CodeBlock
+            code={`const tr = state.tr
   .insertText("hello", 0)
   .delete(5, 10)
   .setSelection(TextSelection.create(doc, 5));
 
-const newState = state.apply(tr);`}</code>
-          </pre>
+const newState = state.apply(tr);`}
+          />
         </div>
         <p className="transactions-callout">
           <strong>Chaining</strong> — Each method returns the same transaction (mutated in place),
@@ -292,13 +293,13 @@ const newState = state.apply(tr);`}</code>
           the new state back.
         </p>
         <div className="code-snippet">
-          <pre>
-            <code>{`dispatchTransaction(tr) {
+          <CodeBlock
+            code={`dispatchTransaction(tr) {
   const newState = state.apply(tr);
   state = newState;
   view.updateState(newState);
-}`}</code>
-          </pre>
+}`}
+          />
         </div>
         <p className="section-note">
           Transactions enable <strong>undo</strong> (history plugin stores inverse steps) and{' '}

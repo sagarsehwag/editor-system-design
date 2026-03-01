@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { CodeBlock } from '../../CodeBlock';
 
 export default function ProseMirrorPlugins() {
   return (
@@ -47,8 +48,8 @@ export default function ProseMirrorPlugins() {
         <details className='plugins-spec-accordion'>
           <summary>Example: word count plugin</summary>
           <div className='code-snippet'>
-            <pre>
-              <code>{`const wordCountPlugin = new Plugin({
+            <CodeBlock
+              code={`const wordCountPlugin = new Plugin({
   state: {
     init() { return { words: 0 }; },
     apply(tr, value) {
@@ -60,8 +61,8 @@ export default function ProseMirrorPlugins() {
   filterTransaction(tr) { return true; },
 });
 
-// Access: state.pluginState(wordCountPlugin)?.words`}</code>
-            </pre>
+// Access: state.pluginState(wordCountPlugin)?.words`}
+            />
           </div>
         </details>
       </div>
@@ -116,8 +117,8 @@ export default function ProseMirrorPlugins() {
           action. Used by keymap, menus, and toolbars.
         </p>
         <div className='code-snippet'>
-          <pre>
-            <code>{`const boldCommand = (state, dispatch) => {
+          <CodeBlock
+            code={`const boldCommand = (state, dispatch) => {
   const { from, to } = state.selection;
   if (from === to) return false;
   const mark = schema.marks.bold.create();
@@ -125,8 +126,8 @@ export default function ProseMirrorPlugins() {
   return true;
 };
 
-keymap({ "Mod-b": boldCommand });`}</code>
-          </pre>
+keymap({ "Mod-b": boldCommand });`}
+          />
         </div>
         <p className='plugins-callout'>
           <strong>Mod</strong> — Cross-platform modifier: <code>Cmd</code> on
@@ -144,8 +145,8 @@ keymap({ "Mod-b": boldCommand });`}</code>
           them.
         </p>
         <div className='code-snippet'>
-          <pre>
-            <code>{`import { history } from "prosemirror-history";
+          <CodeBlock
+            code={`import { history } from "prosemirror-history";
 import { keymap } from "prosemirror-keymap";
 import { baseKeymap } from "prosemirror-commands";
 
@@ -156,8 +157,8 @@ const state = EditorState.create({
     keymap(baseKeymap),
     keymap({ "Mod-z": undo, "Mod-y": redo })
   ]
-});`}</code>
-          </pre>
+});`}
+          />
         </div>
       </div>
     </div>
