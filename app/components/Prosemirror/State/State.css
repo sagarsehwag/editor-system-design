@@ -21,10 +21,10 @@
 }
 
 .state-tab .prosemirror-section h4 {
-    font-size: 0.95rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: var(--gap-sm);
+    margin-bottom: var(--gap-md);
     margin-top: 0;
 }
 
@@ -62,20 +62,6 @@
 .state-tab .code-snippet {
     margin-top: var(--gap-md);
     margin-bottom: var(--gap-md);
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: var(--gap-md);
-}
-
-.state-tab .code-snippet pre {
-    margin: 0;
-    font-size: 0.8rem;
-    line-height: 1.5;
-}
-
-.state-tab .code-snippet code {
-    color: var(--text-secondary);
 }
 
 .state-tab .state-callout {

@@ -53,7 +53,10 @@
   border-radius: var(--radius-sm);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
 }
 .viz-fullscreen-close:hover {
   color: var(--text-primary);
@@ -170,11 +173,15 @@ button.viz-hdr-chip {
 
 @keyframes viz-chip-flash {
   0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-blue) 50%, transparent), 0 0 20px color-mix(in srgb, var(--accent-blue) 30%, transparent);
+    box-shadow:
+      0 0 0 0 color-mix(in srgb, var(--accent-blue) 50%, transparent),
+      0 0 20px color-mix(in srgb, var(--accent-blue) 30%, transparent);
     transform: scale(1.08);
   }
   40% {
-    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-blue) 0%, transparent), 0 0 0 color-mix(in srgb, var(--accent-blue) 0%, transparent);
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--accent-blue) 0%, transparent),
+      0 0 0 color-mix(in srgb, var(--accent-blue) 0%, transparent);
     transform: scale(1);
   }
   100% {
@@ -707,7 +714,10 @@ button.viz-hdr-chip {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--flash-color, color-mix(in srgb, var(--accent-purple) 6%, transparent));
+  background: var(
+    --flash-color,
+    color-mix(in srgb, var(--accent-purple) 6%, transparent)
+  );
   pointer-events: none;
   animation: viz-card-flash 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 5;

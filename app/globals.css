@@ -864,7 +864,7 @@ li.ProseMirror-selectednode::after {
 }
 
 .card-header h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     font-family: 'JetBrains Mono', monospace;
 }
@@ -2007,7 +2007,7 @@ kbd {
 }
 
 .panel-header h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     margin: 0;
 }
 
@@ -2395,7 +2395,7 @@ kbd {
     }
 
     .card-header h3 {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 
     /* -- Card Padding -- */
