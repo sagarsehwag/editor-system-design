@@ -1,30 +1,64 @@
 'use client';
 
 import React from 'react';
+import { Card, CardHeader, CardContent, Table, type TableRow } from '../../ui';
 import ProseMirrorInsertWorkflow from './ProseMirrorInsertWorkflow';
+
+const IMMUTABLE_COMPLEXITY_COLUMNS = [
+  { key: 'operation', header: 'Operation' },
+  { key: 'complexity', header: 'Complexity' },
+];
+
+const IMMUTABLE_COMPLEXITY_ROWS: TableRow[] = [
+  {
+    operation: 'Insert / delete child',
+    complexity: 'O(depth)',
+    _cellClassNames: { complexity: 'good' },
+  },
+  {
+    operation: 'Resolve position',
+    complexity: 'O(depth)',
+    _cellClassNames: { complexity: 'medium' },
+  },
+  {
+    operation: 'Memory per update',
+    complexity: 'O(depth)',
+    _cellClassNames: { complexity: 'good' },
+  },
+  {
+    operation: 'Store undo state',
+    complexity: 'O(1) ref',
+    _cellClassNames: { complexity: 'good' },
+  },
+  {
+    operation: 'Index shifting',
+    complexity: 'No',
+    _cellClassNames: { complexity: 'good' },
+  },
+];
 
 export default function ProseMirrorImmutable() {
   return (
     <div className='immutable-tab'>
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>Persistent Data</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             <strong>Nodes are immutable values</strong> — like the number 3, you
             never change them in place; updates produce new values instead.{' '}
             <strong>Structural sharing</strong> reuses unchanged nodes by
             reference, so updates stay cheap.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>Structural Sharing</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             When you apply a transaction, Prosemirror creates a{' '}
             <strong>new</strong> document — but it doesn&apos;t copy everything.
@@ -45,14 +79,14 @@ export default function ProseMirrorImmutable() {
             the whole tree. Undo stays cheap too: old states share most nodes
             with the current state.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>What Gets Recreated</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             The <strong>changed node and all ancestors</strong> are new.{' '}
             <strong>Siblings</strong> of the changed node are reused (same
@@ -93,14 +127,14 @@ export default function ProseMirrorImmutable() {
               Paragraphs 1 and 3 are reused.
             </p>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>Old State vs New State</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Both states exist in memory. Green = <strong>same object</strong> in
             both. Orange = new allocation. The new state has a new{' '}
@@ -140,14 +174,14 @@ export default function ProseMirrorImmutable() {
             keeps old state cheap because it shares &quot;One&quot; and
             &quot;Three&quot; with current state.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>Animated Insert Workflow</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Like the &quot;Map with Child Array&quot; demo in NodeStructures,
             but aligned with Prosemirror&apos;s model:{' '}
@@ -156,63 +190,36 @@ export default function ProseMirrorImmutable() {
             the changed path; siblings stay shared.
           </p>
           <ProseMirrorInsertWorkflow />
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>Algorithm Complexity</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Prosemirror&apos;s immutable tree with structural sharing gives
             predictable complexity. New nodes are created only along the changed
             path.
           </p>
-          <div className='comparison-table-container'>
-            <table className='comparison-table'>
-              <thead>
-                <tr>
-                  <th>Operation</th>
-                  <th>Complexity</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Insert / delete child</td>
-                  <td className='good'>O(depth)</td>
-                </tr>
-                <tr>
-                  <td>Resolve position</td>
-                  <td className='medium'>O(depth)</td>
-                </tr>
-                <tr>
-                  <td>Memory per update</td>
-                  <td className='good'>O(depth)</td>
-                </tr>
-                <tr>
-                  <td>Store undo state</td>
-                  <td className='good'>O(1) ref</td>
-                </tr>
-                <tr>
-                  <td>Index shifting</td>
-                  <td className='good'>No</td>
-                </tr>
-              </tbody>
-            </table>
-            <p className='table-note'>
-              <code>depth</code> = tree depth (typically &lt; 20). Structural
-              sharing reuses siblings. Position-based model.
-            </p>
-          </div>
-        </div>
-      </div>
+          <Table
+            columns={IMMUTABLE_COMPLEXITY_COLUMNS}
+            rows={IMMUTABLE_COMPLEXITY_ROWS}
+            wrapperClassName='comparison-table-container'
+          />
+          <p className='table-note'>
+            <code>depth</code> = tree depth (typically &lt; 20). Structural
+            sharing reuses siblings. Position-based model.
+          </p>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h3>Why It Matters</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <ul className='structural-sharing-list'>
             <li>
               <strong>Performance</strong> — Updates allocate O(depth) new
@@ -227,8 +234,8 @@ export default function ProseMirrorImmutable() {
               coexist without copying the whole doc.
             </li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

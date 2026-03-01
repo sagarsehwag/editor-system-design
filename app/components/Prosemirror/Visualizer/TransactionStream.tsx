@@ -4,6 +4,7 @@ import React from 'react';
 import type { TransactionRecord } from './types';
 import { TransactionBubble } from './TransactionBubble';
 import { useHorizontalScroll } from './hooks/useHorizontalScroll';
+import { EmptyState } from '../../ui';
 
 type TransactionStreamProps = {
   transactions: TransactionRecord[];
@@ -36,9 +37,10 @@ export function TransactionStream({
         </div>
         <div ref={scrollRef} className='viz-tr-stream' onWheel={handleWheel}>
           {transactions.length === 0 ? (
-            <div className='viz-empty-state'>
-              Start typing to see transactions flow →
-            </div>
+            <EmptyState
+              message="Start typing to see transactions flow →"
+              className="viz-empty-state"
+            />
           ) : (
             transactions.map((tx) => (
               <TransactionBubble

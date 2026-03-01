@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
-import { CodeBlock } from '../../CodeBlock';
+import { CodeBlock, Button } from '../../ui';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -154,14 +154,14 @@ interface ProseMirrorNode {
 
       <div className="operation-demo">
         <h4>Insert &quot;x&quot; into p2 (after &quot;He&quot;)</h4>
-        <button
-          type="button"
-          className="btn btn-sm"
+        <Button
+          size="sm"
+          variant="secondary"
           onClick={runInsert}
           disabled={disabled}
         >
           ▶ Animate Insert
-        </button>
+        </Button>
         <div className="operation-steps">
           <div className={getStepClass(1)}>1. Create new text node &quot;x&quot;</div>
           <div className={getStepClass(2)}>2. New Fragment for p2 (replaceRange)</div>

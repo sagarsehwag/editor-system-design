@@ -1,6 +1,21 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import {
+  SectionHeader,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Badge,
+  Instructions,
+  ProsConsList,
+  Kbd,
+  Textarea,
+  Table,
+  type TableRow,
+} from '../../ui';
 
 function CanvasDemo() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -99,78 +114,139 @@ function FakeCursorDemo() {
   );
 }
 
+const COMPARISON_COLUMNS = [
+  { key: 'approach', header: 'Approach' },
+  { key: 'richFormatting', header: 'Rich Formatting' },
+  { key: 'cursors', header: 'Cursors' },
+  { key: 'implementation', header: 'Implementation' },
+  { key: 'usedBy', header: 'Used By' },
+];
+
+const COMPARISON_ROWS: TableRow[] = [
+  {
+    approach: <code>&lt;textarea&gt;</code>,
+    richFormatting: '❌ No',
+    cursors: '✅ Native',
+    implementation: 'Easy',
+    usedBy: 'Code editors, comments',
+    _cellClassNames: {
+      richFormatting: 'no',
+      cursors: 'yes',
+      implementation: 'easy',
+    },
+  },
+  {
+    approach: <code>DOM + Fake Cursor</code>,
+    richFormatting: '✅ Yes',
+    cursors: '⚙️ Custom',
+    implementation: 'High',
+    usedBy: 'Rarely used',
+    _cellClassNames: {
+      richFormatting: 'yes',
+      cursors: 'no',
+      implementation: 'hard',
+    },
+  },
+  {
+    approach: <code>contenteditable</code>,
+    richFormatting: '✅ Yes',
+    cursors: '✅ Native',
+    implementation: 'Moderate',
+    usedBy: 'Lexical, Slate, Gmail',
+    _rowClassName: 'highlight-row',
+    _cellClassNames: {
+      richFormatting: 'yes',
+      cursors: 'yes',
+      implementation: 'medium',
+    },
+  },
+  {
+    approach: <code>&lt;canvas&gt;</code>,
+    richFormatting: '✅ Custom',
+    cursors: '⚙️ Custom',
+    implementation: 'Very High',
+    usedBy: 'Google Docs',
+    _cellClassNames: {
+      richFormatting: 'yes',
+      cursors: 'no',
+      implementation: 'hard',
+    },
+  },
+];
+
 export default function RenderingApproaches() {
   return (
     <section id='rendering' className='demo-section active'>
-      <div className='demo-header'>
-        <h2>Rendering Approaches Comparison</h2>
-        <p className='demo-subtitle'>
-          4 ways to render editable text - each with trade-offs
-        </p>
-      </div>
+      <SectionHeader
+        title='Rendering Approaches Comparison'
+        subtitle='4 ways to render editable text - each with trade-offs'
+      />
 
-      <div className='demo-grid four-cols'>
+      <Grid cols={4}>
         {/* Textarea */}
-        <div className='demo-card'>
-          <div className='card-header'>
+        <Card>
+          <CardHeader>
             <h3>&lt;textarea&gt;</h3>
-            <span className='badge badge-red'>Plain Text Only</span>
-          </div>
-          <div className='card-content'>
-            <textarea
-              className='demo-textarea'
+            <Badge variant='red'>Plain Text Only</Badge>
+          </CardHeader>
+          <CardContent>
+            <Textarea
               placeholder='Try typing here...'
               defaultValue={'Hello World\nThis is a second line'}
             />
-            <div className='instructions'>
+            <Instructions>
               <p>
-                Try: Select text + <kbd>Ctrl</kbd>+<kbd>B</kbd>
+                Try: Select text + <Kbd>Ctrl</Kbd>+<Kbd>B</Kbd>
               </p>
               <p className='result'>
                 ❌ Nothing happens - no rich text support
               </p>
-            </div>
-          </div>
-          <div className='card-footer'>
-            <ul className='pros-cons'>
-              <li className='pro'>Multi-line support</li>
-              <li className='con'>No formatting</li>
-              <li className='pro'>Native cursor</li>
-            </ul>
-          </div>
-        </div>
+            </Instructions>
+          </CardContent>
+          <CardFooter>
+            <ProsConsList
+              items={[
+                { type: 'pro', text: 'Multi-line support' },
+                { type: 'con', text: 'No formatting' },
+                { type: 'pro', text: 'Native cursor' },
+              ]}
+            />
+          </CardFooter>
+        </Card>
 
         {/* DOM with Fake Cursors */}
-        <div className='demo-card'>
-          <div className='card-header'>
+        <Card>
+          <CardHeader>
             <h3>DOM + Fake Cursor</h3>
-            <span className='badge badge-orange'>Complex!</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant='orange'>Complex!</Badge>
+          </CardHeader>
+          <CardContent>
             <FakeCursorDemo />
-            <div className='instructions'>
+            <Instructions>
               <p>Click words to &quot;move&quot; cursor</p>
               <p className='result'>
                 ⚠️ Custom cursor positioning is very hard!
               </p>
-            </div>
-          </div>
-          <div className='card-footer'>
-            <ul className='pros-cons'>
-              <li className='pro'>Rich formatting</li>
-              <li className='con'>Custom cursor needed</li>
-              <li className='con'>Complex text measurement</li>
-            </ul>
-          </div>
-        </div>
+            </Instructions>
+          </CardContent>
+          <CardFooter>
+            <ProsConsList
+              items={[
+                { type: 'pro', text: 'Rich formatting' },
+                { type: 'con', text: 'Custom cursor needed' },
+                { type: 'con', text: 'Complex text measurement' },
+              ]}
+            />
+          </CardFooter>
+        </Card>
 
         {/* ContentEditable */}
-        <div className='demo-card featured'>
-          <div className='card-header'>
+        <Card variant='featured'>
+          <CardHeader>
             <h3>contenteditable</h3>
-            <span className='badge badge-green'>Rich Text!</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant='green'>Rich Text!</Badge>
+          </CardHeader>
+          <CardContent>
             <div
               className='demo-contenteditable'
               contentEditable
@@ -179,118 +255,74 @@ export default function RenderingApproaches() {
                 __html: 'Hello <strong>World</strong>',
               }}
             />
-            <div className='instructions'>
+            <Instructions>
               <p>
-                Try: Select text + <kbd>Ctrl</kbd>+<kbd>B</kbd>
+                Try: Select text + <Kbd>Ctrl</Kbd>+<Kbd>B</Kbd>
               </p>
               <p className='result'>
                 ✅ Text becomes bold! Inspect to see &lt;b&gt; tags
               </p>
-            </div>
-          </div>
-          <div className='card-footer'>
-            <ul className='pros-cons'>
-              <li className='pro'>Rich formatting</li>
-              <li className='pro'>Native cursor</li>
-              <li className='con'>Browser inconsistencies</li>
-            </ul>
-          </div>
-        </div>
+            </Instructions>
+          </CardContent>
+          <CardFooter>
+            <ProsConsList
+              items={[
+                { type: 'pro', text: 'Rich formatting' },
+                { type: 'pro', text: 'Native cursor' },
+                { type: 'con', text: 'Browser inconsistencies' },
+              ]}
+            />
+          </CardFooter>
+        </Card>
 
         {/* Canvas */}
-        <div className='demo-card'>
-          <div className='card-header'>
+        <Card>
+          <CardHeader>
             <h3>&lt;canvas&gt;</h3>
-            <span className='badge badge-purple'>Custom Everything</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant='purple'>Custom Everything</Badge>
+          </CardHeader>
+          <CardContent>
             <CanvasDemo />
-            <div className='instructions'>
+            <Instructions>
               <p>Inspect this element in DevTools</p>
               <p className='result'>
                 ⚠️ Screen readers can&apos;t access text inside!
               </p>
-            </div>
-          </div>
-          <div className='card-footer'>
-            <ul className='pros-cons'>
-              <li className='pro'>Full control</li>
-              <li className='con'>Custom cursor needed</li>
-              <li className='con'>Accessibility issues</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+            </Instructions>
+          </CardContent>
+          <CardFooter>
+            <ProsConsList
+              items={[
+                { type: 'pro', text: 'Full control' },
+                { type: 'con', text: 'Custom cursor needed' },
+                { type: 'con', text: 'Accessibility issues' },
+              ]}
+            />
+          </CardFooter>
+        </Card>
+      </Grid>
 
-      <div className='demo-card'>
-        <div className='card-header'>
+      <Card>
+        <CardHeader>
           <h3>📊 Feature Comparison</h3>
-        </div>
-        <div className='card-content'>
-          <table className='comparison-table'>
-            <thead>
-              <tr>
-                <th>Approach</th>
-                <th>Rich Formatting</th>
-                <th>Cursors</th>
-                <th>Implementation</th>
-                <th>Used By</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>&lt;textarea&gt;</code>
-                </td>
-                <td className='no'>❌ No</td>
-                <td className='yes'>✅ Native</td>
-                <td className='easy'>Easy</td>
-                <td>Code editors, comments</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>DOM + Fake Cursor</code>
-                </td>
-                <td className='yes'>✅ Yes</td>
-                <td className='no'>⚙️ Custom</td>
-                <td className='hard'>High</td>
-                <td>Rarely used</td>
-              </tr>
-              <tr className='highlight-row'>
-                <td>
-                  <code>contenteditable</code>
-                </td>
-                <td className='yes'>✅ Yes</td>
-                <td className='yes'>✅ Native</td>
-                <td className='medium'>Moderate</td>
-                <td>Lexical, Slate, Gmail</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>&lt;canvas&gt;</code>
-                </td>
-                <td className='yes'>✅ Custom</td>
-                <td className='no'>⚙️ Custom</td>
-                <td className='hard'>Very High</td>
-                <td>Google Docs</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+        </CardHeader>
+        <CardContent>
+          <Table columns={COMPARISON_COLUMNS} rows={COMPARISON_ROWS} />
+        </CardContent>
+      </Card>
 
-      <div className='demo-card insight'>
-        <div className='card-header'>
+      <Card variant='insight'>
+        <CardHeader>
           <h3>🎯 Key Insight</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             <strong>contenteditable</strong> is the sweet spot - you get native
             rich text support and cursor handling for free. That&apos;s why
             Lexical, Slate, Quill, and most editors use it!
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

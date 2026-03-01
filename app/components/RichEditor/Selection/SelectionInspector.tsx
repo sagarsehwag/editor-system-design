@@ -1,6 +1,17 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef } from 'react';
+import {
+  SectionHeader,
+  Card,
+  CardHeader,
+  CardContent,
+  Badge,
+  Button,
+  Grid,
+  KeyValueList,
+  Hint,
+} from '../../ui';
 
 function getNodeDescription(node: Node | null): string {
   if (!node) return 'null';
@@ -180,22 +191,29 @@ export default function SelectionInspector() {
     }
   };
 
+  const stateItems = [
+    { key: 'type', value: '"None"', valueRef: typeRef },
+    { key: 'anchorNode', value: 'null', valueRef: anchorNodeRef },
+    { key: 'anchorOffset', value: '0', valueRef: anchorOffsetRef },
+    { key: 'focusNode', value: 'null', valueRef: focusNodeRef },
+    { key: 'focusOffset', value: '0', valueRef: focusOffsetRef },
+    { key: 'isBackwards', value: 'false', valueRef: backwardsRef, highlight: true },
+  ];
+
   return (
     <section id='selection' className='demo-section active'>
-      <div className='demo-header'>
-        <h2>Selection Inspector</h2>
-        <p className='demo-subtitle'>
-          Real-time visualization of the browser&apos;s Selection object
-        </p>
-      </div>
+      <SectionHeader
+        title="Selection Inspector"
+        subtitle="Real-time visualization of the browser's Selection object"
+      />
 
-      <div className='demo-grid two-cols'>
-        <div className='demo-card large'>
-          <div className='card-header'>
+      <Grid cols={2}>
+        <Card variant="large">
+          <CardHeader>
             <h3>Select Text Here</h3>
-            <span className='badge badge-blue'>Click and drag</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant="blue">Click and drag</Badge>
+          </CardHeader>
+          <CardContent>
             <div
               id='selection-editor'
               ref={editorRef}
@@ -204,75 +222,32 @@ export default function SelectionInspector() {
               suppressContentEditableWarning
             />
             <div className='selection-actions'>
-              <button
-                className='btn btn-secondary'
-                onClick={handleBackwardsSelection}
-              >
+              <Button variant="secondary" onClick={handleBackwardsSelection}>
                 Demo Backwards Selection
-              </button>
-              <button
-                className='btn btn-secondary'
-                onClick={handleCrossNodeSelection}
-              >
+              </Button>
+              <Button variant="secondary" onClick={handleCrossNodeSelection}>
                 Demo Cross-Node Selection
-              </button>
+              </Button>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        <div className='demo-card large'>
-          <div className='card-header'>
+        <Card variant="large">
+          <CardHeader>
             <h3>Selection Object State</h3>
-            <span className='badge badge-green live-badge'>LIVE</span>
-          </div>
-          <div className='card-content'>
-            <div className='state-display'>
-              <div className='state-row'>
-                <span className='state-label'>type:</span>
-                <span className='state-value' ref={typeRef}>
-                  &quot;None&quot;
-                </span>
-              </div>
-              <div className='state-row'>
-                <span className='state-label'>anchorNode:</span>
-                <span className='state-value' ref={anchorNodeRef}>
-                  null
-                </span>
-              </div>
-              <div className='state-row'>
-                <span className='state-label'>anchorOffset:</span>
-                <span className='state-value' ref={anchorOffsetRef}>
-                  0
-                </span>
-              </div>
-              <div className='state-row'>
-                <span className='state-label'>focusNode:</span>
-                <span className='state-value' ref={focusNodeRef}>
-                  null
-                </span>
-              </div>
-              <div className='state-row'>
-                <span className='state-label'>focusOffset:</span>
-                <span className='state-value' ref={focusOffsetRef}>
-                  0
-                </span>
-              </div>
-              <div className='state-row highlight'>
-                <span className='state-label'>isBackwards:</span>
-                <span className='state-value' ref={backwardsRef}>
-                  false
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <Badge variant="green" live>LIVE</Badge>
+          </CardHeader>
+          <CardContent>
+            <KeyValueList items={stateItems} />
+          </CardContent>
+        </Card>
+      </Grid>
 
-      <div className='demo-card'>
-        <div className='card-header'>
+      <Card>
+        <CardHeader>
           <h3>📐 Selection Direction Matters!</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <div className='direction-demo'>
             <div className='direction-example'>
               <h4>Forward Selection (Left → Right)</h4>
@@ -293,22 +268,22 @@ export default function SelectionInspector() {
               <p>Shift + → shrinks selection!</p>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card insight'>
-        <div className='card-header'>
+      <Card variant="insight">
+        <CardHeader>
           <h3>🎯 Why This Matters</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>Rich text editors need to:</p>
           <ul>
             <li>Track selection to know WHERE to apply formatting</li>
             <li>Handle backwards selection for proper keyboard navigation</li>
             <li>Map browser selection to their internal state model</li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

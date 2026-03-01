@@ -1,6 +1,13 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
+import {
+  SectionHeader,
+  Card,
+  CardHeader,
+  CardContent,
+  Button,
+} from '../../ui';
 
 interface StepState {
   activeStep: number | null;
@@ -115,29 +122,27 @@ export default function UpdateLoop() {
 
   return (
     <section id='update-loop' className='demo-section active'>
-      <div className='demo-header'>
-        <h2>Update Loop &amp; Reconciliation</h2>
-        <p className='demo-subtitle'>
-          How editors efficiently update the DOM (like React&apos;s Virtual DOM)
-        </p>
-      </div>
+      <SectionHeader
+        title='Update Loop &amp; Reconciliation'
+        subtitle="How editors efficiently update the DOM (like React's Virtual DOM)"
+      />
 
-      <div className='demo-card update-loop-container'>
-        <div className='card-header'>
+      <Card className='update-loop-container'>
+        <CardHeader>
           <h3>Update Loop Animation</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <div className='update-loop-controls'>
-            <button
-              className='btn btn-primary'
+            <Button
+              variant='primary'
               onClick={runAnimation}
               disabled={isRunning}
             >
               {buttonText}
-            </button>
-            <button className='btn btn-secondary' onClick={resetAnimation}>
+            </Button>
+            <Button variant='secondary' onClick={resetAnimation}>
               ↺ Reset
-            </button>
+            </Button>
             <span className='speed-control'>
               <label>Speed:</label>
               <input
@@ -277,14 +282,14 @@ export default function UpdateLoop() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card insight'>
-        <div className='card-header'>
+      <Card variant='insight'>
+        <CardHeader>
           <h3>🎯 Just Like React!</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>This update flow is exactly how React&apos;s Virtual DOM works:</p>
           <ul>
             <li>
@@ -304,8 +309,8 @@ export default function UpdateLoop() {
             Lexical implements its own DOM reconciliation that&apos;s
             independent of React!
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

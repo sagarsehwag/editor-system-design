@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CodeBlock } from '../../CodeBlock';
+import { CodeBlock, Card, CardHeader, CardContent } from '../../ui';
 
 type ViewSubTab = 'overview' | 'decorations';
 
@@ -29,11 +29,11 @@ export default function ProseMirrorView() {
 
       {activeSubTab === 'overview' && (
         <>
-          <div className='demo-card prosemirror-section view-intro'>
-            <div className='card-header'>
+          <Card className='prosemirror-section view-intro'>
+            <CardHeader>
               <h3>What is the View?</h3>
-            </div>
-            <div className='card-content'>
+            </CardHeader>
+            <CardContent>
               <p>
                 The <strong>EditorView</strong> is the UI layer. It reads{' '}
                 <code>state.doc</code> and renders it to the DOM, handles user
@@ -46,13 +46,13 @@ export default function ProseMirrorView() {
                 The view subscribes to state updates and re-renders when state
                 changes.
               </p>
-            </div>
-          </div>
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
+            </CardContent>
+          </Card>
+          <Card className='prosemirror-section'>
+            <CardHeader>
               <h4>State → View → Dispatch</h4>
-            </div>
-            <div className='card-content'>
+            </CardHeader>
+            <CardContent>
               <p>
                 The view reads state to render. When the user types or selects,
                 the view creates a transaction and calls{' '}
@@ -73,14 +73,14 @@ export default function ProseMirrorView() {
                   <span className='view-flow-box'>New State</span>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
+          <Card className='prosemirror-section'>
+            <CardHeader>
               <h4>Key Responsibilities</h4>
-            </div>
-            <div className='card-content'>
+            </CardHeader>
+            <CardContent>
               <ul className='view-responsibilities-list'>
                 <li>
                   <strong>Rendering</strong> — Converts <code>state.doc</code>{' '}
@@ -100,14 +100,14 @@ export default function ProseMirrorView() {
                   the view.
                 </li>
               </ul>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
+          <Card className='prosemirror-section'>
+            <CardHeader>
               <h4>Creating a View</h4>
-            </div>
-            <div className='card-content'>
+            </CardHeader>
+            <CardContent>
               <div className='code-snippet'>
                 <CodeBlock
                   code={`const view = new EditorView(document.querySelector("#editor"), {
@@ -125,17 +125,17 @@ export default function ProseMirrorView() {
                 <code>useEditorEffect</code> or a ref) to create the view and
                 wire <code>dispatchTransaction</code> to your state setter.
               </p>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </>
       )}
 
       {activeSubTab === 'decorations' && (
-        <div className='demo-card prosemirror-section view-decorations'>
-          <div className='card-header'>
+        <Card className='prosemirror-section view-decorations'>
+          <CardHeader>
             <h3>Decorations</h3>
-          </div>
-          <div className='card-content'>
+          </CardHeader>
+          <CardContent>
             <p>
               <strong>Decorations</strong> are visual overlays the view renders
               on top of the document without changing its content. They&apos;re
@@ -191,8 +191,8 @@ const plugin = new Plugin({
               <code>DecorationSet.map(tr.mapping)</code> updates positions when
               the doc changes.
             </p>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

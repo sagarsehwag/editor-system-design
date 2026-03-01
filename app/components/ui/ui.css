@@ -1,0 +1,280 @@
+/* ============================================================
+   Design System — JSON Highlight & Diff (ds-*)
+   ============================================================ */
+
+.ds-json-key {
+  color: var(--accent-purple);
+}
+.ds-json-string {
+  color: var(--accent-green);
+}
+.ds-json-number {
+  color: var(--accent-orange);
+}
+.ds-json-bool {
+  color: var(--accent-blue);
+}
+.ds-json-null {
+  color: var(--text-muted);
+}
+
+.ds-json-pre {
+  background: var(--code-bg);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: #a0a0a0;
+  font-family: 'JetBrains Mono', monospace;
+  overflow: auto;
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.ds-json-inline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+}
+
+/* Diff layout */
+.ds-diff-view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: 1fr;
+  gap: var(--gap-md);
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ds-diff-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ds-diff-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--gap-sm);
+  flex-shrink: 0;
+}
+
+.ds-diff-col.ds-diff-before .ds-diff-label {
+  color: color-mix(in srgb, var(--accent-orange) 90%, transparent);
+}
+.ds-diff-col.ds-diff-after .ds-diff-label {
+  color: color-mix(in srgb, var(--accent-green) 90%, transparent);
+}
+
+.ds-diff-pre {
+  margin: 0;
+  padding: var(--gap-sm) var(--gap-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  overflow: auto;
+  flex: 1;
+  min-height: 180px;
+  background: var(--code-bg);
+  color: var(--text-secondary);
+  width: 100%;
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.ds-diff-col.ds-diff-before .ds-diff-pre {
+  border: 1px solid color-mix(in srgb, var(--accent-orange) 30%, transparent);
+}
+.ds-diff-col.ds-diff-after .ds-diff-pre {
+  border: 1px solid color-mix(in srgb, var(--accent-green) 30%, transparent);
+}
+
+.ds-diff-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.ds-diff-removed {
+  background: var(--diff-removed-bg);
+  color: var(--diff-removed-color);
+}
+.ds-diff-added {
+  background: var(--diff-added-bg);
+  color: var(--diff-added-color);
+}
+.ds-diff-unchanged {
+  color: var(--text-secondary);
+}
+.ds-diff-empty {
+  background: color-mix(in srgb, var(--shadow-color) 20%, transparent);
+  min-height: 1.5em;
+}
+
+/* Icon button — circular, icon-only */
+.ds-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ds-icon-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.ds-icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Size variants */
+.ds-icon-btn-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.ds-icon-btn-sm svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ds-icon-btn-lg {
+  width: 52px;
+  height: 52px;
+}
+
+.ds-icon-btn-lg svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Style variants */
+.ds-icon-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.ds-icon-btn-ghost:hover {
+  background: var(--bg-hover);
+  border-color: transparent;
+}
+
+.ds-icon-btn-outline {
+  background: transparent;
+}
+
+.ds-icon-btn-outline:hover {
+  background: var(--bg-hover);
+}
+
+/* Overlay — backdrop for modals/drawers */
+.ds-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 90;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: dsOverlayFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dsOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Panel header */
+.ds-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  padding: var(--gap-sm) var(--gap-md);
+}
+
+.ds-panel-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+}
+
+.ds-panel-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.ds-panel-count {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+/* Collapsible */
+.ds-collapsible {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--gap-md);
+}
+
+.ds-collapsible-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-primary);
+  list-style: none;
+}
+
+.ds-collapsible-summary::-webkit-details-marker,
+.ds-collapsible-summary::marker {
+  display: none;
+}
+
+.ds-collapsible-summary::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.ds-collapsible[open] .ds-collapsible-summary::before {
+  transform: rotate(90deg);
+}
+
+.ds-collapsible-content {
+  margin-top: var(--gap-md);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* Empty state */
+.ds-empty-state {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: var(--gap-md) 0;
+}

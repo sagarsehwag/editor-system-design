@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { EditorMount } from './EditorMount';
+import { EditorMount } from '../../ui';
 
 type FlowEditorPanelProps = {
   onEditorReady: (container: HTMLDivElement) => (() => void) | void;
@@ -26,7 +26,11 @@ export function FlowEditorPanel({
         <div className="pm-flow-editor-header">
           <span className="pm-flow-editor-label">EditorView</span>
         </div>
-        <EditorMount onReady={onEditorReady} />
+        <EditorMount
+          onReady={onEditorReady}
+          className="pm-flow-editor pm-flow-editor-prosemirror"
+          style={{ minHeight: 80 }}
+        />
       </div>
       {children}
     </div>

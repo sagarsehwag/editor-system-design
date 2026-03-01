@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Toolbar } from './Toolbar';
-import { EditorMount } from './EditorMount';
+import { EditorMount } from '../../ui';
 import { useFlash } from './hooks/useFlash';
 
 type EditorPaneProps = {
@@ -26,7 +26,7 @@ export function EditorPane({ onEditorReady, onCommand, activeMarks, snapshotHtml
       </div>
       <Toolbar onCommand={onCommand} activeMarks={activeMarks} disabled={isSnapshot} />
       <div className="viz-editor-body">
-        <EditorMount onReady={onEditorReady} />
+        <EditorMount onReady={onEditorReady} className="viz-editor-mount" />
         {isSnapshot && (
           <div
             className="viz-editor-snapshot"

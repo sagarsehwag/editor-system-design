@@ -606,7 +606,8 @@
   overflow: hidden;
 }
 
-.pm-flow-data-diff-wrapper .pm-flow-diff-view {
+.pm-flow-data-diff-wrapper .pm-flow-diff-view,
+.pm-flow-data-diff-wrapper .ds-diff-view {
   flex: 1;
   min-height: 0;
 }

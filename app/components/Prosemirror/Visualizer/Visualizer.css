@@ -897,7 +897,8 @@ button.viz-hdr-chip {
   min-height: 0;
   overflow-y: auto;
 }
-.viz-tr-panel-json .viz-json-pre {
+.viz-tr-panel-json .viz-json-pre,
+.viz-tr-panel-json .ds-json-pre {
   border-radius: var(--radius-sm);
   height: 100%;
   margin: 0;

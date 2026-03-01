@@ -1,29 +1,29 @@
 'use client';
 
 import React from 'react';
-import { CodeBlock } from '../../CodeBlock';
+import { CodeBlock, Card, CardHeader, CardContent } from '../../ui';
 
 export default function ProseMirrorSchema() {
   return (
     <div className='schema-tab'>
-      <div className='demo-card prosemirror-section schema-intro'>
-        <div className='card-header'>
+      <Card className='prosemirror-section schema-intro'>
+        <CardHeader>
           <h3>Model</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Every Prosemirror document conforms to a <strong>schema</strong>. It
             defines which node types exist, what they can contain, and which
             marks are allowed. Invalid content is discarded.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Example Document First</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Here&apos;s what a Prosemirror document actually looks like — the
             real data shape. We&apos;ll explain how the schema defines and
@@ -62,14 +62,14 @@ export default function ProseMirrorSchema() {
             blocks (paragraph, blockquote). Paragraphs contain inline content
             (text with optional marks). The schema defines these rules.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>The Schema That Allows It</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             This schema defines the rules. Every document like the one above
             must conform to it.
@@ -94,14 +94,14 @@ export default function ProseMirrorSchema() {
 });`}
             />
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>How It Works</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Each node type has a <strong>rule</strong> that says what it can
             contain. When you add or paste content, Prosemirror checks: does
@@ -181,14 +181,14 @@ export default function ProseMirrorSchema() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Content Expression Syntax</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             The <code>content</code> field uses a regex-like syntax to specify
             valid child sequences.
@@ -227,14 +227,14 @@ export default function ProseMirrorSchema() {
               <span>1 to 5 blocks</span>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Node Groups</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Add <code>group: &quot;block&quot;</code> to node specs. Use{' '}
             <code>block+</code> in content expressions instead of listing types.
@@ -257,14 +257,14 @@ export default function ProseMirrorSchema() {
               <span className='group-member'>horizontal_rule</span>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Marks: Per-Node Control</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             By default, nodes with inline content allow <strong>all</strong>{' '}
             marks. But some nodes shouldn&apos;t — headings often stay plain,
@@ -305,14 +305,14 @@ code_block: { content: "text*", group: "block", marks: "" }`}
             Invalid marks are stripped during transforms — e.g. pasting
             formatted text into a <code>code_block</code> loses the formatting.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section schema-takeaways'>
-        <div className='card-header'>
+      <Card className='prosemirror-section schema-takeaways'>
+        <CardHeader>
           <h4>What you should know</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <ul className='schema-learn-list'>
             <li>
               <strong>Content expressions</strong> — Regex-like: <code>+</code>{' '}
@@ -341,8 +341,8 @@ code_block: { content: "text*", group: "block", marks: "" }`}
               State is never parsed from the DOM.
             </li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

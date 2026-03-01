@@ -2,6 +2,7 @@
 
 import React from 'react';
 import type { ProseMirrorProps, ProseMirrorTab } from './types';
+import { SectionHeader } from '../ui';
 import ProseMirrorOverview from './Overview/ProseMirrorOverview';
 import ProseMirrorSchema from './Schema/ProseMirrorSchema';
 import ProseMirrorState from './State/ProseMirrorState';
@@ -68,10 +69,7 @@ export default function ProseMirror({ activeTab }: ProseMirrorProps) {
 
   return (
     <section id="prosemirror" className="demo-section active">
-      <div className="demo-header">
-        <h2>{title}</h2>
-        <p className="demo-subtitle">{subtitle}</p>
-      </div>
+      <SectionHeader title={title} subtitle={subtitle} />
 
       {show('overview') && <ProseMirrorOverview />}
       {show('schema') && <ProseMirrorSchema />}

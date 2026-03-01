@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { IconButton, BoldIcon, ItalicIcon, UndoIcon, RedoIcon } from '../../ui';
 
 type ToolbarProps = {
   onCommand: (cmd: 'bold' | 'italic' | 'undo' | 'redo') => void;
@@ -11,38 +12,42 @@ type ToolbarProps = {
 export function Toolbar({ onCommand, activeMarks, disabled }: ToolbarProps) {
   return (
     <div className="viz-toolbar">
-      <button
+      <IconButton
+        aria-label="Bold (Cmd+B)"
+        title="Bold (Cmd+B)"
         className={`viz-toolbar-btn ${activeMarks.includes('strong') ? 'active' : ''}`}
         onClick={() => onCommand('bold')}
-        title="Bold (Cmd+B)"
         disabled={disabled}
       >
-        <b>B</b>
-      </button>
-      <button
+        <BoldIcon size={16} />
+      </IconButton>
+      <IconButton
+        aria-label="Italic (Cmd+I)"
+        title="Italic (Cmd+I)"
         className={`viz-toolbar-btn ${activeMarks.includes('em') ? 'active' : ''}`}
         onClick={() => onCommand('italic')}
-        title="Italic (Cmd+I)"
         disabled={disabled}
       >
-        <i>I</i>
-      </button>
-      <button
+        <ItalicIcon size={16} />
+      </IconButton>
+      <IconButton
+        aria-label="Undo (Cmd+Z)"
+        title="Undo (Cmd+Z)"
         className="viz-toolbar-btn wide"
         onClick={() => onCommand('undo')}
-        title="Undo (Cmd+Z)"
         disabled={disabled}
       >
-        ↩
-      </button>
-      <button
+        <UndoIcon size={16} />
+      </IconButton>
+      <IconButton
+        aria-label="Redo (Cmd+Shift+Z)"
+        title="Redo (Cmd+Shift+Z)"
         className="viz-toolbar-btn wide"
         onClick={() => onCommand('redo')}
-        title="Redo (Cmd+Shift+Z)"
         disabled={disabled}
       >
-        ↪
-      </button>
+        <RedoIcon size={16} />
+      </IconButton>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
-import { CodeBlock } from '../../CodeBlock';
+import { CodeBlock, Card, CardHeader, CardContent, Button } from '../../ui';
 
 export default function ProseMirrorTransactions() {
   const [txStepState, setTxStepState] = useState<{
@@ -94,16 +94,16 @@ export default function ProseMirrorTransactions() {
 
   return (
     <div className='transactions-tab'>
-      <div className='demo-card prosemirror-section transactions-intro'>
-        <div className='card-header'>
+      <Card className='prosemirror-section transactions-intro'>
+        <CardHeader>
           <h3>What is a Transform?</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             A <strong>Transform</strong> is a sequence of steps applied to a
             document. A <strong>Transaction</strong> extends it with selection,
-            storedMarks, and metadata — it&apos;s the full unit of change you
-            create and apply. You never mutate state directly; you create a
+            stored marks, and metadata. It is the full unit of change you create
+            and apply. You never mutate state directly; instead, you create a
             transaction and apply it.
           </p>
           <div className='transactions-hierarchy'>
@@ -126,14 +126,14 @@ export default function ProseMirrorTransactions() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>The Update Loop</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             When the user types or pastes, the view creates a transaction,
             applies it to state, and re-renders. This flow is the core of every
@@ -141,16 +141,16 @@ export default function ProseMirrorTransactions() {
           </p>
           <div className='update-loop-container'>
             <div className='update-loop-controls'>
-              <button
-                className='btn btn-primary'
+              <Button
+                variant='primary'
                 onClick={txRunAnimation}
                 disabled={isRunning}
               >
                 {txButtonText}
-              </button>
-              <button className='btn btn-secondary' onClick={txReset}>
+              </Button>
+              <Button variant='secondary' onClick={txReset}>
                 ↺ Reset
-              </button>
+              </Button>
               <span className='speed-control'>
                 <label>Speed:</label>
                 <input
@@ -204,14 +204,14 @@ export default function ProseMirrorTransactions() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Common Step Types</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Steps describe low-level document changes. The most common is{' '}
             <code>ReplaceStep</code>, which can insert, delete, or replace
@@ -244,14 +244,14 @@ export default function ProseMirrorTransactions() {
               <p>Remove mark from range</p>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Creating Transactions</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Use <code>state.tr</code> (short for{' '}
             <code>Transaction.create(state)</code>) to create a transaction.
@@ -273,14 +273,14 @@ const newState = state.apply(tr);`}
             <code>delete</code>, <code>setSelection</code>,{' '}
             <code>setStoredMarks</code>, and more.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>What&apos;s in a Transaction</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             A transaction carries steps (document changes) plus metadata.
             Plugins read and extend it via <code>tr.getMeta()</code> and{' '}
@@ -328,14 +328,14 @@ const newState = state.apply(tr);`}
               </span>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Applying Transactions</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             <code>state.apply(tr)</code> returns a new EditorState. The
             view&apos;s <code>dispatchTransaction</code> callback receives every
@@ -355,8 +355,8 @@ const newState = state.apply(tr);`}
             inverse steps) and <strong>collaborative editing</strong> (steps can
             be sent over the wire and applied remotely).
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

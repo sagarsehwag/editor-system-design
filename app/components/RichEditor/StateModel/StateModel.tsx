@@ -1,6 +1,16 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  SectionHeader,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  Toolbar,
+  ToolbarButton,
+  Badge,
+} from '../../ui';
 
 interface TextNode {
   type: 'text';
@@ -177,42 +187,40 @@ export default function StateModel() {
 
   return (
     <section id='state' className='demo-section active'>
-      <div className='demo-header'>
-        <h2>State Model &amp; Formatting</h2>
-        <p className='demo-subtitle'>
-          How editors represent content internally (not as raw HTML)
-        </p>
-      </div>
+      <SectionHeader
+        title='State Model &amp; Formatting'
+        subtitle='How editors represent content internally (not as raw HTML)'
+      />
 
-      <div className='demo-grid two-cols'>
-        <div className='demo-card large'>
-          <div className='card-header'>
+      <Grid cols={2}>
+        <Card variant='large'>
+          <CardHeader>
             <h3>Editor (Type here)</h3>
-            <div className='toolbar'>
-              <button
-                className={`toolbar-btn ${boldActive ? 'active' : ''}`}
+            <Toolbar>
+              <ToolbarButton
+                active={boldActive}
                 title='Bold'
                 onClick={handleBold}
               >
                 B
-              </button>
-              <button
-                className={`toolbar-btn ${italicActive ? 'active' : ''}`}
+              </ToolbarButton>
+              <ToolbarButton
+                active={italicActive}
                 title='Italic'
                 onClick={handleItalic}
               >
                 <em>I</em>
-              </button>
-              <button
-                className={`toolbar-btn ${underlineActive ? 'active' : ''}`}
+              </ToolbarButton>
+              <ToolbarButton
+                active={underlineActive}
                 title='Underline'
                 onClick={handleUnderline}
               >
                 <u>U</u>
-              </button>
-            </div>
-          </div>
-          <div className='card-content'>
+              </ToolbarButton>
+            </Toolbar>
+          </CardHeader>
+          <CardContent>
             <div
               ref={editorRef}
               className='demo-contenteditable large'
@@ -223,27 +231,29 @@ export default function StateModel() {
             >
               Hello World
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        <div className='demo-card large'>
-          <div className='card-header'>
+        <Card variant='large'>
+          <CardHeader>
             <h3>Internal State Model</h3>
-            <span className='badge badge-green live-badge'>LIVE</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant='green' live>
+              LIVE
+            </Badge>
+          </CardHeader>
+          <CardContent>
             <pre className='code-output json'>
               <code dangerouslySetInnerHTML={{ __html: stateHtml }} />
             </pre>
-          </div>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
+      </Grid>
 
-      <div className='demo-card'>
-        <div className='card-header'>
+      <Card>
+        <CardHeader>
           <h3>🎨 How Formatting Works</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <div className='format-example'>
             <p>
               For the text: <strong>Tarzan</strong>{' '}
@@ -278,14 +288,14 @@ export default function StateModel() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card'>
-        <div className='card-header'>
+      <Card>
+        <CardHeader>
           <h3>🌳 Node Tree Structure</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <div className='tree'>
             <div className='tree-node root'>
               <span>Root</span>
@@ -310,14 +320,14 @@ export default function StateModel() {
             <span className='legend-item element'>Element Node</span>
             <span className='legend-item text'>Text Node (leaf)</span>
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card insight'>
-        <div className='card-header'>
+      <Card variant='insight'>
+        <CardHeader>
           <h3>🎯 Why Use a Custom State Model?</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <ul>
             <li>
               <strong>Portability:</strong> Same data can render on web, mobile,
@@ -338,8 +348,8 @@ export default function StateModel() {
               corrupt your source of truth
             </li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

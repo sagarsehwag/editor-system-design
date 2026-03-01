@@ -2,9 +2,7 @@
 
 import React from 'react';
 import type { TransactionEntry } from './types';
-import { JsonHighlight } from './JsonHighlight';
-import { DocDiffView } from './DocDiffView';
-import { DomDiffView } from './DomDiffView';
+import { JsonHighlight, DocDiffView, DomDiffView } from '../../ui';
 type DataPanelContentProps = {
   selectedTx: TransactionEntry | null;
   activeStep: number | null;

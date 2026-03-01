@@ -1,21 +1,21 @@
 'use client';
 
 import React from 'react';
-import { CodeBlock } from '../../CodeBlock';
+import { CodeBlock, Card, CardHeader, CardContent } from '../../ui';
 
 export default function ProseMirrorState() {
   return (
     <div className='state-tab'>
-      <div className='demo-card prosemirror-section state-intro'>
-        <div className='card-header'>
+      <Card className='prosemirror-section state-intro'>
+        <CardHeader>
           <h3>What is EditorState?</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             <strong>EditorState</strong> is the single source of truth for the
-            document, selection, stored marks, schema, and plugin state.
-            It&apos;s immutable — you never mutate it; you create a new state by
-            applying a transaction.
+            document, selection, stored marks, schema, and plugin state. It is
+            immutable: you never mutate it directly. Instead, you create a new
+            state by applying a transaction.
           </p>
           <div className='state-intro-tagline'>
             Everything the editor displays comes from state.
@@ -52,14 +52,14 @@ export default function ProseMirrorState() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>How State Changes</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Updates are never in-place. You create a transaction (steps) and
             apply it. That returns a new EditorState — the old one is unchanged.
@@ -95,14 +95,14 @@ const newState = state.apply(tr);
             can chain steps on (<code>tr.insertText()</code>,{' '}
             <code>tr.delete()</code>, etc.).
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Creating State</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             To bootstrap an editor, use <code>EditorState.create()</code>. You
             need a schema and (optionally) an initial document. Plugins and
@@ -122,14 +122,14 @@ const newState = state.apply(tr);
             <code>plugins</code> add history, keybindings, and more — see
             Plugins tab.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Built-in Fields</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Every EditorState has these core fields. <code>doc</code> and{' '}
             <code>selection</code> are the ones you use most; plugins extend
@@ -222,14 +222,14 @@ const newState = state.apply(tr);
               </p>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Plugin State</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Each plugin can store its own state. Access it via{' '}
             <code>state.pluginState(plugin)</code> or{' '}
@@ -246,14 +246,14 @@ const newState = state.apply(tr);
             Plugin state is immutable too. Plugins return new state from their{' '}
             <code>apply</code> function.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>storedMarks</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             When the cursor is inside formatted text (e.g. bold),{' '}
             <code>storedMarks</code> holds those marks. The next character you
@@ -284,8 +284,8 @@ const newState = state.apply(tr);
               </p>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -2,23 +2,25 @@
 
 import React, { useEffect, useRef } from 'react';
 
+type EditorMountProps = {
+  onReady: (container: HTMLDivElement) => (() => void) | void;
+  className?: string;
+  style?: React.CSSProperties;
+};
+
 export const EditorMount = React.memo(function EditorMount({
   onReady,
-}: {
-  onReady: (container: HTMLDivElement) => (() => void) | void;
-}) {
+  className = '',
+  style,
+}: EditorMountProps) {
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const cleanup = onReady(el);
     return () => cleanup?.();
   }, [onReady]);
-  return (
-    <div
-      ref={ref}
-      className="pm-flow-editor pm-flow-editor-prosemirror"
-      style={{ minHeight: 80 }}
-    />
-  );
+
+  return <div ref={ref} className={className} style={style} />;
 });

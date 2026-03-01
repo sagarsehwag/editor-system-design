@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Card, CardHeader, CardContent, Button } from '../../ui';
 import { POSITION_TOOLTIPS, getProseMirrorPosition } from '../utils';
 
 const POSITION_TOKENS = [
@@ -118,11 +119,11 @@ export default function ProseMirrorPositions() {
 
       {activeSubTab === 'positions' && (
         <>
-          <div className='demo-card prosemirror-section positions-intro'>
-            <div className='card-header'>
+          <Card className='prosemirror-section positions-intro'>
+            <CardHeader>
               <h3>Positions: Integer Offsets</h3>
-            </div>
-            <div className='card-content'>
+            </CardHeader>
+            <CardContent>
               <p>
                 A document position is an integer — the index in a flat{' '}
                 <strong>token sequence</strong>. Selection, transforms, and
@@ -181,14 +182,14 @@ export default function ProseMirrorPositions() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+        </CardContent>
+      </Card>
 
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
-              <h4>How We Count to 14</h4>
-            </div>
-            <div className='card-content'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
+          <h4>How We Count to 14</h4>
+        </CardHeader>
+        <CardContent>
               <div className='position-count-table-wrapper'>
                 <table className='position-count-table'>
                   <thead>
@@ -309,14 +310,14 @@ export default function ProseMirrorPositions() {
                   character = 1 token. Leaf nodes = 1 token.
                 </p>
               </div>
-            </div>
-          </div>
+        </CardContent>
+      </Card>
 
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
-              <h4>ResolvedPos</h4>
-            </div>
-            <div className='card-content'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
+          <h4>ResolvedPos</h4>
+        </CardHeader>
+        <CardContent>
               <p>
                 <code>doc.resolve(pos)</code> returns a <code>ResolvedPos</code>{' '}
                 with context: parent node, offset into parent, ancestors,{' '}
@@ -448,14 +449,14 @@ export default function ProseMirrorPositions() {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
+        </CardContent>
+      </Card>
 
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
-              <h4>Ranges (from, to)</h4>
-            </div>
-            <div className='card-content'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
+          <h4>Ranges (from, to)</h4>
+        </CardHeader>
+        <CardContent>
               <p>
                 A range is a pair of positions. <code>to</code> is exclusive —
                 the content between <code>from</code> and <code>to</code>{' '}
@@ -497,14 +498,14 @@ export default function ProseMirrorPositions() {
                   <code>&lt;p&gt;</code> <code>T</code> <code>w</code>
                 </p>
               </div>
-            </div>
-          </div>
+        </CardContent>
+      </Card>
 
-          <div className='demo-card prosemirror-section'>
-            <div className='card-header'>
-              <h4>Slice</h4>
-            </div>
-            <div className='card-content'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
+          <h4>Slice</h4>
+        </CardHeader>
+        <CardContent>
               <p>
                 <code>doc.slice(from, to)</code> cuts a slice of the document —
                 the content between two positions. Used for copy-paste and
@@ -552,17 +553,17 @@ export default function ProseMirrorPositions() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+          </CardContent>
+        </Card>
         </>
       )}
 
       {activeSubTab === 'selection' && (
-        <div className='demo-card prosemirror-section'>
-          <div className='card-header'>
+        <Card className='prosemirror-section'>
+          <CardHeader>
             <h3>Selection</h3>
-          </div>
-          <div className='card-content'>
+          </CardHeader>
+          <CardContent>
             <p>
               Selections have <strong>anchor</strong> (unmoveable) and{' '}
               <strong>head</strong> (moveable) — both are positions pointing
@@ -571,24 +572,27 @@ export default function ProseMirrorPositions() {
               max(anchor, head).
             </p>
             <div className='selection-demo-controls'>
-              <button
-                className={`btn btn-sm ${selectionExample === 'cursor' ? 'btn-primary' : 'btn-secondary'}`}
+              <Button
+                variant={selectionExample === 'cursor' ? 'primary' : 'secondary'}
+                size='sm'
                 onClick={() => setSelectionExample('cursor')}
               >
                 Cursor at 5
-              </button>
-              <button
-                className={`btn btn-sm ${selectionExample === 'forward' ? 'btn-primary' : 'btn-secondary'}`}
+              </Button>
+              <Button
+                variant={selectionExample === 'forward' ? 'primary' : 'secondary'}
+                size='sm'
                 onClick={() => setSelectionExample('forward')}
               >
                 Select 3→8
-              </button>
-              <button
-                className={`btn btn-sm ${selectionExample === 'backward' ? 'btn-primary' : 'btn-secondary'}`}
+              </Button>
+              <Button
+                variant={selectionExample === 'backward' ? 'primary' : 'secondary'}
+                size='sm'
                 onClick={() => setSelectionExample('backward')}
               >
                 Select 8→3
-              </button>
+              </Button>
             </div>
             <div className='pm-selection-visual'>
               <div className='pm-selection-unified'>
@@ -690,8 +694,8 @@ export default function ProseMirrorPositions() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

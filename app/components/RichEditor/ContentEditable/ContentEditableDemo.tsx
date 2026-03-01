@@ -1,6 +1,18 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Badge,
+  ShortcutGrid,
+  Kbd,
+  Hint,
+  Button,
+  SectionHeader,
+  Grid,
+} from '../../ui';
 
 function escapeHTML(html: string): string {
   return html
@@ -55,23 +67,27 @@ export default function ContentEditableDemo() {
     }
   };
 
+  const shortcuts = [
+    { keys: <><Kbd>Ctrl</Kbd>+<Kbd>B</Kbd></>, label: 'Bold' },
+    { keys: <><Kbd>Ctrl</Kbd>+<Kbd>I</Kbd></>, label: 'Italic' },
+    { keys: <><Kbd>Ctrl</Kbd>+<Kbd>U</Kbd></>, label: 'Underline' },
+    { keys: <><Kbd>Ctrl</Kbd>+<Kbd>Z</Kbd></>, label: 'Undo' },
+  ];
+
   return (
     <section id='contenteditable' className='demo-section active'>
-      <div className='demo-header'>
-        <h2>ContentEditable Deep Dive</h2>
-        <p className='demo-subtitle'>
-          Understanding the HTML attribute that powers rich text editing
-        </p>
-      </div>
+      <SectionHeader
+        title="ContentEditable Deep Dive"
+        subtitle="Understanding the HTML attribute that powers rich text editing"
+      />
 
-      <div className='demo-grid two-cols'>
-        {/* Native Formatting */}
-        <div className='demo-card large'>
-          <div className='card-header'>
+      <Grid cols={2}>
+        <Card variant="large">
+          <CardHeader>
             <h3>Native Formatting Shortcuts</h3>
-            <span className='badge badge-green'>Try These!</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant="green">Try These!</Badge>
+          </CardHeader>
+          <CardContent>
             <div
               id='format-editor'
               ref={formatEditorRef}
@@ -84,59 +100,30 @@ export default function ContentEditableDemo() {
               Type here and try the keyboard shortcuts below to format your
               text. Select some text first!
             </div>
-            <div className='shortcut-grid'>
-              <div className='shortcut'>
-                <span>
-                  <kbd>Ctrl</kbd>+<kbd>B</kbd>
-                </span>
-                <span>Bold</span>
-              </div>
-              <div className='shortcut'>
-                <span>
-                  <kbd>Ctrl</kbd>+<kbd>I</kbd>
-                </span>
-                <span>Italic</span>
-              </div>
-              <div className='shortcut'>
-                <span>
-                  <kbd>Ctrl</kbd>+<kbd>U</kbd>
-                </span>
-                <span>Underline</span>
-              </div>
-              <div className='shortcut'>
-                <span>
-                  <kbd>Ctrl</kbd>+<kbd>Z</kbd>
-                </span>
-                <span>Undo</span>
-              </div>
-            </div>
-          </div>
-        </div>
+            <ShortcutGrid shortcuts={shortcuts} />
+          </CardContent>
+        </Card>
 
-        {/* DOM Output */}
-        <div className='demo-card large'>
-          <div className='card-header'>
+        <Card variant="large">
+          <CardHeader>
             <h3>Live DOM Output</h3>
-            <span className='badge badge-blue'>Updates in Real-time</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant="blue">Updates in Real-time</Badge>
+          </CardHeader>
+          <CardContent>
             <pre className='code-output'>
               <code dangerouslySetInnerHTML={{ __html: domOutput }} />
             </pre>
-            <p className='hint'>
-              Watch how the DOM changes as you format text ↑
-            </p>
-          </div>
-        </div>
-      </div>
+            <Hint>Watch how the DOM changes as you format text ↑</Hint>
+          </CardContent>
+        </Card>
+      </Grid>
 
-      <div className='demo-grid two-cols'>
-        {/* Text Nodes Explanation */}
-        <div className='demo-card'>
-          <div className='card-header'>
+      <Grid cols={2}>
+        <Card>
+          <CardHeader>
             <h3>🧩 Understanding Text Nodes</h3>
-          </div>
-          <div className='card-content'>
+          </CardHeader>
+          <CardContent>
             <div className='text-node-demo'>
               <p>How many DOM nodes in this HTML?</p>
               <pre className='code-small'>
@@ -144,12 +131,9 @@ export default function ContentEditableDemo() {
                   &lt;p&gt;Hello &lt;strong&gt;World&lt;/strong&gt;&lt;/p&gt;
                 </code>
               </pre>
-              <button
-                className='btn btn-primary'
-                onClick={() => setShowAnswer(!showAnswer)}
-              >
+              <Button onClick={() => setShowAnswer(!showAnswer)}>
                 {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-              </button>
+              </Button>
               <div className={`answer ${showAnswer ? '' : 'hidden'}`}>
                 <p>
                   <strong>4 nodes!</strong>
@@ -168,21 +152,20 @@ export default function ContentEditableDemo() {
                     <code>Text</code> node: &quot;World&quot;
                   </li>
                 </ol>
-                <p className='hint'>
+                <Hint>
                   Text is always in Text nodes - they&apos;re invisible in
                   DevTools by default!
-                </p>
+                </Hint>
               </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        {/* Cursor Demo */}
-        <div className='demo-card'>
-          <div className='card-header'>
+        <Card>
+          <CardHeader>
             <h3>📍 Cursor Behavior</h3>
-          </div>
-          <div className='card-content'>
+          </CardHeader>
+          <CardContent>
             <div className='cursor-demo-area'>
               <div
                 contentEditable
@@ -194,18 +177,16 @@ export default function ContentEditableDemo() {
                 }}
               />
             </div>
-            <p className='hint'>
-              Notice how the cursor height automatically matches the text size!
-            </p>
-          </div>
-        </div>
-      </div>
+            <Hint>Notice how the cursor height automatically matches the text size!</Hint>
+          </CardContent>
+        </Card>
+      </Grid>
 
-      <div className='demo-card insight'>
-        <div className='card-header'>
+      <Card variant="insight">
+        <CardHeader>
           <h3>⚠️ The Catch with ContentEditable</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <ul>
             <li>
               <strong>Browser inconsistencies:</strong> Chrome and Safari may
@@ -224,8 +205,8 @@ export default function ContentEditableDemo() {
             That&apos;s why editors like Lexical intercept events and maintain
             their own state model! →
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

@@ -1,17 +1,17 @@
 'use client';
 
 import React from 'react';
-import { CodeBlock } from '../../CodeBlock';
+import { CodeBlock, Card, CardHeader, CardContent } from '../../ui';
 
 export default function ProseMirrorPlugins() {
   return (
     <div className='plugins-tab'>
       {/* 1. Intro */}
-      <div className='demo-card prosemirror-section plugins-intro'>
-        <div className='card-header'>
+      <Card className='prosemirror-section plugins-intro'>
+        <CardHeader>
           <h3>What is a Plugin?</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             <strong>Plugins</strong> extend ProseMirror with custom state,
             props, and behavior. They hook into the editor lifecycle: filter
@@ -21,15 +21,15 @@ export default function ProseMirrorPlugins() {
           <div className='plugins-intro-tagline'>
             History, keymap, input rules, and collab are all plugins.
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* 2. Plugin Spec — one section, one example */}
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Plugin Spec</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             A plugin is <code>new Plugin(spec)</code>. The spec defines how it
             participates in the editor lifecycle.
@@ -76,15 +76,15 @@ export default function ProseMirrorPlugins() {
               />
             </div>
           </details>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* 3. Common Plugins */}
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Common Plugins</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             ProseMirror ships with core plugins. Import from{' '}
             <code>prosemirror-history</code>, <code>prosemirror-keymap</code>,
@@ -120,15 +120,15 @@ export default function ProseMirrorPlugins() {
               </span>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* 4. Commands */}
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Commands</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             <strong>Commands</strong> are functions{' '}
             <code>(state, dispatch, view) → boolean</code>. They read state,
@@ -153,15 +153,15 @@ keymap({ "Mod-b": boldCommand });`}
             Mac, <code>Ctrl</code> elsewhere. <code>undo</code> and{' '}
             <code>redo</code> from history are commands.
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
       {/* 5. Wiring it up */}
-      <div className='demo-card prosemirror-section'>
-        <div className='card-header'>
+      <Card className='prosemirror-section'>
+        <CardHeader>
           <h4>Creating an Editor with Plugins</h4>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <p>
             Pass plugins when creating state. Order can matter — e.g. history
             should receive transactions before other plugins that might filter
@@ -183,8 +183,8 @@ const state = EditorState.create({
 });`}
             />
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

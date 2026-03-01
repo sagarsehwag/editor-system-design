@@ -4,9 +4,7 @@ import React from 'react';
 import type { TransactionRecord } from './types';
 import { describeTransaction } from './utils';
 import { StepChips } from './StepChips';
-import { JsonHighlight } from './JsonHighlight';
-import { DocDiffView } from './DocDiffView';
-import { DomDiffView } from './DomDiffView';
+import { JsonHighlight, DocDiffView, DomDiffView } from '../../ui';
 import { useFlash } from './hooks/useFlash';
 import { LIFECYCLE_STEPS } from './constants';
 

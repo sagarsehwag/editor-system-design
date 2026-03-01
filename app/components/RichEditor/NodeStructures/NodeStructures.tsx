@@ -1,6 +1,17 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
+import {
+  SectionHeader,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  Badge,
+  Button,
+  Table,
+  type TableRow,
+} from '../../ui';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -216,6 +227,51 @@ export default function NodeStructures() {
     setLinkedDisabled(false);
   }, []);
 
+  const COMPARISON_COLUMNS = [
+    { key: 'operation', header: 'Operation' },
+    { key: 'array', header: 'Array' },
+    { key: 'linkedList', header: 'Linked List' },
+    { key: 'winner', header: 'Winner' },
+  ];
+
+  const COMPARISON_ROWS: TableRow[] = [
+    {
+      operation: 'Access node by key',
+      array: 'O(1)',
+      linkedList: 'O(1)',
+      winner: '🤝 Tie',
+      _cellClassNames: { array: 'good', linkedList: 'good' },
+    },
+    {
+      operation: 'Insert/Delete child',
+      array: 'O(n)',
+      linkedList: 'O(1)',
+      winner: '🔗 Linked',
+      _cellClassNames: { array: 'bad', linkedList: 'good' },
+    },
+    {
+      operation: 'Get children count',
+      array: 'O(1)',
+      linkedList: 'O(n)*',
+      winner: '📚 Array',
+      _cellClassNames: { array: 'good', linkedList: 'bad' },
+    },
+    {
+      operation: 'Clone state',
+      array: 'O(1) shallow',
+      linkedList: 'O(1) shallow',
+      winner: '🤝 Tie',
+      _cellClassNames: { array: 'good', linkedList: 'good' },
+    },
+    {
+      operation: 'Reparent node',
+      array: 'O(n)',
+      linkedList: 'O(1)',
+      winner: '🔗 Linked',
+      _cellClassNames: { array: 'bad', linkedList: 'good' },
+    },
+  ];
+
   const getOpStepClass = (
     stepStates: Record<number, string>,
     step: number,
@@ -230,21 +286,19 @@ export default function NodeStructures() {
 
   return (
     <section id='node-structures' className='demo-section active'>
-      <div className='demo-header'>
-        <h2>Node Data Structures</h2>
-        <p className='demo-subtitle'>
-          Comparing Map + Array vs Map + Linked List approaches
-        </p>
-      </div>
+      <SectionHeader
+        title='Node Data Structures'
+        subtitle='Comparing Map + Array vs Map + Linked List approaches'
+      />
 
-      <div className='structure-comparison'>
+      <Grid cols={2} className='structure-comparison'>
         {/* Array Approach */}
-        <div className='demo-card' id='array-structure'>
-          <div className='card-header'>
+        <Card id='array-structure'>
+          <CardHeader>
             <h3>📚 Map with Child Array</h3>
-            <span className='badge badge-blue'>Draft.js, Slate.js</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant='blue'>Draft.js, Slate.js</Badge>
+          </CardHeader>
+          <CardContent>
             <div className='code-snippet'>
               <pre>
                 <code>{`interface ElementNode {
@@ -319,13 +373,14 @@ export default function NodeStructures() {
 
             <div className='operation-demo'>
               <h4>Insert Node Operation</h4>
-              <button
-                className='btn btn-sm'
+              <Button
+                size='sm'
+                variant='secondary'
                 onClick={runArrayInsert}
                 disabled={arrayDisabled}
               >
                 ▶ Animate Insert
-              </button>
+              </Button>
               <div className='operation-steps' id='array-steps'>
                 <div
                   className={getOpStepClass(arrayStepStates, 1)}
@@ -354,16 +409,16 @@ export default function NodeStructures() {
                 <span className='bad'>O(n)</span> - Array splice shifts elements
               </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Linked List Approach */}
-        <div className='demo-card' id='linked-structure'>
-          <div className='card-header'>
+        <Card id='linked-structure'>
+          <CardHeader>
             <h3>🔗 Map with Linked List</h3>
-            <span className='badge badge-green'>Lexical</span>
-          </div>
-          <div className='card-content'>
+            <Badge variant='green'>Lexical</Badge>
+          </CardHeader>
+          <CardContent>
             <div className='code-snippet'>
               <pre>
                 <code>{`interface EditorNode {
@@ -422,13 +477,14 @@ interface ElementNode {
 
             <div className='operation-demo'>
               <h4>Insert Node Operation</h4>
-              <button
-                className='btn btn-sm btn-green'
+              <Button
+                size='sm'
+                variant='green'
                 onClick={runLinkedInsert}
                 disabled={linkedDisabled}
               >
                 ▶ Animate Insert
-              </button>
+              </Button>
               <div className='operation-steps' id='linked-steps'>
                 <div
                   className={getOpStepClass(linkedStepStates, 1)}
@@ -463,68 +519,27 @@ interface ElementNode {
                 <span className='good'>O(1)</span> - Just update pointers
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
+      </Grid>
 
-      <div className='demo-card'>
-        <div className='card-header'>
+      <Card>
+        <CardHeader>
           <h3>📊 Comparison</h3>
-        </div>
-        <div className='card-content'>
-          <table className='comparison-table'>
-            <thead>
-              <tr>
-                <th>Operation</th>
-                <th>Array</th>
-                <th>Linked List</th>
-                <th>Winner</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Access node by key</td>
-                <td className='good'>O(1)</td>
-                <td className='good'>O(1)</td>
-                <td>🤝 Tie</td>
-              </tr>
-              <tr>
-                <td>Insert/Delete child</td>
-                <td className='bad'>O(n)</td>
-                <td className='good'>O(1)</td>
-                <td>🔗 Linked</td>
-              </tr>
-              <tr>
-                <td>Get children count</td>
-                <td className='good'>O(1)</td>
-                <td className='bad'>O(n)*</td>
-                <td>📚 Array</td>
-              </tr>
-              <tr>
-                <td>Clone state</td>
-                <td className='good'>O(1) shallow</td>
-                <td className='good'>O(1) shallow</td>
-                <td>🤝 Tie</td>
-              </tr>
-              <tr>
-                <td>Reparent node</td>
-                <td className='bad'>O(n)</td>
-                <td className='good'>O(1)</td>
-                <td>🔗 Linked</td>
-              </tr>
-            </tbody>
-          </table>
+        </CardHeader>
+        <CardContent>
+          <Table columns={COMPARISON_COLUMNS} rows={COMPARISON_ROWS} />
           <p className='table-note'>
             * Can be mitigated with cached size field
           </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      <div className='demo-card insight'>
-        <div className='card-header'>
+      <Card variant='insight'>
+        <CardHeader>
           <h3>🎯 Why Lexical Uses Linked Lists</h3>
-        </div>
-        <div className='card-content'>
+        </CardHeader>
+        <CardContent>
           <ul>
             <li>
               <strong>Rich text editing = frequent inserts/deletes</strong> -
@@ -542,8 +557,8 @@ interface ElementNode {
               changes
             </li>
           </ul>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

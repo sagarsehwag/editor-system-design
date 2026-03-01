@@ -25,6 +25,23 @@
     --transition-normal: 250ms ease;
     --transition-slow: 400ms ease;
 
+    /* Typography */
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-size-xs: 0.65rem;
+    --font-size-sm: 0.8rem;
+    --font-size-md: 0.9rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.1rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 2rem;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.6;
+    --line-height-relaxed: 1.75;
+
     /* Accent colors (same in both themes) */
     --accent-blue: #3b82f6;
     --accent-green: #22c55e;
@@ -1524,6 +1541,11 @@ kbd {
 .toolbar-btn.active {
     background: var(--accent-blue);
     border-color: var(--accent-blue);
+}
+
+.toolbar-btn-wide {
+    width: auto;
+    padding: 0 var(--gap-sm);
 }
 
 /* ========================================
