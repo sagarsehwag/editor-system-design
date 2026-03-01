@@ -149,7 +149,7 @@ li.ProseMirror-selectednode::after {
 
 .sidebar {
     width: var(--sidebar-width);
-    background: var(--bg-secondary);
+    background: var(--bg-card);
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
@@ -159,7 +159,12 @@ li.ProseMirror-selectednode::after {
     left: 0;
     top: 0;
     z-index: 100;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+[data-theme="dark"] .sidebar {
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Desktop: collapsed = icons only, expanded = full */
@@ -244,10 +249,34 @@ li.ProseMirror-selectednode::after {
     .sidebar.sidebar-collapsed .nav-section-header {
         justify-content: center;
         padding: 0.75rem;
+        margin: 0;
+        border-radius: 0;
+        height: 44px;
+        min-height: 44px;
+        box-sizing: border-box;
     }
 
     .sidebar.sidebar-collapsed .nav-section-header span:not(.nav-icon) {
         display: none;
+    }
+
+    .sidebar.sidebar-collapsed .nav-section-header .nav-icon {
+        font-size: 1.25rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar.sidebar-collapsed .nav-section-header .nav-icon-img img {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    .sidebar.sidebar-collapsed .nav-item {
+        margin: 0;
+        border-radius: 0;
     }
 
     .sidebar.sidebar-collapsed .nav-sublist {
@@ -266,6 +295,7 @@ li.ProseMirror-selectednode::after {
     align-items: flex-start;
     justify-content: space-between;
     gap: var(--gap-md);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent-purple) 4%, transparent) 0%, transparent 100%);
 }
 
 .sidebar-header-content {
@@ -275,23 +305,25 @@ li.ProseMirror-selectednode::after {
 
 .sidebar-collapse-btn {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-tertiary);
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
     color: var(--text-secondary);
     cursor: pointer;
     font-size: 1rem;
+    box-shadow: var(--shadow-sm);
     transition: all var(--transition-fast);
 }
 
 .sidebar-collapse-btn:hover {
     background: var(--bg-hover);
     color: var(--text-primary);
+    box-shadow: var(--shadow-md);
 }
 
 @media (max-width: 768px) {
@@ -321,10 +353,12 @@ li.ProseMirror-selectednode::after {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.875rem 1.5rem;
+    padding: 0.75rem 1.25rem;
+    margin: 0 0.5rem;
+    border-radius: var(--radius-md);
     cursor: pointer;
     color: var(--text-secondary);
-    transition: all var(--transition-fast);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border-left: 3px solid transparent;
 }
 
@@ -334,9 +368,9 @@ li.ProseMirror-selectednode::after {
 }
 
 .nav-item.active {
-    background: color-mix(in srgb, var(--accent-blue) 10%, transparent);
-    color: var(--accent-blue);
-    border-left-color: var(--accent-blue);
+    background: color-mix(in srgb, var(--accent-purple) 12%, transparent);
+    color: var(--accent-purple);
+    border-left-color: var(--accent-purple);
 }
 
 .nav-icon {
@@ -383,7 +417,9 @@ li.ProseMirror-selectednode::after {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.875rem 1.5rem;
+    padding: 0.875rem 1.25rem;
+    margin: 0 0.5rem;
+    border-radius: var(--radius-md);
     color: var(--text-secondary);
     text-decoration: none;
     transition: all var(--transition-fast);
@@ -396,9 +432,9 @@ li.ProseMirror-selectednode::after {
 }
 
 .nav-section-header.active {
-    background: color-mix(in srgb, var(--accent-blue) 8%, transparent);
-    color: var(--accent-blue);
-    border-left-color: var(--accent-blue);
+    background: color-mix(in srgb, var(--accent-purple) 10%, transparent);
+    color: var(--accent-purple);
+    border-left-color: var(--accent-purple);
 }
 
 .nav-sublist {
@@ -441,8 +477,9 @@ li.ProseMirror-selectednode::after {
 }
 
 .nav-sublist .nav-item.active {
-    background: color-mix(in srgb, var(--accent-blue) 15%, transparent);
-    color: var(--accent-blue);
+    background: color-mix(in srgb, var(--accent-purple) 15%, transparent);
+    color: var(--accent-purple);
+    border-left-color: var(--accent-purple);
 }
 
 .nav-sublist .nav-item.active .nav-link {
@@ -457,7 +494,7 @@ li.ProseMirror-selectednode::after {
     transform: translateY(-50%);
     width: 3px;
     height: 1rem;
-    background: var(--accent-blue);
+    background: var(--accent-purple);
     border-radius: 0 2px 2px 0;
 }
 
@@ -505,11 +542,11 @@ li.ProseMirror-selectednode::after {
 
 .floating-theme-toggle {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    top: 1rem;
+    right: 1rem;
     z-index: 10000;
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -541,35 +578,42 @@ li.ProseMirror-selectednode::after {
     z-index: 200;
     width: 44px;
     height: 44px;
-    background: var(--bg-secondary);
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
+    border-radius: 50%;
+    color: var(--text-primary);
     cursor: pointer;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 6px;
     padding: 0;
-    transition: background var(--transition-fast);
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-toggle:active {
+    transform: scale(0.96);
 }
 
 .sidebar-toggle:hover {
     background: var(--bg-hover);
+    box-shadow: var(--shadow-lg);
 }
 
 .hamburger-line {
     display: block;
-    width: 22px;
+    width: 20px;
     height: 2px;
-    background: var(--text-primary);
+    background: currentColor;
     border-radius: 2px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
     transform-origin: center;
 }
 
 /* Animate hamburger to X when open */
 .sidebar-toggle.open .hamburger-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
 }
 
 .sidebar-toggle.open .hamburger-line:nth-child(2) {
@@ -578,7 +622,7 @@ li.ProseMirror-selectednode::after {
 }
 
 .sidebar-toggle.open .hamburger-line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 /* ========================================
@@ -591,8 +635,9 @@ li.ProseMirror-selectednode::after {
     inset: 0;
     background: var(--overlay-bg);
     z-index: 90;
-    backdrop-filter: blur(2px);
-    animation: overlayFadeIn 0.3s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: overlayFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes overlayFadeIn {
@@ -785,12 +830,27 @@ li.ProseMirror-selectednode::after {
 
     .sidebar.sidebar-open {
         transform: translateX(0);
-        box-shadow: none;
+        box-shadow: 8px 0 24px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="dark"] .sidebar.sidebar-open {
+        box-shadow: 8px 0 24px rgba(0, 0, 0, 0.4);
     }
 
     .sidebar-header {
-        padding: 1.5rem;
-        padding-top: 4.5rem;
+        padding: 1rem 1.5rem 1.5rem;
+        padding-left: calc(1rem + 44px + 0.5rem);
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .sidebar-header .sidebar-header-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .sidebar-header .subtitle {
+        margin-top: 0.15rem;
     }
 
     /* -- Content Area (mobile only) -- */
