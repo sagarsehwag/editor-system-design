@@ -743,17 +743,19 @@ li.ProseMirror-selectednode::after {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    background: var(--accent-blue);
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
     color: #fff;
     font-weight: 600;
     font-size: 0.95rem;
     border-radius: var(--radius-md);
     text-decoration: none;
-    transition: background var(--transition-fast);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-purple) 35%, transparent);
+    transition: all var(--transition-fast);
 }
 
 .next-button:hover {
-    background: color-mix(in srgb, var(--accent-blue) 85%, black);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent-purple) 90%, white), color-mix(in srgb, var(--accent-blue) 90%, white));
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent-purple) 45%, transparent);
 }
 
 .next-button-arrow {
