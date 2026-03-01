@@ -309,8 +309,8 @@ button.viz-hdr-chip {
   padding: 0 var(--gap-md);
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--accent-purple) 20%, transparent) 0%,
-    color-mix(in srgb, var(--accent-purple) 6%, transparent) 70%,
+    color-mix(in srgb, var(--accent-purple) 35%, transparent) 0%,
+    color-mix(in srgb, var(--accent-purple) 12%, transparent) 70%,
     transparent 100%
   );
   border-bottom: 1px solid var(--border-color);
@@ -682,8 +682,8 @@ button.viz-hdr-chip {
   padding: 0 var(--gap-md);
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--accent-green) 20%, transparent) 0%,
-    color-mix(in srgb, var(--accent-green) 6%, transparent) 70%,
+    color-mix(in srgb, var(--accent-green) 35%, transparent) 0%,
+    color-mix(in srgb, var(--accent-green) 12%, transparent) 70%,
     transparent 100%
   );
   border-bottom: 1px solid var(--border-color);
@@ -812,8 +812,8 @@ button.viz-hdr-chip {
   flex-shrink: 0;
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--accent-blue) 20%, transparent) 0%,
-    color-mix(in srgb, var(--accent-blue) 6%, transparent) 70%,
+    color-mix(in srgb, var(--accent-blue) 35%, transparent) 0%,
+    color-mix(in srgb, var(--accent-blue) 12%, transparent) 70%,
     transparent 100%
   );
   border-bottom: 1px solid var(--border-color);
@@ -1199,14 +1199,14 @@ button.viz-hdr-chip {
 }
 
 .viz-json-pre {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
+  background: var(--code-bg);
+  border: none;
   border-radius: var(--radius-md);
   padding: 1rem;
   font-size: 0.75rem;
   line-height: 1.5;
   white-space: pre-wrap;
-  color: var(--text-secondary);
+  color: #a0a0a0;
   font-family: 'JetBrains Mono', monospace;
   overflow: auto;
   margin: 0;
@@ -1267,6 +1267,8 @@ button.viz-hdr-chip {
   overflow: auto;
   flex: 1;
   min-height: 180px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
   width: 100%;
   background: var(--code-bg);
   border-radius: var(--radius-sm);
@@ -1336,8 +1338,8 @@ button.viz-hdr-chip {
   padding: 0 var(--gap-md);
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--accent-orange) 20%, transparent) 0%,
-    color-mix(in srgb, var(--accent-orange) 6%, transparent) 70%,
+    color-mix(in srgb, var(--accent-orange) 35%, transparent) 0%,
+    color-mix(in srgb, var(--accent-orange) 12%, transparent) 70%,
     transparent 100%
   );
   border-bottom: 1px solid var(--border-color);
@@ -1384,21 +1386,12 @@ button.viz-hdr-chip {
   flex: 1;
   min-height: 0;
   align-items: center;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .viz-tr-stream::-webkit-scrollbar {
-  height: 8px;
-}
-.viz-tr-stream::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-}
-.viz-tr-stream::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 4px;
-}
-.viz-tr-stream::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  display: none;
 }
 
 .viz-empty-state {
@@ -1412,6 +1405,7 @@ button.viz-hdr-chip {
 .viz-tr-card {
   flex-shrink: 0;
   width: 140px;
+  height: 120px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -1609,6 +1603,15 @@ button.viz-hdr-chip {
     overflow: visible;
   }
 
+  .viz-header-row {
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+  .viz-header-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
   .viz-header {
     padding: var(--gap-md);
   }
@@ -1687,20 +1690,6 @@ button.viz-hdr-chip {
    Responsive: Small mobile (480px)
    ============================================================ */
 @media (max-width: 480px) {
-  .viz-title {
-    font-size: 0.85rem;
-  }
-  .viz-subtitle {
-    font-size: 0.72rem;
-  }
-  .viz-header-row {
-    flex-wrap: wrap;
-    gap: var(--gap-sm);
-  }
-  .viz-header-controls {
-    width: 100%;
-    justify-content: flex-end;
-  }
 
   .viz-lc-card {
     flex: 0 0 100%;

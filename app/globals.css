@@ -618,6 +618,49 @@ li.ProseMirror-selectednode::after {
    Page wrappers: consistent gap above Next button
    ======================================== */
 
+.try-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100vw;
+    overflow-x: hidden;
+    padding: var(--gap-lg);
+    background: var(--bg-primary);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.try-page .viz-root {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    height: auto;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.try-page .viz-inspector {
+    max-height: none;
+}
+
+.try-page .viz-main {
+    height: auto;
+}
+
+.try-page .viz-hdr-chip-fullscreen {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .try-page {
+        padding: var(--gap-sm);
+    }
+
+    .try-page .viz-root {
+        border-radius: var(--radius-md);
+    }
+}
+
 .prosemirror-page,
 .rich-text-editor-page {
     padding-bottom: var(--gap-md);
