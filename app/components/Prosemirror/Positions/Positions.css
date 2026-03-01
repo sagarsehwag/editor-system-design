@@ -66,13 +66,13 @@
   border-radius: var(--radius-sm);
 }
 
+/* Removed top border & padding because schema-takeaways is wrapped in a Card */
 .schema-takeaways {
-  border-top: 1px solid var(--border-color);
-  padding-top: var(--gap-lg);
+  margin-top: var(--gap-lg);
 }
 
 .schema-takeaways h4 {
-  margin-bottom: var(--gap-md);
+  margin-bottom: 0;
 }
 
 .schema-learn-list {

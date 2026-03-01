@@ -609,6 +609,33 @@ li.ProseMirror-selectednode::after {
     box-shadow: var(--shadow-lg);
 }
 
+.floating-back-link {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10000;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: var(--font-size-2sm);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+}
+
+.floating-back-link:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+    box-shadow: var(--shadow-lg);
+}
+
 /* ========================================
    Sidebar Toggle (Hamburger) Button
    ======================================== */
@@ -722,7 +749,7 @@ li.ProseMirror-selectednode::after {
     min-height: 100dvh;
     width: 100vw;
     overflow-x: hidden;
-    padding: var(--gap-lg);
+    padding: 5rem var(--gap-lg) var(--gap-lg);
     background: var(--bg-primary);
     box-sizing: border-box;
     display: flex;
@@ -752,7 +779,7 @@ li.ProseMirror-selectednode::after {
 
 @media (max-width: 768px) {
     .try-page {
-        padding: var(--gap-sm);
+        padding: 5rem var(--gap-sm) var(--gap-sm);
     }
 
     .try-page .viz-root {
@@ -813,7 +840,7 @@ li.ProseMirror-selectednode::after {
     }
 }
 
-/* Tablet: center-aligned, slightly larger */
+/* Tablet: full-width, smaller */
 @media (max-width: 1024px) {
     .next-button-wrapper {
         display: flex;
@@ -823,14 +850,19 @@ li.ProseMirror-selectednode::after {
     }
 
     .next-button {
-        padding: 0.875rem 1.5rem;
-        font-size: var(--font-size-base);
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 0.6rem 1rem;
+        font-size: var(--font-size-2sm);
     }
 }
 
-/* Mobile: full-width, larger tap target */
+/* Mobile: full-width, compact */
 @media (max-width: 768px) {
     .next-button-wrapper {
+        display: flex;
+        justify-content: center;
         margin-top: var(--gap-sm);
         padding-top: var(--gap-sm);
     }
@@ -839,13 +871,13 @@ li.ProseMirror-selectednode::after {
         display: flex;
         justify-content: center;
         width: 100%;
-        min-height: 48px;
-        padding: 0.875rem 1.5rem;
-        font-size: var(--font-size-base);
+        min-height: auto;
+        padding: 0.5rem 1rem;
+        font-size: var(--font-size-sm);
     }
 
     .next-button-arrow {
-        font-size: var(--font-size-2lg);
+        font-size: var(--font-size-md);
     }
 }
 

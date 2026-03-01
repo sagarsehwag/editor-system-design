@@ -25,7 +25,7 @@ export function Header({
   return (
     <header className="viz-header">
       <h3 className="viz-title">
-        Prose<span className="viz-title-accent">Mirror</span> Data Flow
+        Prose<span className="viz-title-accent">Mirror</span> Visualizer
       </h3>
       <div className="viz-header-controls">
         {isLive ? (

@@ -47,9 +47,7 @@ export default function ProseMirrorVisualizer() {
         onToggleFullscreen={() => setFullscreen((f) => !f)}
       />
       <p className='viz-subtitle'>
-        Every edit follows the same cycle: a DOM event is intercepted by the
-        EditorView, translated into a Transaction, applied to produce a new
-        immutable EditorState, and rendered back to the DOM.
+        This interactive tool visualizes how ProseMirror works internally, inspired by the official data flow diagram: every edit follows a consistent cycle where a DOM event is intercepted by the EditorView, converted into a Transaction, applied to produce a new immutable EditorState, and finally rendered back to the DOM.
       </p>
       <div className='viz-main'>
         <EditorPane
