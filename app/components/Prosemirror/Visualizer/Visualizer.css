@@ -1642,7 +1642,7 @@ button.viz-hdr-chip {
   }
 
   .viz-tr-log {
-    padding: var(--gap-sm) var(--gap-md);
+    padding: var(--gap-sm) var(--gap-md) var(--gap-lg);
   }
 
   .viz-tr-card {
