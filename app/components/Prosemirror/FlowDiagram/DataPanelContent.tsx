@@ -1,22 +1,22 @@
 'use client';
 
 import React from 'react';
-import type { TransactionEntry, LiveState } from './types';
+import type { TransactionEntry } from './types';
 import { JsonHighlight } from './JsonHighlight';
 import { DocDiffView } from './DocDiffView';
 import { DomDiffView } from './DomDiffView';
-import { LiveStateView } from './LiveStateView';
-
 type DataPanelContentProps = {
   selectedTx: TransactionEntry | null;
   activeStep: number | null;
-  liveState: LiveState;
 };
 
-export function DataPanelContent({ selectedTx, activeStep, liveState }: DataPanelContentProps) {
-  // No transaction yet — show live EditorState
+export function DataPanelContent({ selectedTx, activeStep }: DataPanelContentProps) {
   if (!selectedTx) {
-    return <LiveStateView liveState={liveState} />;
+    return (
+      <p className="pm-flow-data-placeholder">
+        Type in the editor to see the flow. Hover steps to inspect data.
+      </p>
+    );
   }
 
   if (activeStep === 0 && selectedTx.lastDomEvent) {
@@ -67,6 +67,7 @@ export function DataPanelContent({ selectedTx, activeStep, liveState }: DataPane
     );
   }
 
-  // Fallback when no step is hovered but a tx is selected — show live state
-  return <LiveStateView liveState={liveState} />;
+  return (
+    <p className="pm-flow-data-placeholder">Hover steps to inspect data.</p>
+  );
 }

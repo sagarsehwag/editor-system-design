@@ -2,26 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { startTransition } from 'react';
-import type { TransactionEntry, LiveState } from '../types';
+import type { TransactionEntry } from '../types';
 import { STEPS, FLASH_DURATION_MS, STATE_APPLY_DURATION_MS, MAX_TRANSACTIONS } from '../constants';
-
-const DEFAULT_LIVE_STATE: LiveState = {
-  charCount: 0,
-  nodeCount: 1,
-  version: 0,
-  hasMarks: false,
-  selType: 'Caret',
-  selCollapsed: true,
-  selFrom: 0,
-  selTo: 0,
-  selText: '',
-  activeMarks: [],
-  totalTx: 0,
-  docChanges: 0,
-  selChanges: 0,
-  markChanges: 0,
-  historyOps: 0,
-};
 
 export function useTransactionFlow() {
   const [doc, setDoc] = useState<object>(() => ({
@@ -32,8 +14,6 @@ export function useTransactionFlow() {
   const [selectedTxId, setSelectedTxId] = useState<number | null>(null);
   const [activeStep, setActiveStep] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
-  const [liveState, setLiveState] = useState<LiveState>(DEFAULT_LIVE_STATE);
-  const [detailTx, setDetailTx] = useState<TransactionEntry | null>(null);
 
   const selectedTx = useMemo(() => {
     if (transactions.length === 0) return null;
@@ -63,10 +43,6 @@ export function useTransactionFlow() {
     },
     []
   );
-
-  const handleLiveState = useCallback((state: LiveState) => {
-    setLiveState(state);
-  }, []);
 
   useEffect(() => {
     if (activeStep === null || isPaused) return;
@@ -100,14 +76,6 @@ export function useTransactionFlow() {
     []
   );
 
-  const handleOpenDetail = useCallback((tx: TransactionEntry) => {
-    setDetailTx(tx);
-  }, []);
-
-  const handleCloseDetail = useCallback(() => {
-    setDetailTx(null);
-  }, []);
-
   const handleClearTransactions = useCallback(() => {
     setTransactions([]);
     setSelectedTxId(null);
@@ -122,16 +90,11 @@ export function useTransactionFlow() {
     selectedTxId,
     activeStep,
     isPaused,
-    liveState,
-    detailTx,
     handleFlush,
-    handleLiveState,
     handleStepHover,
     handleFlowEnter,
     handleFlowLeave,
     handleSelectTransaction,
-    handleOpenDetail,
-    handleCloseDetail,
     handleClearTransactions,
   };
 }

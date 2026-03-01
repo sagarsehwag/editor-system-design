@@ -9,7 +9,6 @@ import { FlowEditorPanel } from './FlowEditorPanel';
 import { FlowSteps } from './FlowSteps';
 import { TransactionList } from './TransactionList';
 import { DataPanelContent } from './DataPanelContent';
-import { TxDetailModal } from './TxDetailModal';
 import './FlowDiagram.css';
 
 export default function ProseMirrorFlowDiagram() {
@@ -21,88 +20,74 @@ export default function ProseMirrorFlowDiagram() {
     selectedTxId,
     activeStep,
     isPaused,
-    liveState,
-    detailTx,
     handleFlush,
-    handleLiveState,
     handleStepHover,
     handleFlowEnter,
     handleFlowLeave,
     handleSelectTransaction,
-    handleOpenDetail,
-    handleCloseDetail,
     handleClearTransactions,
   } = useTransactionFlow();
 
-  const { onEditorReady } = useProseMirrorEditor(setDoc, handleFlush, handleLiveState);
+  const { onEditorReady } = useProseMirrorEditor(setDoc, handleFlush);
 
   return (
-    <>
-      <div className='pm-flow-diagram pm-flow-diagram-compact'>
-        <div className='pm-flow-header'>
-          <h3 className='pm-flow-title'>How ProseMirror works</h3>
-          <p className='pm-flow-subtitle'>
-            Type and watch the flow. Data updates live from the real ProseMirror
-            instance.
-          </p>
-        </div>
-
-        <div className='pm-flow-grid'>
-          <FlowEditorPanel
-            onEditorReady={onEditorReady}
-            onFlowEnter={handleFlowEnter}
-            onFlowLeave={handleFlowLeave}
-          >
-            <FlowSteps
-              activeStep={activeStep}
-              isPaused={isPaused}
-              onStepHover={handleStepHover}
-            />
-          </FlowEditorPanel>
-
-          <div className='pm-flow-data-panel'>
-            <div className='pm-flow-data-header'>
-              <span>
-                {activeStep !== null && STEPS[activeStep]
-                  ? STEPS[activeStep].label
-                  : 'Internals View'}
-              </span>
-              {transactions.length > 0 && (
-                <span className='pm-flow-data-badge'>
-                  {transactions.length} transaction
-                  {transactions.length !== 1 ? 's' : ''}
-                </span>
-              )}
-            </div>
-            <TransactionList
-              transactions={transactions}
-              selectedTxId={selectedTxId}
-              onSelect={handleSelectTransaction}
-              onDetail={handleOpenDetail}
-              onClear={handleClearTransactions}
-            />
-            <div className='pm-flow-data-body'>
-              <DataPanelContent
-                selectedTx={selectedTx}
-                activeStep={activeStep}
-                liveState={liveState}
-              />
-            </div>
-          </div>
-        </div>
-
-        <details className='pm-flow-plugins-note'>
-          <summary>Plugin pipeline</summary>
-          <p>
-            Before <code>state.apply(tr)</code>, plugins run{' '}
-            <code>filterTransaction</code> (can reject) and{' '}
-            <code>appendTransaction</code> (can add steps). History stores inverse
-            steps for undo.
-          </p>
-        </details>
+    <div className="pm-flow-diagram pm-flow-diagram-compact">
+      <div className="pm-flow-header">
+        <h3 className="pm-flow-title">How ProseMirror works</h3>
+        <p className="pm-flow-subtitle">
+          Type and watch the flow. Data updates live from the real ProseMirror
+          instance.
+        </p>
       </div>
 
-      {detailTx && <TxDetailModal tx={detailTx} onClose={handleCloseDetail} />}
-    </>
+      <div className="pm-flow-grid">
+        <FlowEditorPanel
+          onEditorReady={onEditorReady}
+          onFlowEnter={handleFlowEnter}
+          onFlowLeave={handleFlowLeave}
+        >
+          <FlowSteps
+            activeStep={activeStep}
+            isPaused={isPaused}
+            onStepHover={handleStepHover}
+          />
+        </FlowEditorPanel>
+
+        <div className="pm-flow-data-panel">
+          <div className="pm-flow-data-header">
+            <span>
+              {activeStep !== null && STEPS[activeStep]
+                ? STEPS[activeStep].label
+                : 'Data'}
+            </span>
+            {transactions.length > 0 && (
+              <span className="pm-flow-data-badge">
+                {transactions.length} transaction
+                {transactions.length !== 1 ? 's' : ''}
+              </span>
+            )}
+          </div>
+          <TransactionList
+            transactions={transactions}
+            selectedTxId={selectedTxId}
+            onSelect={handleSelectTransaction}
+            onClear={handleClearTransactions}
+          />
+          <div className="pm-flow-data-body">
+            <DataPanelContent selectedTx={selectedTx} activeStep={activeStep} />
+          </div>
+        </div>
+      </div>
+
+      <details className="pm-flow-plugins-note">
+        <summary>Plugin pipeline</summary>
+        <p>
+          Before <code>state.apply(tr)</code>, plugins run{' '}
+          <code>filterTransaction</code> (can reject) and{' '}
+          <code>appendTransaction</code> (can add steps). History stores inverse
+          steps for undo.
+        </p>
+      </details>
+    </div>
   );
 }
