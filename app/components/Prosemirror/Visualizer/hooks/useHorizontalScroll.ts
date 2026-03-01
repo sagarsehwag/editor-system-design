@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect } from 'react';
 
 export function useHorizontalScroll(depCount: number) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -11,13 +11,26 @@ export function useHorizontalScroll(depCount: number) {
     }
   }, [depCount]);
 
-  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+  useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    if (el.scrollWidth <= el.clientWidth) return;
-    e.preventDefault();
-    el.scrollLeft += e.deltaY || e.deltaX;
+
+    const onWheel = (e: WheelEvent) => {
+      if (el.scrollWidth <= el.clientWidth) return;
+      const canScrollLeft = el.scrollLeft > 0;
+      const canScrollRight = el.scrollLeft < el.scrollWidth - el.clientWidth;
+      const scrollingDown = e.deltaY > 0;
+      const scrollingUp = e.deltaY < 0;
+
+      if ((scrollingDown && canScrollRight) || (scrollingUp && canScrollLeft)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
   }, []);
 
-  return { scrollRef, handleWheel };
+  return { scrollRef };
 }

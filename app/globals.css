@@ -86,13 +86,14 @@
     --overlay-bg: rgba(0, 0, 0, 0.6);
 
     --code-bg: #151515;
+    --code-fg: #e5e5e5;
     --scrollbar-track: #242424;
     --scrollbar-thumb: #444444;
 
-    --diff-removed-bg: rgba(239, 68, 68, 0.25);
-    --diff-removed-color: #fca5a5;
-    --diff-added-bg: rgba(34, 197, 94, 0.2);
-    --diff-added-color: #86efac;
+    --diff-removed-bg: rgba(239, 68, 68, 0.35);
+    --diff-removed-color: #f87171;
+    --diff-added-bg: rgba(34, 197, 94, 0.3);
+    --diff-added-color: #6ee7b7;
 
     --gradient-end: rgba(26, 26, 26, 0.98);
 }
@@ -120,13 +121,14 @@
     --overlay-bg: rgba(0, 0, 0, 0.3);
 
     --code-bg: #1e1e1e;
+    --code-fg: #e5e5e5;
     --scrollbar-track: #dcdad2;
     --scrollbar-thumb: #b2ada4;
 
-    --diff-removed-bg: rgba(239, 68, 68, 0.12);
-    --diff-removed-color: #b91c1c;
-    --diff-added-bg: rgba(34, 197, 94, 0.12);
-    --diff-added-color: #15803d;
+    --diff-removed-bg: rgba(239, 68, 68, 0.25);
+    --diff-removed-color: #f87171;
+    --diff-added-bg: rgba(34, 197, 94, 0.25);
+    --diff-added-color: #4ade80;
 
     --gradient-end: rgba(239, 236, 229, 0.98);
 }

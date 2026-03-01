@@ -167,9 +167,24 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
           keydown(_view, event) {
             lastDomEventRef.current = `keydown: key="${event.key}"`;
           },
+          beforeinput(_view, event) {
+            const e = event as InputEvent;
+            const inputType = e.inputType ?? 'unknown';
+            lastDomEventRef.current = `beforeinput: ${inputType}`;
+          },
           input(_view, event) {
-            const inputType = event instanceof InputEvent ? event.inputType : 'unknown';
-            lastDomEventRef.current = `input: inputType="${inputType}"`;
+            const e = event as InputEvent;
+            const inputType = e.inputType ?? 'unknown';
+            lastDomEventRef.current = `input: ${inputType}`;
+          },
+          compositionstart() {
+            lastDomEventRef.current = 'compositionstart';
+          },
+          compositionupdate() {
+            lastDomEventRef.current = 'compositionupdate';
+          },
+          compositionend() {
+            lastDomEventRef.current = 'compositionend';
           },
           mousedown() {
             lastDomEventRef.current = 'mouse: mousedown';
@@ -182,6 +197,7 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
           },
           paste() { lastDomEventRef.current = 'paste'; },
           cut() { lastDomEventRef.current = 'cut'; },
+          drop() { lastDomEventRef.current = 'drop'; },
         },
         dispatchTransaction(tr) {
           const prevState = view.state;
@@ -217,8 +233,8 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
           const type = classifyTransaction(tr, stepJsons);
           const id = ++txIdRef.current;
 
-          // Selection-only transactions never come from insertText (that fires on content change).
-          // If we see insertText here, it's stale from a previous action (e.g. mouse selection).
+          // Selection-only transactions never come from insertText (content change).
+          // If we see beforeinput/input insertText here, it's stale from a previous action.
           let lastDomEvent = lastDomEventRef.current;
           if (type === 'selection' && lastDomEvent?.includes('insertText')) {
             lastDomEvent = 'selection (keyboard or mouse)';
@@ -251,8 +267,21 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
         },
       });
 
+      const onSelectionChange = () => {
+        const sel = document.getSelection();
+        if (sel?.anchorNode && container.contains(sel.anchorNode)) {
+          const causal = lastDomEventRef.current;
+          const hasCausal = causal?.startsWith('mouse:') || causal?.startsWith('keydown:');
+          if (!hasCausal) {
+            lastDomEventRef.current = 'selectionchange';
+          }
+        }
+      };
+      document.addEventListener('selectionchange', onSelectionChange);
+
       viewRef.current = view;
       return () => {
+        document.removeEventListener('selectionchange', onSelectionChange);
         view.destroy();
         viewRef.current = null;
       };

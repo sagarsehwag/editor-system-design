@@ -80,12 +80,10 @@ function ViewPanel({ tx }: { tx: TransactionRecord }) {
       <WhatHappened tx={tx} />
       <div className='viz-insp-grid'>
         <div className='viz-insp-cell'>
-          <span className='viz-k'>source</span>
-          <span className='viz-v'>{tx.source}</span>
-        </div>
-        <div className='viz-insp-cell'>
-          <span className='viz-k'>dom event</span>
-          <span className='viz-v'>{tx.lastDomEvent || '—'}</span>
+          <span className='viz-k'>DOM event</span>
+          <span className='viz-v' title='ContentEditable: beforeinput, input, mouse, keydown, composition'>
+            {tx.lastDomEvent || tx.source || '—'}
+          </span>
         </div>
         {selChanged && tx.selAfter && (
           <div className='viz-insp-cell'>

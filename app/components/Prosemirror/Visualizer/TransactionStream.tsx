@@ -19,7 +19,7 @@ export function TransactionStream({
   onSelect,
   onClear,
 }: TransactionStreamProps) {
-  const { scrollRef, handleWheel } = useHorizontalScroll(transactions.length);
+  const { scrollRef } = useHorizontalScroll(transactions.length);
 
   return (
     <div className='viz-tr-log'>
@@ -35,7 +35,7 @@ export function TransactionStream({
             </button>
           )}
         </div>
-        <div ref={scrollRef} className='viz-tr-stream' onWheel={handleWheel}>
+        <div ref={scrollRef} className='viz-tr-stream'>
           {transactions.length === 0 ? (
             <EmptyState
               message="Start typing to see transactions flow →"
