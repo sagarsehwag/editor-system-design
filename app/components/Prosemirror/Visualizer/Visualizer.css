@@ -28,6 +28,10 @@
   overflow-y: auto;
 }
 
+.viz-root.viz-fullscreen .viz-header-controls {
+  right: calc(1rem + 44px + 0.5rem);
+}
+
 
 .viz-fullscreen-close {
   position: absolute;
