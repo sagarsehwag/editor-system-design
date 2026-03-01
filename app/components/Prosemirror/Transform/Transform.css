@@ -319,6 +319,41 @@
     padding: var(--gap-md);
   }
 
+  .transactions-tab .update-loop-diagram {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .transactions-tab .update-step {
+    min-width: unset;
+    max-width: 280px;
+    width: 100%;
+    align-self: center;
+    min-height: 4.5rem;
+  }
+
+  .transactions-tab .update-step.wide {
+    min-width: unset;
+    max-width: 280px;
+    width: 100%;
+    align-self: center;
+    min-height: 4.5rem;
+  }
+
+  .transactions-tab .flow-arrow {
+    font-size: 0;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  .transactions-tab .flow-arrow::before {
+    content: "↓";
+    font-size: 1.25rem;
+    color: inherit;
+    opacity: inherit;
+  }
+
   .transactions-tab .tx-struct-row {
     flex-wrap: wrap;
   }
