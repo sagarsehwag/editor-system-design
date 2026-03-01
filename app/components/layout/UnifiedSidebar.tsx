@@ -85,11 +85,15 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
         className={`sidebar unified-sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}
       >
         <div className="sidebar-header">
-          <span className="sidebar-collapsed-logo" aria-hidden>
-            <img src={ICON_SRC} alt="" width={24} height={24} />
-          </span>
+          <button className="sidebar-collapsed-logo" onClick={onToggle} aria-label="Expand sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
           <div className="sidebar-header-content">
-            <h1>Editor Mechanics · ProseMirror</h1>
+            <h1>Editor · ProseMirror</h1>
             <p className="subtitle">How ProseMirror and rich text editors work</p>
           </div>
           <button

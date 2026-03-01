@@ -6,7 +6,7 @@
 
 :root {
     /* Spacing (shared across themes) */
-    --sidebar-width: 280px;
+    --sidebar-width: 310px;
     --sidebar-collapsed-width: 56px;
     --content-padding: 2rem;
     --card-padding: 1.5rem;
@@ -179,9 +179,23 @@ li.ProseMirror-selectednode::after {
     }
 
     .sidebar.sidebar-collapsed .sidebar-collapsed-logo {
-        display: block;
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        border-radius: var(--radius-sm);
+        transition: all var(--transition-fast);
+        padding: 0;
+    }
+
+    .sidebar.sidebar-collapsed .sidebar-collapsed-logo:hover {
+        background: var(--bg-hover);
+        color: var(--text-primary);
     }
 
     .sidebar.sidebar-collapsed .sidebar-header-content {
@@ -189,7 +203,7 @@ li.ProseMirror-selectednode::after {
     }
 
     .sidebar.sidebar-collapsed .sidebar-collapse-btn {
-        margin: 0;
+        display: none;
     }
 
     .sidebar.sidebar-collapsed .nav-list {
@@ -324,10 +338,6 @@ li.ProseMirror-selectednode::after {
 .nav-icon img {
     display: block;
     flex-shrink: 0;
-}
-
-.sidebar-collapsed-logo img {
-    display: block;
 }
 
 .nav-link {
@@ -635,7 +645,7 @@ li.ProseMirror-selectednode::after {
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
     background: var(--accent-blue);
-    color: var(--text-primary);
+    color: #fff;
     font-weight: 600;
     font-size: 0.95rem;
     border-radius: var(--radius-md);
@@ -1234,7 +1244,7 @@ kbd {
 
 .btn-primary {
     background: var(--accent-blue);
-    color: var(--text-primary);
+    color: #fff;
 }
 
 .btn-primary:hover {
@@ -1567,7 +1577,7 @@ kbd {
     font-size: 0.7rem;
     padding: 0.15rem 0.5rem;
     background: var(--accent-orange);
-    color: var(--text-primary);
+    color: #fff;
     border-radius: 10px;
     margin-left: 0.5rem;
 }
@@ -2278,7 +2288,7 @@ kbd {
 
 .btn-green {
     background: var(--accent-green);
-    color: var(--text-primary);
+    color: #fff;
 }
 
 .btn-green:hover {
