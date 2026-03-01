@@ -179,36 +179,12 @@ li.ProseMirror-selectednode::after {
         align-items: center;
     }
 
-    .sidebar-collapsed-logo {
-        display: none;
-    }
-
-    .sidebar.sidebar-collapsed .sidebar-collapsed-logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        background: none;
-        border: none;
-        color: var(--text-secondary);
-        cursor: pointer;
-        border-radius: var(--radius-sm);
-        transition: all var(--transition-fast);
-        padding: 0;
-    }
-
-    .sidebar.sidebar-collapsed .sidebar-collapsed-logo:hover {
-        background: var(--bg-hover);
-        color: var(--text-primary);
-    }
-
     .sidebar.sidebar-collapsed .sidebar-header-content {
         display: none;
     }
 
     .sidebar.sidebar-collapsed .sidebar-collapse-btn {
-        display: none;
+        margin: 0 auto;
     }
 
     .sidebar.sidebar-collapsed .nav-list {
