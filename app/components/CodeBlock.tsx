@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
-
 type CodeBlockProps = {
   code: string;
   language?: 'javascript' | 'typescript' | 'json' | 'css' | 'html';
@@ -14,6 +13,7 @@ export function CodeBlock({
   language = 'javascript',
   className = '',
 }: CodeBlockProps) {
+
   return (
     <Highlight theme={themes.vsDark} code={code.trim()} language={language}>
       {({ className: highlightClassName, style, tokens, getLineProps, getTokenProps }) => (
@@ -21,7 +21,7 @@ export function CodeBlock({
           className={`${highlightClassName} ${className}`.trim()}
           style={{
             ...style,
-            backgroundColor: 'var(--bg-primary)',
+            backgroundColor: 'var(--code-bg)',
           }}
         >
           {tokens.map((line, i) => (

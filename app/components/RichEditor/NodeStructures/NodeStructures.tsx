@@ -42,7 +42,7 @@ export default function NodeStructures() {
     newEntry.innerHTML = `
       <span class="key">"${newKey}"</span>
       <span class="arrow">→</span>
-      <div class="node-box text" style="border-color: var(--accent-orange); background: rgba(249, 115, 22, 0.2);">
+      <div class="node-box text" style="border-color: var(--accent-orange); background: color-mix(in srgb, var(--accent-orange) 20%, transparent);">
         <span class="node-type" style="color: var(--accent-orange);">TextNode (NEW!)</span>
         <span class="text-content">" inserted"</span>
       </div>
@@ -70,7 +70,7 @@ export default function NodeStructures() {
     const shiftOverlay = document.createElement('div');
     shiftOverlay.className = 'new-inserted';
     shiftOverlay.style.cssText = `
-      background: rgba(239, 68, 68, 0.15);
+      background: color-mix(in srgb, var(--accent-red) 15%, transparent);
       border: 1px dashed var(--accent-red);
       border-radius: 4px;
       padding: 8px;
@@ -145,7 +145,7 @@ export default function NodeStructures() {
 
     const newNode = document.createElement('div');
     newNode.className = 'linked-node text new-inserted new-node';
-    newNode.style.cssText = 'border-color: var(--accent-orange); background: rgba(249, 115, 22, 0.2); color: var(--accent-orange);';
+    newNode.style.cssText = 'border-color: var(--accent-orange); background: color-mix(in srgb, var(--accent-orange) 20%, transparent); color: var(--accent-orange);';
     newNode.innerHTML = '<span>NEW</span><small>"inserted"</small>';
 
     const newArrow = document.createElement('div');

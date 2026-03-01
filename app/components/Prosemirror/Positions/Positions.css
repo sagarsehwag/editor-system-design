@@ -29,7 +29,7 @@
 }
 
 .positions-tab .positions-sub-tab.active {
-  background: rgba(59, 130, 246, 0.15);
+  background: color-mix(in srgb, var(--accent-blue) 15%, transparent);
   border-color: var(--accent-blue);
   color: var(--accent-blue);
 }
@@ -122,13 +122,13 @@
 }
 
 .schema-compare-panel.invalid {
-  background: rgba(239, 68, 68, 0.06);
-  border-left: 4px solid #ef4444;
+  background: color-mix(in srgb, var(--accent-red) 6%, transparent);
+  border-left: 4px solid var(--accent-red);
 }
 
 .schema-compare-panel.valid {
-  background: rgba(34, 197, 94, 0.06);
-  border-left: 4px solid #22c55e;
+  background: color-mix(in srgb, var(--accent-green) 6%, transparent);
+  border-left: 4px solid var(--accent-green);
 }
 
 .schema-compare-panel h5 {
@@ -161,19 +161,19 @@
 
 .schema-mini-tree .node {
   padding: 0.25rem 0.5rem;
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
   border-radius: var(--radius-sm);
   color: var(--accent-blue);
 }
 
 .schema-mini-tree .node.bad {
-  background: rgba(239, 68, 68, 0.2);
-  color: #ef4444;
+  background: color-mix(in srgb, var(--accent-red) 20%, transparent);
+  color: var(--accent-red);
 }
 
 .schema-mini-tree .node.good {
-  background: rgba(34, 197, 94, 0.2);
-  color: #22c55e;
+  background: color-mix(in srgb, var(--accent-green) 20%, transparent);
+  color: var(--accent-green);
 }
 
 .schema-mini-tree .arrow {
@@ -230,8 +230,8 @@
 .schema-tree-node .node-name {
   display: inline-block;
   padding: 0.2rem 0.5rem;
-  background: rgba(59, 130, 246, 0.2);
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-blue) 40%, transparent);
   border-radius: 4px;
   color: var(--accent-blue);
   font-weight: 600;
@@ -246,11 +246,11 @@
 .schema-tree-children {
   margin: 0.35rem 0 0.35rem 1.25rem;
   padding-left: 1rem;
-  border-left: 2px solid rgba(59, 130, 246, 0.3);
+  border-left: 2px solid color-mix(in srgb, var(--accent-blue) 30%, transparent);
 }
 
 .schema-tree-children.inline {
-  border-left-color: rgba(34, 197, 94, 0.4);
+  border-left-color: color-mix(in srgb, var(--accent-green) 40%, transparent);
 }
 
 .inline-placeholder {
@@ -258,8 +258,8 @@
   padding: 0.15rem 0.4rem;
   font-size: 0.8rem;
   color: var(--accent-green);
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px dashed rgba(34, 197, 94, 0.4);
+  background: color-mix(in srgb, var(--accent-green) 10%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--accent-green) 40%, transparent);
   border-radius: 4px;
 }
 
@@ -302,7 +302,7 @@
 .group-tag {
   font-size: 0.75rem;
   padding: 0.2rem 0.5rem;
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
   color: var(--accent-blue);
   border-radius: var(--radius-sm);
 }
@@ -392,7 +392,7 @@
 }
 
 .rp-ba-gap.in-blockquote {
-  background: rgba(59, 130, 246, 0.08);
+  background: color-mix(in srgb, var(--accent-blue) 8%, transparent);
   border-radius: 4px;
 }
 
@@ -411,12 +411,12 @@
 }
 
 .rp-ba-pos.before {
-  background: rgba(34, 197, 94, 0.25);
+  background: color-mix(in srgb, var(--accent-green) 25%, transparent);
   color: var(--accent-green);
 }
 
 .rp-ba-pos.after {
-  background: rgba(249, 115, 22, 0.25);
+  background: color-mix(in srgb, var(--accent-orange) 25%, transparent);
   color: var(--accent-orange);
 }
 
@@ -457,15 +457,15 @@
 }
 
 .rp-ba-swatch.before {
-  background: rgba(34, 197, 94, 0.4);
+  background: color-mix(in srgb, var(--accent-green) 40%, transparent);
 }
 
 .rp-ba-swatch.after {
-  background: rgba(249, 115, 22, 0.4);
+  background: color-mix(in srgb, var(--accent-orange) 40%, transparent);
 }
 
 .rp-ba-swatch.blockquote {
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
 }
 
 .resolvedpos-tree {
@@ -481,8 +481,8 @@
 }
 
 .rp-node.rp-highlight {
-  background: rgba(59, 130, 246, 0.15);
-  border-color: rgba(59, 130, 246, 0.4);
+  background: color-mix(in srgb, var(--accent-blue) 15%, transparent);
+  border-color: color-mix(in srgb, var(--accent-blue) 40%, transparent);
 }
 
 .rp-children {
@@ -688,7 +688,7 @@
 
 .range-gap.in-range .range-pos {
   color: var(--accent-blue);
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
 }
 
 .range-gap .range-token {
@@ -702,8 +702,8 @@
 }
 
 .range-gap.in-range .range-token {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.4);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent-blue) 40%, transparent);
   color: var(--accent-blue);
 }
 
@@ -763,7 +763,7 @@
 .pos-gap:hover .pos-num,
 .pos-gap.active .pos-num {
   color: var(--accent-blue);
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
 }
 
 .pos-gap .pos-token {
@@ -782,7 +782,7 @@
 
 .pos-gap .pos-token:hover,
 .pos-gap .pos-token.active {
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
   border-color: var(--accent-blue);
 }
 
@@ -802,8 +802,8 @@
 .position-tooltip {
   width: 100%;
   padding: var(--gap-sm) var(--gap-md);
-  background: rgba(59, 130, 246, 0.45);
-  border: 1px solid rgba(59, 130, 246, 0.55);
+  background: color-mix(in srgb, var(--accent-blue) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-blue) 55%, transparent);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
   color: #fff;
@@ -898,13 +898,13 @@
 }
 
 .slice-block.selected {
-  background: rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.5);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
+  border-color: color-mix(in srgb, var(--accent-blue) 50%, transparent);
   color: var(--accent-blue);
 }
 
 .slice-selected {
-  background: rgba(59, 130, 246, 0.25);
+  background: color-mix(in srgb, var(--accent-blue) 25%, transparent);
   color: var(--accent-blue);
 }
 
@@ -934,13 +934,13 @@
 }
 
 .slice-result.closed {
-  background: rgba(34, 197, 94, 0.12);
-  border: 1px solid rgba(34, 197, 94, 0.35);
+  background: color-mix(in srgb, var(--accent-green) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-green) 35%, transparent);
 }
 
 .slice-result.open {
-  background: rgba(249, 115, 22, 0.12);
-  border: 1px solid rgba(249, 115, 22, 0.35);
+  background: color-mix(in srgb, var(--accent-orange) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent-orange) 35%, transparent);
 }
 
 .slice-badge {
@@ -1009,7 +1009,7 @@
 }
 
 .pm-sel-gap.in-range {
-  background: rgba(59, 130, 246, 0.08);
+  background: color-mix(in srgb, var(--accent-blue) 8%, transparent);
   border-radius: 4px;
 }
 
@@ -1032,12 +1032,12 @@
 
 .pm-sel-pos-num.anchor {
   color: var(--accent-blue);
-  background: rgba(59, 130, 246, 0.25);
+  background: color-mix(in srgb, var(--accent-blue) 25%, transparent);
 }
 
 .pm-sel-pos-num.head {
   color: var(--accent-purple);
-  background: rgba(168, 85, 247, 0.25);
+  background: color-mix(in srgb, var(--accent-purple) 25%, transparent);
 }
 
 .pos-label {
@@ -1061,7 +1061,7 @@
 }
 
 .pm-sel-token.selected {
-  background: rgba(59, 130, 246, 0.3);
+  background: color-mix(in srgb, var(--accent-blue) 30%, transparent);
   border-color: var(--accent-blue);
 }
 
@@ -1093,17 +1093,17 @@
 }
 
 .pm-marker.anchor {
-  background: rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--accent-blue) 20%, transparent);
   color: var(--accent-blue);
 }
 
 .pm-marker.head {
-  background: rgba(168, 85, 247, 0.2);
+  background: color-mix(in srgb, var(--accent-purple) 20%, transparent);
   color: var(--accent-purple);
 }
 
 .pm-marker.range {
-  background: rgba(34, 197, 94, 0.15);
+  background: color-mix(in srgb, var(--accent-green) 15%, transparent);
   color: var(--accent-green);
 }
 

@@ -23,11 +23,11 @@ function syntaxHighlight(json: string): string {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"([^"]+)":/g, '<span style="color: #a855f7">"$1"</span>:')
-    .replace(/: "([^"]*)"/g, ': <span style="color: #22c55e">"$1"</span>')
-    .replace(/: (\d+)/g, ': <span style="color: #f97316">$1</span>')
-    .replace(/: (true|false)/g, ': <span style="color: #3b82f6">$1</span>')
-    .replace(/\[\]/g, '<span style="color: #666">[]</span>');
+    .replace(/"([^"]+)":/g, '<span style="color: var(--accent-purple)">"$1"</span>:')
+    .replace(/: "([^"]*)"/g, ': <span style="color: var(--accent-green)">"$1"</span>')
+    .replace(/: (\d+)/g, ': <span style="color: var(--accent-orange)">$1</span>')
+    .replace(/: (true|false)/g, ': <span style="color: var(--accent-blue)">$1</span>')
+    .replace(/\[\]/g, '<span style="color: var(--text-muted)">[]</span>');
 }
 
 export default function StateModel() {

@@ -114,8 +114,8 @@
 }
 
 .transactions-tab .tx-hierarchy-pill-final {
-  background: rgba(59, 130, 246, 0.08);
-  border-color: rgba(59, 130, 246, 0.4);
+  background: color-mix(in srgb, var(--accent-blue) 8%, transparent);
+  border-color: color-mix(in srgb, var(--accent-blue) 40%, transparent);
 }
 
 .transactions-tab .tx-hierarchy-label {
@@ -218,7 +218,7 @@
 .transactions-tab .transactions-callout {
   margin-top: var(--gap-md);
   padding: var(--gap-md);
-  background: rgba(59, 130, 246, 0.08);
+  background: color-mix(in srgb, var(--accent-blue) 8%, transparent);
   border-left: 4px solid var(--accent-blue);
   border-radius: var(--radius-sm);
   font-size: 0.9rem;

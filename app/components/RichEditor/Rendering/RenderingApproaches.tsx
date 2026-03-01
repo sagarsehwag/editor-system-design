@@ -20,7 +20,11 @@ function CanvasDemo() {
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
 
-    ctx.fillStyle = '#ffffff';
+    const styles = getComputedStyle(document.documentElement);
+    const textColor = styles.getPropertyValue('--text-primary').trim() || '#ffffff';
+    const bgColor = styles.getPropertyValue('--bg-tertiary').trim() || '#242424';
+
+    ctx.fillStyle = textColor;
     ctx.font = '16px Inter, sans-serif';
     ctx.fillText('Hello World', 20, 35);
 
@@ -32,11 +36,11 @@ function CanvasDemo() {
     const cursorY = 25;
 
     const interval = setInterval(() => {
-      ctx.fillStyle = '#242424';
+      ctx.fillStyle = bgColor;
       ctx.fillRect(cursorX, cursorY, 2, 20);
 
       if (cursorVisible) {
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = textColor;
         ctx.fillRect(cursorX, cursorY, 2, 20);
       }
       cursorVisible = !cursorVisible;

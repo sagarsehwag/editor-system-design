@@ -3,6 +3,7 @@
 import { useState, useCallback, useSyncExternalStore, Suspense } from 'react';
 import UnifiedSidebar from '../components/layout/UnifiedSidebar';
 import NextButton from '../components/layout/NextButton';
+import FloatingThemeToggle from '../components/layout/FloatingThemeToggle';
 
 const DESKTOP_MEDIA = '(min-width: 769px)';
 
@@ -53,6 +54,7 @@ export default function MainLayout({
           <NextButton />
         </Suspense>
       </main>
+      <FloatingThemeToggle />
     </>
   );
 }

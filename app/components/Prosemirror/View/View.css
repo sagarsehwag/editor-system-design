@@ -163,7 +163,7 @@
 }
 
 .view-tab .view-sub-tab.active {
-    background: rgba(59, 130, 246, 0.15);
+    background: color-mix(in srgb, var(--accent-blue) 15%, transparent);
     border-color: var(--accent-blue);
     color: var(--accent-blue);
 }
@@ -200,7 +200,7 @@
 }
 
 .view-tab .view-deco-highlight mark {
-    background: rgba(234, 179, 8, 0.35);
+    background: color-mix(in srgb, var(--accent-yellow) 35%, transparent);
     color: var(--text-primary);
     padding: 0 0.15em;
     border-radius: 2px;

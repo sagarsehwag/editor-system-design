@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sagarsehwag.github.io/prosemirror-mechanics"),
@@ -29,14 +30,22 @@ export const metadata: Metadata = {
   },
 };
 
+const ANTI_FLASH_SCRIPT = `(function(){try{var t=localStorage.getItem('theme-override');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t}else{document.documentElement.dataset.theme=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}}catch(e){document.documentElement.dataset.theme='dark'}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="theme-color" content="#0f0f0f" />
+        <script dangerouslySetInnerHTML={{ __html: ANTI_FLASH_SCRIPT }} />
+      </head>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
