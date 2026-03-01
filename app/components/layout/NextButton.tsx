@@ -38,8 +38,8 @@ function getNextLink(pathname: string, tab: string | null): { href: string; labe
       };
     }
     return {
-      href: '/rich-text-editor?tab=rendering',
-      label: 'Next: Rich Text Editor → Rendering',
+      href: '/prosemirror-visualizer',
+      label: 'Next: Transaction Visualizer',
     };
   }
 

@@ -1,0 +1,1488 @@
+/* ProseMirror Transaction Visualizer
+   Styled to match project design system (FlowDiagram, globals.css) */
+
+/* ============================================================
+   Root — gradient card container matching pm-flow-diagram
+   ============================================================ */
+.viz-root {
+  background: linear-gradient(
+    180deg,
+    var(--bg-tertiary) 0%,
+    rgba(26, 26, 26, 0.98) 100%
+  );
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Header — matches pm-flow-header
+   ============================================================ */
+.viz-header {
+  padding: var(--gap-md);
+  padding-bottom: var(--gap-sm);
+  min-width: 0;
+  overflow: hidden;
+}
+
+.viz-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-md);
+}
+
+/* Header controls — pill group */
+.viz-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.viz-hdr-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  cursor: default;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+button.viz-hdr-chip {
+  cursor: pointer;
+}
+
+.viz-hdr-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+/* Live chip */
+.viz-hdr-chip-live {
+  color: var(--accent-green);
+  border-color: color-mix(in srgb, var(--accent-green) 30%, transparent);
+  background: color-mix(in srgb, var(--accent-green) 6%, var(--bg-tertiary));
+}
+
+.viz-hdr-chip-dot-live {
+  background: var(--accent-green);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent-green) 60%, transparent);
+  animation: viz-pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes viz-pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px color-mix(in srgb, var(--accent-green) 60%, transparent); }
+  50%      { opacity: 0.5; box-shadow: 0 0 2px color-mix(in srgb, var(--accent-green) 30%, transparent); }
+}
+
+/* TX chip */
+.viz-hdr-chip-tx {
+  color: var(--accent-blue);
+  border-color: color-mix(in srgb, var(--accent-blue) 30%, transparent);
+  background: color-mix(in srgb, var(--accent-blue) 8%, var(--bg-tertiary));
+}
+
+.viz-hdr-chip-tx:hover {
+  border-color: color-mix(in srgb, var(--accent-blue) 50%, transparent);
+  background: color-mix(in srgb, var(--accent-blue) 12%, var(--bg-tertiary));
+}
+
+.viz-hdr-chip-dot-tx {
+  background: var(--accent-blue);
+  box-shadow: 0 0 5px color-mix(in srgb, var(--accent-blue) 50%, transparent);
+}
+
+.viz-hdr-chip-dismiss {
+  font-size: 0.85rem;
+  line-height: 1;
+  margin-left: 2px;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.viz-hdr-chip-tx:hover .viz-hdr-chip-dismiss {
+  opacity: 1;
+}
+
+/* Animate toggle chip */
+.viz-hdr-chip-toggle {
+  color: var(--text-muted);
+}
+
+.viz-hdr-chip-toggle:hover {
+  color: var(--text-secondary);
+  border-color: var(--text-muted);
+}
+
+.viz-hdr-chip-toggle.active {
+  color: var(--accent-purple);
+  border-color: color-mix(in srgb, var(--accent-purple) 30%, transparent);
+  background: color-mix(in srgb, var(--accent-purple) 6%, var(--bg-tertiary));
+}
+
+.viz-hdr-chip-toggle.active:hover {
+  border-color: color-mix(in srgb, var(--accent-purple) 50%, transparent);
+}
+
+.viz-hdr-chip-dot-on {
+  background: var(--accent-purple);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent-purple) 50%, transparent);
+}
+
+.viz-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--gap-sm);
+  letter-spacing: -0.02em;
+}
+
+.viz-title-accent {
+  color: var(--accent-purple);
+}
+
+.viz-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+/* (viz-badge removed — status is now in header controls) */
+
+/* ============================================================
+   Main 2-col grid — matches pm-flow-grid
+   ============================================================ */
+.viz-main {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--gap-md);
+  padding: 0 var(--gap-md);
+  overflow: hidden;
+  flex: 0 0 auto;
+  height: 280px;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.viz-main > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ============================================================
+   Editor pane — matches pm-flow-editor-panel
+   ============================================================ */
+.viz-editor-pane {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+}
+
+.viz-editor-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  height: 2.5rem;
+  padding: 0 var(--gap-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.viz-editor-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* (viz-back-live-btn removed — back-to-live is now in header chip) */
+
+/* Toolbar */
+.viz-toolbar {
+  display: flex;
+  gap: 0.25rem;
+  padding: var(--gap-sm) var(--gap-md);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  flex-shrink: 0;
+}
+
+.viz-toolbar-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.viz-toolbar-btn.wide {
+  width: auto;
+  padding: 0 var(--gap-sm);
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+.viz-toolbar-btn:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.viz-toolbar-btn.active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* Editor mount */
+.viz-editor-body {
+  position: relative;
+  flex: 1;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+.viz-editor-mount {
+  padding: var(--gap-md);
+  outline: none;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  overflow-y: auto;
+  height: 100%;
+}
+
+.viz-editor-snapshot {
+  position: absolute;
+  inset: 0;
+  padding: var(--gap-md);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  overflow-y: auto;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.viz-editor-snapshot p {
+  margin: 0 0 var(--gap-sm) 0;
+}
+.viz-editor-snapshot p:last-child {
+  margin-bottom: 0;
+}
+
+.viz-editor-mount .ProseMirror {
+  outline: none;
+  min-height: 60px;
+  caret-color: var(--text-primary);
+}
+
+.viz-editor-mount .ProseMirror p {
+  margin: 0 0 var(--gap-sm) 0;
+}
+
+.viz-editor-mount .ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
+.viz-editor-mount .ProseMirror p[data-placeholder] {
+  position: relative;
+}
+
+.viz-editor-mount .ProseMirror p[data-placeholder]::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* ============================================================
+   Lifecycle — single-row step cards with callout
+   ============================================================ */
+.viz-lifecycle {
+  flex-shrink: 0;
+  min-width: 0;
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.viz-lc-row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  gap: var(--gap-sm);
+}
+
+/* Cards */
+.viz-lc-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  padding: var(--gap-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.viz-lc-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  background: var(--border-color);
+  transition: background 0.3s ease;
+}
+
+.viz-lc-card:hover {
+  border-color: var(--text-muted);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Color accent — left bar */
+.viz-lc-color-purple::before {
+  background: var(--accent-purple);
+}
+.viz-lc-color-orange::before {
+  background: var(--accent-orange);
+}
+.viz-lc-color-green::before {
+  background: var(--accent-green);
+}
+.viz-lc-color-blue::before {
+  background: var(--accent-blue);
+}
+
+/* Active state (animated) */
+.viz-lc-card.active {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Past state */
+.viz-lc-card.past {
+  opacity: 0.5;
+}
+
+/* Selected state (click) */
+.viz-lc-card.selected {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--text-muted);
+}
+
+.viz-lc-card-num {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.viz-lc-card.active .viz-lc-card-num {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.viz-lc-card.selected .viz-lc-card-num {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+.viz-lc-card-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+
+.viz-lc-card.active .viz-lc-card-label {
+  color: var(--text-primary);
+}
+.viz-lc-card.selected .viz-lc-card-label {
+  color: var(--text-primary);
+}
+
+.viz-lc-arrow {
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  opacity: 0.4;
+  padding: 0 3px;
+  align-self: center;
+  transition: all 0.3s ease;
+}
+
+.viz-lc-arrow.active {
+  color: var(--accent-green);
+  opacity: 1;
+}
+
+/* Callout */
+.viz-lc-callout {
+  width: 100%;
+  margin-top: var(--gap-sm);
+  padding: var(--gap-sm) var(--gap-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-sm);
+}
+
+.viz-lc-callout-label {
+  font-weight: 700;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.viz-lc-callout-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.viz-lc-callout-purple {
+  border-left: 3px solid var(--accent-purple);
+}
+.viz-lc-callout-purple .viz-lc-callout-label {
+  color: var(--accent-purple);
+}
+
+.viz-lc-callout-orange {
+  border-left: 3px solid var(--accent-orange);
+}
+.viz-lc-callout-orange .viz-lc-callout-label {
+  color: var(--accent-orange);
+}
+
+.viz-lc-callout-green {
+  border-left: 3px solid var(--accent-green);
+}
+.viz-lc-callout-green .viz-lc-callout-label {
+  color: var(--accent-green);
+}
+
+.viz-lc-callout-blue {
+  border-left: 3px solid var(--accent-blue);
+}
+.viz-lc-callout-blue .viz-lc-callout-label {
+  color: var(--accent-blue);
+}
+
+/* ============================================================
+   State panel (right column) — matches pm-flow-data-panel
+   ============================================================ */
+.viz-state-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
+}
+
+.viz-state-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  height: 2.5rem;
+  padding: 0 var(--gap-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* (viz-state-badge removed — status is now in header controls) */
+
+.viz-state-list {
+  padding: var(--gap-md);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.viz-state-list.viz-card-flash {
+  animation: viz-card-flash 0.5s ease;
+}
+
+@keyframes viz-card-flash {
+  0% { background: rgba(34, 197, 94, 0.04); }
+  100% { background: transparent; }
+}
+
+.viz-state-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+  gap: var(--gap-sm);
+}
+
+.viz-k {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+.viz-v {
+  color: var(--accent-green);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+}
+.viz-v-highlight {
+  color: var(--accent-blue);
+  font-size: 0.9rem;
+}
+.viz-v-trunc {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Inspector — tabs matching prosemirror-tab pattern
+   ============================================================ */
+.viz-inspector {
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+  flex-shrink: 0;
+  padding: 0 var(--gap-md);
+  overflow: hidden;
+}
+
+.viz-inspector-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.viz-inspector-tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  height: 2.5rem;
+  padding: 0;
+  flex-shrink: 0;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.viz-inspector-tab {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0 var(--gap-md);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: -1px;
+}
+
+.viz-inspector-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.viz-inspector-tab.active {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.viz-inspector-tab:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.viz-inspector-empty {
+  padding: var(--gap-md);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.viz-inspector-body {
+  overflow-y: auto;
+  padding: var(--gap-md);
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+}
+
+.viz-inspector-body > * {
+  direction: ltr;
+}
+
+.viz-inspector-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Type badges — matching badge badge-{color} pattern */
+.viz-type-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.viz-type-doc {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent-purple);
+}
+.viz-type-selection {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--accent-red);
+}
+.viz-type-mark {
+  background: rgba(249, 115, 22, 0.15);
+  color: var(--accent-orange);
+}
+.viz-type-history {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+}
+.viz-type-meta {
+  background: rgba(102, 102, 102, 0.15);
+  color: var(--text-muted);
+}
+
+/* Inspector summary layout */
+.viz-insp-header-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+.viz-insp-id {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.viz-insp-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.viz-insp-flags {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.viz-insp-flag {
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+
+.viz-insp-flag-purple {
+  background: rgba(168, 85, 247, 0.12);
+  color: var(--accent-purple);
+}
+.viz-insp-flag-blue {
+  background: rgba(59, 130, 246, 0.12);
+  color: var(--accent-blue);
+}
+.viz-insp-flag-orange {
+  background: rgba(249, 115, 22, 0.12);
+  color: var(--accent-orange);
+}
+
+.viz-insp-section {
+  margin-bottom: var(--gap-sm);
+}
+
+.viz-insp-section h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--gap-sm);
+  font-weight: 600;
+}
+
+.viz-delta {
+  margin-left: 4px;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+.viz-delta-up { color: var(--accent-green); }
+.viz-delta-down { color: var(--accent-red); }
+
+.viz-insp-hint {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.viz-what-happened {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  padding: var(--gap-sm) var(--gap-md);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--border-color);
+}
+
+.viz-what-purple { border-left-color: var(--accent-purple); }
+.viz-what-orange { border-left-color: var(--accent-orange); }
+.viz-what-green { border-left-color: var(--accent-green); }
+.viz-what-blue { border-left-color: var(--accent-blue); }
+
+.viz-what-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.viz-what-purple .viz-what-icon { color: var(--accent-purple); }
+.viz-what-orange .viz-what-icon { color: var(--accent-orange); }
+.viz-what-green .viz-what-icon { color: var(--accent-green); }
+.viz-what-blue .viz-what-icon { color: var(--accent-blue); }
+
+.viz-what-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.viz-what-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.viz-what-detail {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viz-insp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+}
+
+.viz-insp-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--gap-sm);
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.viz-insp-cell .viz-k {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.viz-insp-cell .viz-v {
+  font-size: 0.75rem;
+  text-align: left;
+  word-break: break-all;
+}
+
+.viz-insp-steps h4,
+.viz-insp-sel-text h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--gap-sm);
+  font-weight: 600;
+}
+
+.viz-insp-step-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ============================================================
+   Code/JSON — matches pm-flow-data-json / code-output
+   ============================================================ */
+.viz-code-block {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.viz-kw {
+  color: var(--accent-red);
+}
+.viz-fn {
+  color: var(--accent-purple);
+}
+.viz-str {
+  color: var(--accent-green);
+}
+.viz-cm {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+.viz-json-key {
+  color: var(--accent-purple);
+}
+.viz-json-string {
+  color: var(--accent-green);
+}
+.viz-json-number {
+  color: var(--accent-orange);
+}
+.viz-json-bool {
+  color: var(--accent-blue);
+}
+.viz-json-null {
+  color: var(--text-muted);
+}
+
+.viz-json-pre {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace;
+  overflow: auto;
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.viz-json-inline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+}
+
+/* ============================================================
+   Diff views — matches pm-flow-diff-*
+   ============================================================ */
+.viz-diff-view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: 1fr;
+  gap: var(--gap-md);
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.viz-diff-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.viz-diff-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--gap-sm);
+  flex-shrink: 0;
+}
+
+.viz-diff-col.viz-diff-before .viz-diff-label {
+  color: rgba(249, 115, 22, 0.9);
+}
+.viz-diff-col.viz-diff-after .viz-diff-label {
+  color: rgba(34, 197, 94, 0.9);
+}
+
+.viz-diff-pre {
+  margin: 0;
+  padding: var(--gap-sm) var(--gap-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.viz-diff-col.viz-diff-before .viz-diff-pre {
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+.viz-diff-col.viz-diff-after .viz-diff-pre {
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.viz-diff-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.viz-diff-removed {
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+.viz-diff-added {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+.viz-diff-unchanged {
+  color: var(--text-secondary);
+}
+.viz-diff-empty {
+  background: rgba(0, 0, 0, 0.2);
+  min-height: 1.5em;
+}
+
+/* ============================================================
+   Transaction stream — card-based layout
+   ============================================================ */
+.viz-tr-log {
+  padding: 0 var(--gap-md) var(--gap-md);
+  margin-top: var(--gap-md);
+  flex-shrink: 0;
+  height: 220px;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.viz-tr-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.viz-tr-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  height: 2.5rem;
+  padding: 0 var(--gap-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.viz-tr-header-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.viz-tr-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.viz-clear-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 0.25rem 0.6rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.viz-clear-btn:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+.viz-tr-stream {
+  display: flex;
+  gap: var(--gap-sm);
+  overflow-x: scroll;
+  padding: var(--gap-sm) var(--gap-md) var(--gap-sm);
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.viz-tr-stream::-webkit-scrollbar {
+  height: 8px;
+}
+.viz-tr-stream::-webkit-scrollbar-track {
+  background: transparent;
+}
+.viz-tr-stream::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.viz-tr-stream::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.viz-empty-state {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: var(--gap-md) 0;
+}
+
+/* Transaction cards */
+.viz-tr-card {
+  flex-shrink: 0;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--gap-sm) var(--gap-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.viz-tr-card:hover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.viz-tr-card.selected {
+  border-color: var(--accent-purple);
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.08) 0%,
+    rgba(168, 85, 247, 0.02) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.viz-tr-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viz-tr-card-id {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.viz-tr-card-time {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.viz-tr-card-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.viz-tr-type-doc {
+  color: var(--accent-purple);
+}
+.viz-tr-type-selection {
+  color: var(--accent-red);
+}
+.viz-tr-type-mark {
+  color: var(--accent-orange);
+}
+.viz-tr-type-history {
+  color: var(--accent-green);
+}
+.viz-tr-type-meta {
+  color: var(--text-muted);
+}
+
+.viz-tr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.viz-tr-card-nosteps {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.viz-tr-card-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: auto;
+}
+
+/* Step chips */
+.viz-chip {
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.viz-chip-insert {
+  background: rgba(168, 85, 247, 0.15);
+  color: var(--accent-purple);
+}
+.viz-chip-delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--accent-red);
+}
+.viz-chip-mark {
+  background: rgba(249, 115, 22, 0.15);
+  color: var(--accent-orange);
+}
+.viz-chip-hist {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent-green);
+}
+.viz-chip-sel {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+/* ============================================================
+   Scrollbars — matches project globals
+   ============================================================ */
+.viz-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.viz-root ::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+.viz-root ::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+/* ============================================================
+   Responsive: Tablet (1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .viz-root {
+    height: auto;
+    min-height: calc(100vh - 2 * var(--content-padding));
+    overflow: visible;
+  }
+
+  .viz-main {
+    grid-template-columns: 1fr;
+    gap: var(--gap-md);
+    height: auto;
+    overflow: visible;
+  }
+
+  .viz-editor-pane {
+    min-height: 200px;
+  }
+
+  .viz-lc-row {
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+  .viz-lc-arrow {
+    display: none;
+  }
+  .viz-lc-card {
+    flex: 0 0 calc(33% - var(--gap-sm));
+  }
+
+  .viz-state-col {
+    height: auto;
+    align-self: auto;
+  }
+
+  .viz-inspector-body {
+    max-height: 400px;
+  }
+
+  .viz-diff-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .viz-tr-card {
+    width: 130px;
+  }
+}
+
+/* ============================================================
+   Responsive: Mobile (768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .viz-root {
+    border-radius: var(--radius-md);
+    height: auto;
+    min-height: calc(100vh - 2 * var(--content-padding));
+    overflow: visible;
+  }
+
+  .viz-header {
+    padding: var(--gap-md);
+  }
+
+  .viz-main {
+    grid-template-columns: 1fr;
+    gap: var(--gap-md);
+    padding: 0 var(--gap-md);
+    height: auto;
+    overflow: visible;
+  }
+
+  .viz-editor-pane {
+    min-height: 180px;
+  }
+
+  .viz-left-col {
+    gap: var(--gap-md);
+  }
+
+  .viz-editor-mount {
+    min-height: 120px;
+  }
+  .viz-editor-mount .ProseMirror {
+    min-height: 100px;
+  }
+
+  .viz-lc-row {
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+  }
+  .viz-lc-arrow {
+    display: none;
+  }
+  .viz-lc-card {
+    flex: 0 0 calc(50% - var(--gap-sm));
+  }
+
+  .viz-state-col {
+    height: auto;
+    align-self: auto;
+  }
+
+  .viz-inspector-body {
+    max-height: 400px;
+  }
+
+  .viz-tr-log {
+    padding: var(--gap-sm) var(--gap-md);
+  }
+
+  .viz-tr-card {
+    width: 120px;
+  }
+
+  .viz-diff-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: var(--gap-sm);
+  }
+
+  .viz-diff-col {
+    min-height: 120px;
+  }
+
+  .viz-insp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Responsive: Small mobile (480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .viz-title {
+    font-size: 1rem;
+  }
+  .viz-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .viz-lc-card {
+    flex: 0 0 100%;
+    padding: var(--gap-sm);
+  }
+
+  .viz-lc-card-num {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.6rem;
+  }
+
+  .viz-lc-callout {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .viz-state-col {
+    height: auto;
+    align-self: auto;
+  }
+
+  .viz-tr-card {
+    width: 110px;
+  }
+}

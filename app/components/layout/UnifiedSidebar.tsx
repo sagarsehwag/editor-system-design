@@ -38,6 +38,7 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isProseMirror = pathname === '/' || pathname === '/prosemirror';
+  const isVisualizer = pathname === '/prosemirror-visualizer';
   const isRichTextEditor = pathname === '/rich-text-editor';
   const prosemirrorBase = pathname === '/prosemirror' ? '/prosemirror' : '/';
   const activeProseMirrorSection =
@@ -164,6 +165,17 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                 ))}
               </ul>
             )}
+          </div>
+
+          {/* Transaction Visualizer */}
+          <div className="nav-section">
+            <Link
+              href="/prosemirror-visualizer"
+              className={`nav-section-header ${isVisualizer ? 'active' : ''}`}
+            >
+              <span className="nav-icon">🔬</span>
+              <span>Transaction Visualizer</span>
+            </Link>
           </div>
 
           {/* Rich Text Editor - Tab */}
