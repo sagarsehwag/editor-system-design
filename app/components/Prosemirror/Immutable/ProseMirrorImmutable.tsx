@@ -34,8 +34,10 @@ export default function ProseMirrorImmutable() {
           changed paragraph and its ancestors), not the whole tree. Undo stays cheap too: old states
           share most nodes with the current state.
         </p>
+      </div>
 
-        <h4>Visual 1: What Gets Recreated</h4>
+      <div className="prosemirror-section">
+        <h3>What Gets Recreated</h3>
         <p>
           The <strong>changed node and all ancestors</strong> are new. <strong>Siblings</strong> of
           the changed node are reused (same object reference).
@@ -66,8 +68,10 @@ export default function ProseMirrorImmutable() {
             new — each holds a new children array. Paragraphs 1 and 3 are reused.
           </p>
         </div>
+      </div>
 
-        <h4>Visual 2: Old State + New State Side by Side</h4>
+      <div className="prosemirror-section">
+        <h3>Old State vs New State</h3>
         <p>
           Both states exist in memory. Green = <strong>same object</strong> in both. Orange = new
           allocation. The new state has a new <code>doc</code> (root) and new paragraph 2; paragraphs 1
@@ -105,22 +109,25 @@ export default function ProseMirrorImmutable() {
           Green = same reference in both states. Orange = new allocation. Undo keeps old state cheap
           because it shares &quot;One&quot; and &quot;Three&quot; with current state.
         </p>
+      </div>
 
-        <h4>Animated Insert Workflow</h4>
+      <div className="prosemirror-section">
+        <h3>Animated Insert Workflow</h3>
         <p>
           Like the &quot;Map with Child Array&quot; demo in NodeStructures, but aligned with Prosemirror&apos;s
           model: <strong>immutable tree</strong> with <strong>Fragment</strong> for children. No index
           shifting — we create new immutable values along the changed path; siblings stay shared.
         </p>
         <ProseMirrorInsertWorkflow />
+      </div>
 
-        <h4>Algorithm Complexity</h4>
+      <div className="prosemirror-section">
+        <h3>Algorithm Complexity</h3>
         <p>
           Prosemirror&apos;s immutable tree with structural sharing gives predictable complexity. New nodes
           are created only along the changed path.
         </p>
         <div className="comparison-table-container">
-          <h3>📊 Prosemirror Complexity</h3>
           <table className="comparison-table">
             <thead>
               <tr>
@@ -155,8 +162,10 @@ export default function ProseMirrorImmutable() {
             <code>depth</code> = tree depth (typically &lt; 20). Structural sharing reuses siblings. Position-based model.
           </p>
         </div>
+      </div>
 
-        <h4>Why It Matters</h4>
+      <div className="prosemirror-section">
+        <h3>Why It Matters</h3>
         <ul className="structural-sharing-list">
           <li>
             <strong>Performance</strong> — Updates allocate O(depth) new nodes, not O(doc size).

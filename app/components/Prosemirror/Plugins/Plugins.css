@@ -16,25 +16,6 @@
   margin-bottom: 0;
 }
 
-.plugins-tab .prosemirror-section h3 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--gap-md);
-  margin-top: 0;
-}
-
-.plugins-tab .prosemirror-section h4 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: var(--gap-md);
-  margin-top: 0;
-}
-
-.plugins-tab .prosemirror-section h4 + p {
-  margin-top: 0;
-}
 
 .plugins-tab .prosemirror-section p {
   font-size: 0.9rem;

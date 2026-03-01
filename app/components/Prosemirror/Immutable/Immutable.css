@@ -12,25 +12,6 @@
     margin-bottom: 0;
 }
 
-.immutable-tab .prosemirror-section h3 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: var(--gap-md);
-    margin-top: 0;
-}
-
-.immutable-tab .prosemirror-section h4 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: var(--gap-md);
-    margin-top: var(--gap-lg);
-}
-
-.immutable-tab .prosemirror-section h4:first-of-type {
-    margin-top: 0;
-}
 
 .immutable-tab .prosemirror-section p {
     font-size: 0.9rem;

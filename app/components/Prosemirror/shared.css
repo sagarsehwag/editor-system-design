@@ -76,16 +76,21 @@
     margin-bottom: var(--gap-lg);
 }
 
-.prosemirror-section h3 {
-    margin-bottom: var(--gap-md);
-    font-size: 1.15rem;
-}
-
-.prosemirror-section h4 {
+.prosemirror-section > h3,
+.prosemirror-section > h4 {
     font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: var(--gap-md);
+    font-family: 'JetBrains Mono', monospace;
     color: var(--text-primary);
+    margin: 0 calc(-1 * var(--gap-lg)) var(--gap-lg);
+    padding: 0 var(--gap-lg) var(--gap-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.prosemirror-section > h3:not(:first-child),
+.prosemirror-section > h4:not(:first-child) {
+    margin-top: var(--gap-xl);
+    padding-top: var(--gap-md);
 }
 
 .prosemirror-section p {
