@@ -2,32 +2,47 @@ import type { LifecycleStepDef } from './types';
 
 export const LIFECYCLE_STEPS: LifecycleStepDef[] = [
   {
-    id: 'view',
-    label: 'View',
-    desc: 'User interacts with the EditorView',
-    tooltip: 'The EditorView captures DOM events (keydown, input, paste, cut) on the contentEditable element and translates them into ProseMirror operations.',
-    color: 'purple',
+    id: 'dom-event',
+    label: 'DOM Event',
+    desc: 'User interaction triggers a browser event',
+    tooltip:
+      'A user types, clicks, pastes, or presses a key. ' +
+      'The browser fires a native DOM event (keydown, input, compositionend, paste, drop, click). ' +
+      'ProseMirror\'s EditorView intercepts this event on the contentEditable element before the default browser behavior takes over.',
+    color: 'red',
   },
   {
     id: 'tr',
     label: 'Transaction',
-    desc: 'tr = state.tr — steps added to mutable object',
-    tooltip: 'A Transaction holds an array of Steps (ReplaceStep, AddMarkStep, etc.). It is a mutable object that accumulates changes before being dispatched.',
-    color: 'orange',
-  },
-  {
-    id: 'apply',
-    label: 'Apply Transaction',
-    desc: 'New immutable EditorState from old + steps',
-    tooltip: 'Creates a new EditorState by mapping each step over the document. The old state is unchanged — structural sharing enables undo/redo.',
-    color: 'green',
-  },
-  {
-    id: 'update',
-    label: 'Update View',
-    desc: 'DOM reconciled, plugin view.update() hooks called',
-    tooltip: 'Compares new state to current DOM, applies minimal DOM updates. Preserves cursor position and selection. Calls plugin view.update() hooks.',
+    desc: 'Steps accumulated into a mutable transaction object',
+    tooltip:
+      'The intercepted event is translated into a Transaction — a mutable object that collects one or more Steps ' +
+      '(ReplaceStep, AddMarkStep, ReplaceAroundStep). ' +
+      'Plugins can append their own steps or metadata. ' +
+      'The transaction is then dispatched via view.dispatch(tr).',
     color: 'blue',
+  },
+  {
+    id: 'new-state',
+    label: 'new EditorState',
+    desc: 'Immutable state created from old state + steps',
+    tooltip:
+      'Calling state.apply(tr) produces a brand-new, immutable EditorState. ' +
+      'Each step is mapped over the document sequentially. ' +
+      'The old state remains untouched — structural sharing keeps this efficient. ' +
+      'This is what powers undo/redo and collaborative editing.',
+    color: 'slate',
+  },
+  {
+    id: 'editor-view',
+    label: 'EditorView',
+    desc: 'DOM reconciled with the new state',
+    tooltip:
+      'The EditorView receives the new state via view.updateState(newState). ' +
+      'It diffs the old and new document, applies minimal DOM mutations, ' +
+      'restores the cursor and selection, re-renders decorations, ' +
+      'and calls each plugin\'s view.update() hook. The cycle then waits for the next DOM event.',
+    color: 'purple',
   },
 ];
 

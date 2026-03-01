@@ -1,34 +1,18 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import type { EditorStats } from './types';
-import type { TransactionStats } from './hooks/useTransactionCapture';
+import React from 'react';
+import type { EditorStats, TransactionStats } from './types';
 
 type StateCardsProps = {
   editorStats: EditorStats | null;
   txStats: TransactionStats;
 };
 
-function useFlash(dep: unknown) {
-  const ref = useRef<HTMLDivElement>(null);
-  const prevDep = useRef(dep);
-  useEffect(() => {
-    if (prevDep.current !== dep && ref.current) {
-      ref.current.classList.remove('viz-card-flash');
-      void ref.current.offsetWidth;
-      ref.current.classList.add('viz-card-flash');
-    }
-    prevDep.current = dep;
-  }, [dep]);
-  return ref;
-}
-
 export function StateCards({ editorStats, txStats }: StateCardsProps) {
-  const ref = useFlash(editorStats?.selection.anchor);
   const s = editorStats;
 
   return (
-    <div ref={ref} className="viz-state-list">
+    <div className="viz-state-list">
       <div className="viz-state-row">
         <span className="viz-k">doc</span>
         <span className="viz-v">{s?.charCount ?? 0} chars · {s?.nodeCount ?? 0} nodes · v{s?.version ?? 0}</span>

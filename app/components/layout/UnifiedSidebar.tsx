@@ -8,7 +8,7 @@ import type { ProseMirrorTab } from '../Prosemirror';
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 const ICON_SRC = `${BASE_PATH}/prosemirror-icon.svg`;
 
-const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
+const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string; badge?: string }[] = [
   { id: 'overview', icon: '📋', label: 'Overview' },
   { id: 'schema', icon: '📄', label: 'Model' },
   { id: 'state', icon: '📦', label: 'State' },
@@ -38,7 +38,6 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const isProseMirror = pathname === '/' || pathname === '/prosemirror';
-  const isVisualizer = pathname === '/prosemirror-visualizer';
   const isRichTextEditor = pathname === '/rich-text-editor';
   const prosemirrorBase = pathname === '/prosemirror' ? '/prosemirror' : '/';
   const activeProseMirrorSection =
@@ -160,22 +159,12 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                     >
                       <span className="nav-icon">{item.icon}</span>
                       <span>{item.label}</span>
+                      {item.badge && <span className="nav-badge">{item.badge}</span>}
                     </button>
                   </li>
                 ))}
               </ul>
             )}
-          </div>
-
-          {/* Transaction Visualizer */}
-          <div className="nav-section">
-            <Link
-              href="/prosemirror-visualizer"
-              className={`nav-section-header ${isVisualizer ? 'active' : ''}`}
-            >
-              <span className="nav-icon">🔬</span>
-              <span>Transaction Visualizer</span>
-            </Link>
           </div>
 
           {/* Rich Text Editor - Tab */}

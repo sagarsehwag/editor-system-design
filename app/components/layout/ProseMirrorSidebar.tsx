@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import type { ProseMirrorTab } from '../Prosemirror';
 
-const SECTIONS: { id: ProseMirrorTab; icon: string; label: string }[] = [
+const SECTIONS: { id: ProseMirrorTab; icon: string; label: string; badge?: string }[] = [
   { id: 'overview', icon: '📋', label: 'Overview' },
   { id: 'schema', icon: '📄', label: 'Model' },
   { id: 'state', icon: '📦', label: 'State' },
@@ -95,6 +95,7 @@ export default function ProseMirrorSidebar({
               <Link href={`/prosemirror?tab=${item.id}`} className="nav-link">
                 <span className="nav-icon">{item.icon}</span>
                 <span>{item.label}</span>
+                {item.badge && <span className="nav-badge">{item.badge}</span>}
               </Link>
             </li>
           ))}

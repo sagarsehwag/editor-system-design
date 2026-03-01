@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Visualizer.css';
 import { Header } from './Header';
 import { EditorPane } from './EditorPane';
@@ -9,102 +9,99 @@ import { StatePanel } from './StatePanel';
 import { StepInspector } from './StepInspector';
 import { TransactionStream } from './TransactionStream';
 import { useProseMirrorEditor } from './hooks/useProseMirrorEditor';
-import { useTransactionCapture } from './hooks/useTransactionCapture';
-import { useLifecycleAnimation } from './hooks/useLifecycleAnimation';
-import type { TransactionRecord, EditorStats } from './types';
-
-function statsFromTx(tx: TransactionRecord): EditorStats {
-  return {
-    charCount: tx.charsAfter,
-    nodeCount: tx.nodesAfter,
-    version: tx.id,
-    hasMarks: tx.marksAfter.length > 0,
-    activeMarks: tx.marksAfter,
-    selection: tx.selAfter!,
-    resolvedPos: tx.resolvedPos,
-  };
-}
+import { useVisualizerState } from './hooks/useVisualizerState';
 
 export default function ProseMirrorVisualizer() {
-  const [liveStats, setLiveStats] = useState<EditorStats | null>(null);
-  const [activeMarks, setActiveMarks] = useState<string[]>([]);
-  const [animationEnabled, setAnimationEnabled] = useState(true);
-
-  const {
-    transactions,
-    selectedTx,
-    stats: txStats,
-    addTransaction,
-    selectTransaction,
-    clearTransactions,
-  } = useTransactionCapture();
-
-  const { activeStepIndex, runAnimation } = useLifecycleAnimation();
-  const suppressAnimRef = useRef(false);
-
-  const handleTransaction = useCallback(
-    (record: TransactionRecord) => {
-      addTransaction(record);
-      if (suppressAnimRef.current) {
-        suppressAnimRef.current = false;
-      } else if (animationEnabled) {
-        runAnimation();
-      }
-      setLiveStats(statsFromTx(record));
-      setActiveMarks(record.marksAfter);
-    },
-    [addTransaction, runAnimation, animationEnabled]
+  const viz = useVisualizerState();
+  const { onEditorReady, execCommand } = useProseMirrorEditor(
+    viz.handleTransaction,
   );
+  const [clickedStep, setClickedStep] = useState<number | null>(null);
+  const [fullscreen, setFullscreen] = useState(false);
+  const exitFullscreen = useCallback(() => setFullscreen(false), []);
 
-  const { onEditorReady, execCommand } = useProseMirrorEditor(handleTransaction);
-
-  const handleSelectTx = useCallback((tx: TransactionRecord | null) => {
-    selectTransaction(tx);
-    if (!tx) {
-      suppressAnimRef.current = true;
+  useEffect(() => {
+    if (fullscreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
-  }, [selectTransaction]);
-
-  const latestTx = transactions.length > 0 ? transactions[0] : null;
-  const inspectorTx = selectedTx ?? latestTx;
-
-  const isViewingSelected = selectedTx !== null;
-  const displayStats = useMemo(
-    () => (isViewingSelected ? statsFromTx(selectedTx!) : liveStats),
-    [isViewingSelected, selectedTx, liveStats]
-  );
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && fullscreen) exitFullscreen();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [fullscreen, exitFullscreen]);
 
   return (
-    <div className="viz-root">
+    <div className={`viz-root${fullscreen ? ' viz-fullscreen' : ''}`}>
+      {fullscreen && (
+        <button
+          className='viz-fullscreen-close'
+          onClick={exitFullscreen}
+          title='Exit fullscreen (Esc)'
+        >
+          <svg
+            width='20'
+            height='20'
+            viewBox='0 0 20 20'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2'
+            strokeLinecap='round'
+          >
+            <line x1='5' y1='5' x2='15' y2='15' />
+            <line x1='15' y1='5' x2='5' y2='15' />
+          </svg>
+        </button>
+      )}
       <Header
-        animationEnabled={animationEnabled}
-        onToggleAnimation={() => setAnimationEnabled(prev => !prev)}
-        selectedTxId={isViewingSelected ? selectedTx!.id : null}
-        onBackToLive={() => handleSelectTx(null)}
+        animationEnabled={viz.animationEnabled}
+        onToggleAnimation={viz.toggleAnimation}
+        selectedTxId={viz.isViewingSelected ? viz.selectedTx!.id : null}
+        onBackToLive={() => viz.selectTx(null)}
+        fullscreen={fullscreen}
+        onToggleFullscreen={() => setFullscreen((f) => !f)}
       />
-      <div className="viz-main">
+      <div className='viz-main'>
         <EditorPane
           onEditorReady={onEditorReady}
           onCommand={execCommand}
-          activeMarks={activeMarks}
-          snapshotHtml={isViewingSelected ? selectedTx!.afterRendered : null}
-          onDismissSnapshot={() => handleSelectTx(null)}
+          activeMarks={viz.activeMarks}
+          snapshotHtml={viz.snapshotHtml}
+          onDismissSnapshot={() => viz.selectTx(null)}
+          flashDep={viz.selectedTx?.id ?? null}
+          flashColor={viz.selectedTx?.type}
         />
         <StatePanel
-          editorStats={displayStats}
-          txStats={txStats}
+          editorStats={viz.displayStats}
+          txStats={viz.counters}
+          flashDep={viz.selectedTx?.id ?? null}
+          flashColor={viz.selectedTx?.type}
         />
       </div>
-      <Lifecycle activeStepIndex={activeStepIndex} />
+      <Lifecycle
+        activeStepIndex={viz.activeStepIndex}
+        onStepClick={(idx) => {
+          viz.stopAnimation();
+          setClickedStep(idx);
+        }}
+      />
       <StepInspector
-        selectedTx={inspectorTx}
-        activeStepIndex={activeStepIndex}
+        selectedTx={viz.inspectorTx}
+        activeStepIndex={viz.activeStepIndex}
+        clickedStepIndex={clickedStep}
+        flashDep={viz.selectedTx?.id ?? null}
+        flashColor={viz.selectedTx?.type}
       />
       <TransactionStream
-        transactions={transactions}
-        selectedTxId={selectedTx?.id ?? null}
-        onSelect={handleSelectTx}
-        onClear={clearTransactions}
+        transactions={viz.transactions}
+        selectedTxId={viz.selectedTx?.id ?? null}
+        onSelect={viz.selectTx}
+        onClear={viz.clearAll}
       />
     </div>
   );

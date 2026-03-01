@@ -330,8 +330,22 @@ body {
     font-size: 1.1rem;
 }
 
-.nav-sublist .nav-item .nav-link span:not(.nav-icon) {
+.nav-sublist .nav-item .nav-link span:not(.nav-icon):not(.nav-badge) {
     font-size: 0.9rem;
+}
+
+.nav-badge {
+    margin-left: auto;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(249, 115, 22, 0.08));
+    color: var(--accent-orange);
+    border: 1px solid rgba(249, 115, 22, 0.25);
+    line-height: 1;
 }
 
 .nav-sublist .nav-item.active {
@@ -452,6 +466,8 @@ body {
     flex: 1;
     padding: var(--content-padding);
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 /* Desktop default: sidebar takes space */

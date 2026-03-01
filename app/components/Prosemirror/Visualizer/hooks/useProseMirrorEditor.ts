@@ -9,7 +9,7 @@ import { history, undo, redo } from 'prosemirror-history';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap, toggleMark } from 'prosemirror-commands';
 import { transactionToJSON } from '../utils';
-import type { TransactionRecord, TransactionType, SelectionInfo, StepInfo, ResolvedPosInfo } from '../types';
+import type { TransactionRecord, TransactionType, SelectionInfo, StepInfo, StepType, ResolvedPosInfo } from '../types';
 
 const PLACEHOLDER_TEXT = 'Start typing to see the transaction stream flow in real-time...';
 
@@ -65,38 +65,52 @@ function getActiveMarks(state: EditorState): string[] {
   return marks.map((m) => m.type.name);
 }
 
-function classifyTransaction(tr: Transaction): TransactionType {
+function classifyTransaction(tr: Transaction, stepJsons: Record<string, unknown>[]): TransactionType {
   if (tr.getMeta('history$')) return 'history';
   if (tr.docChanged) {
-    const marks = tr.steps.some(
-      (s) => s.toJSON().stepType === 'addMark' || s.toJSON().stepType === 'removeMark'
+    const hasMark = stepJsons.some(
+      (j) => j.stepType === 'addMark' || j.stepType === 'removeMark',
     );
-    return marks ? 'mark' : 'doc';
+    return hasMark ? 'mark' : 'doc';
   }
   if (tr.selectionSet) return 'selection';
   return 'meta';
 }
 
-function buildStepInfos(tr: Transaction, charDelta: number): StepInfo[] {
+function computeStepDelta(json: Record<string, unknown>): number {
+  const from = (json.from as number) ?? 0;
+  const to = (json.to as number) ?? from;
+  const slice = json.slice as { content?: Array<{ text?: string; content?: unknown[] }> } | undefined;
+  let sliceSize = 0;
+  if (slice?.content) {
+    for (const node of slice.content) {
+      if (node.text) sliceSize += node.text.length;
+      else sliceSize += 1;
+    }
+  }
+  return sliceSize - (to - from);
+}
+
+function buildStepInfos(tr: Transaction, stepJsons: Record<string, unknown>[]): StepInfo[] {
   if (tr.getMeta('history$')) {
     return [{ type: 'hist', action: tr.getMeta('history$')?.redo ? 'redo' : 'undo' }];
   }
   if (!tr.docChanged && tr.selectionSet) {
     return [{ type: 'selection' }];
   }
+
   const infos: StepInfo[] = [];
-  for (const step of tr.steps) {
-    const json = step.toJSON();
+  for (const json of stepJsons) {
     if (json.stepType === 'addMark' || json.stepType === 'removeMark') {
-      infos.push({ type: 'mark', cmd: json.mark?.type || 'mark', json });
+      const mark = json.mark as { type?: string } | undefined;
+      infos.push({ type: 'mark', cmd: mark?.type || 'mark', json });
     } else {
-      if (charDelta > 0) {
-        infos.push({ type: 'insert', delta: charDelta, json });
-      } else if (charDelta < 0) {
-        infos.push({ type: 'delete', delta: charDelta, json });
-      } else {
-        infos.push({ type: 'replace', delta: 0, json });
-      }
+      const delta = computeStepDelta(json);
+      let type: StepType;
+      if (delta > 0) type = 'insert';
+      else if (delta < 0) type = 'delete';
+      else type = 'replace';
+      infos.push({ type, delta, json });
     }
   }
   return infos.length ? infos : [{ type: 'meta' }];
@@ -129,33 +143,6 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
         break;
     }
     view.focus();
-  }, []);
-
-  const getStats = useCallback(() => {
-    const view = viewRef.current;
-    if (!view) return null;
-    const state = view.state;
-    const doc = state.doc;
-    let nodeCount = 0;
-    doc.descendants(() => { nodeCount++; return true; });
-    return {
-      charCount: doc.textContent.length,
-      nodeCount,
-      version: txIdRef.current,
-      hasMarks:
-        doc.textContent.length > 0 &&
-        (() => {
-          let found = false;
-          doc.descendants((node) => {
-            if (node.marks.length > 0) found = true;
-            return !found;
-          });
-          return found;
-        })(),
-      activeMarks: getActiveMarks(state),
-      selection: getSelectionInfo(state),
-      resolvedPos: getResolvedPosInfo(state),
-    };
   }, []);
 
   const onEditorReady = useCallback(
@@ -192,7 +179,7 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
           const charsBefore = prevState.doc.textContent.length;
           const selBefore = getSelectionInfo(prevState);
           const marksBefore = getActiveMarks(prevState);
-          const beforeDoc = prevState.doc.toJSON();
+          const beforeDoc = prevState.doc.toJSON() as Record<string, unknown>;
           let nodesBefore = 0;
           prevState.doc.descendants(() => { nodesBefore++; return true; });
 
@@ -212,13 +199,13 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
           const charsAfter = newState.doc.textContent.length;
           const selAfter = getSelectionInfo(newState);
           const marksAfter = getActiveMarks(newState);
-          const afterDoc = newState.doc.toJSON();
+          const afterDoc = newState.doc.toJSON() as Record<string, unknown>;
           const afterRendered = view.dom.innerHTML;
           let nodesAfter = 0;
           newState.doc.descendants(() => { nodesAfter++; return true; });
 
-          const charDelta = charsAfter - charsBefore;
-          const type = classifyTransaction(tr);
+          const stepJsons = tr.steps.map((s) => s.toJSON() as Record<string, unknown>);
+          const type = classifyTransaction(tr, stepJsons);
           const id = ++txIdRef.current;
 
           const record: TransactionRecord = {
@@ -226,7 +213,7 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
             type,
             time: new Date().toLocaleTimeString('en', { hour12: false }),
             source: lastDomEventRef.current || 'programmatic',
-            steps: buildStepInfos(tr, charDelta),
+            steps: buildStepInfos(tr, stepJsons),
             charsBefore,
             charsAfter,
             nodesBefore,
@@ -235,7 +222,7 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
             selAfter,
             marksBefore,
             marksAfter,
-            tr: transactionToJSON(tr),
+            tr: transactionToJSON(tr) as Record<string, unknown>,
             beforeDoc,
             afterDoc,
             beforeRendered,
@@ -254,8 +241,8 @@ export function useProseMirrorEditor(onTransaction: OnTransactionCallback) {
         viewRef.current = null;
       };
     },
-    []
+    [],
   );
 
-  return { onEditorReady, execCommand, getStats };
+  return { onEditorReady, execCommand };
 }

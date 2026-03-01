@@ -1,21 +1,27 @@
 export type TransactionType = 'doc' | 'selection' | 'mark' | 'history' | 'meta';
 
+export type StepType = 'insert' | 'delete' | 'replace' | 'mark' | 'hist' | 'selection' | 'meta';
+
 export type StepInfo = {
-  type: string;
+  type: StepType;
   delta?: number;
   cmd?: string;
   action?: string;
-  json?: object;
+  json?: Record<string, unknown>;
 };
 
 export type SelectionInfo = {
-  type: string;
+  type: 'Cursor' | 'Range' | 'None';
   anchor: number;
   head: number;
   from: number;
   to: number;
   empty: boolean;
   text: string;
+};
+
+export const EMPTY_SELECTION: SelectionInfo = {
+  type: 'None', anchor: 0, head: 0, from: 0, to: 0, empty: true, text: '',
 };
 
 export type TransactionRecord = {
@@ -32,9 +38,9 @@ export type TransactionRecord = {
   selAfter: SelectionInfo | null;
   marksBefore: string[];
   marksAfter: string[];
-  tr: object;
-  beforeDoc: object;
-  afterDoc: object;
+  tr: Record<string, unknown>;
+  beforeDoc: Record<string, unknown>;
+  afterDoc: Record<string, unknown>;
   beforeRendered: string;
   afterRendered: string;
   lastDomEvent: string | null;
@@ -63,8 +69,15 @@ export type EditorStats = {
   charCount: number;
   nodeCount: number;
   version: number;
-  hasMarks: boolean;
   activeMarks: string[];
   selection: SelectionInfo;
   resolvedPos: ResolvedPosInfo;
+};
+
+export type TransactionStats = {
+  total: number;
+  docChanges: number;
+  selChanges: number;
+  markChanges: number;
+  historyOps: number;
 };

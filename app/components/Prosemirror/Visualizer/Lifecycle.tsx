@@ -5,13 +5,11 @@ import { LIFECYCLE_STEPS } from './constants';
 
 type LifecycleProps = {
   activeStepIndex: number | null;
+  onStepClick?: (index: number | null) => void;
 };
 
-export function Lifecycle({ activeStepIndex }: LifecycleProps) {
+export function Lifecycle({ activeStepIndex, onStepClick }: LifecycleProps) {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
-
-  const visibleIdx = activeStepIndex ?? selectedIdx;
-  const visibleStep = visibleIdx !== null ? LIFECYCLE_STEPS[visibleIdx] : null;
 
   return (
     <div className="viz-lifecycle">
@@ -26,7 +24,11 @@ export function Lifecycle({ activeStepIndex }: LifecycleProps) {
             <React.Fragment key={step.id}>
               <div
                 className={`viz-lc-card viz-lc-color-${step.color} ${isActive ? 'active' : ''} ${isPast ? 'past' : ''} ${isSelected ? 'selected' : ''}`}
-                onClick={() => setSelectedIdx(selectedIdx === i ? null : i)}
+                onClick={() => {
+                  const next = selectedIdx === i ? null : i;
+                  setSelectedIdx(next);
+                  onStepClick?.(next);
+                }}
               >
                 <div className="viz-lc-card-num">{i + 1}</div>
                 <div className="viz-lc-card-label">{step.label}</div>
@@ -37,16 +39,6 @@ export function Lifecycle({ activeStepIndex }: LifecycleProps) {
             </React.Fragment>
           );
         })}
-      </div>
-      <div className={`viz-lc-callout ${visibleStep ? `viz-lc-callout-${visibleStep.color}` : ''}`}>
-        {visibleStep ? (
-          <>
-            <span className="viz-lc-callout-label">{visibleStep.label}</span>
-            <span className="viz-lc-callout-text">{visibleStep.tooltip}</span>
-          </>
-        ) : (
-          <span className="viz-lc-callout-text">Click on a step to see details</span>
-        )}
       </div>
     </div>
   );

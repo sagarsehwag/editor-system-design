@@ -32,15 +32,13 @@ function getNextLink(pathname: string, tab: string | null): { href: string; labe
     const idx = currentIndex < 0 ? 0 : currentIndex;
     if (idx < PROSEMIRROR_SECTIONS.length - 1) {
       const nextTab = PROSEMIRROR_SECTIONS[idx + 1];
+      const label = nextTab.charAt(0).toUpperCase() + nextTab.slice(1).replace(/-/g, ' ');
       return {
         href: `${prosemirrorBase}?tab=${nextTab}`,
-        label: `Next: ${nextTab.charAt(0).toUpperCase() + nextTab.slice(1).replace(/-/g, ' ')}`,
+        label: `Next: ${label}`,
       };
     }
-    return {
-      href: '/prosemirror-visualizer',
-      label: 'Next: Transaction Visualizer',
-    };
+    return null;
   }
 
   if (pathname === '/rich-text-editor') {

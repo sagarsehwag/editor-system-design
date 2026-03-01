@@ -22,7 +22,7 @@ import './Immutable/Immutable.css';
 
 const TAB_HEADINGS: Record<
   ProseMirrorTab,
-  { title: string; subtitle: string }
+  { title: React.ReactNode; subtitle: string }
 > = {
   overview: {
     title: 'Prosemirror Overview',
