@@ -18,13 +18,13 @@ export function FlowEditorPanel({
 }: FlowEditorPanelProps) {
   return (
     <div
-      className="pm-flow-main-col"
+      className='pm-flow-main-col'
       onMouseEnter={onFlowEnter}
       onMouseLeave={onFlowLeave}
     >
-      <div className="pm-flow-editor-panel">
-        <div className="pm-flow-editor-header">
-          <span className="pm-flow-editor-label">EditorView</span>
+      <div className='pm-flow-editor-panel'>
+        <div className='pm-flow-editor-header'>
+          <span className='pm-flow-editor-label'>EditorView</span>
         </div>
         <EditorMount onReady={onEditorReady} />
       </div>

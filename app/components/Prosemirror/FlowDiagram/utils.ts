@@ -1,10 +1,96 @@
 import * as Diff from 'diff';
+import type { TxType, StepChip, SelectionSnapshot, LiveState } from './types';
 
 export function transactionToJSON(tr: {
   steps: Array<{ toJSON: () => object }>;
 }): object {
   return {
     steps: tr.steps.map((step) => step.toJSON()),
+  };
+}
+
+type RawStep = { stepType?: string; mark?: { type?: string } };
+
+export function classifyTr(tr: {
+  steps: Array<{ toJSON: () => RawStep }>;
+  getMeta: (key: string) => unknown;
+}): TxType {
+  try {
+    if (tr.getMeta('history$')) return 'history';
+  } catch { /* ignore */ }
+  if (tr.steps.length === 0) return 'selection';
+  const hasMarkStep = tr.steps.some((s) => {
+    const j = s.toJSON();
+    return j.stepType === 'addMark' || j.stepType === 'removeMark';
+  });
+  if (hasMarkStep) return 'mark';
+  return 'doc';
+}
+
+export function extractStepChips(
+  steps: Array<{ toJSON: () => RawStep }>,
+  charsBefore: number,
+  charsAfter: number
+): StepChip[] {
+  if (steps.length === 0) return [{ kind: 'sel', label: 'SEL' }];
+
+  const chips: StepChip[] = [];
+  const delta = charsAfter - charsBefore;
+
+  for (const step of steps) {
+    const j = step.toJSON();
+    if (j.stepType === 'replace' || j.stepType === 'replaceAround') {
+      if (delta > 0) chips.push({ kind: 'insert', label: `INSERT +${delta}` });
+      else if (delta < 0) chips.push({ kind: 'delete', label: `DELETE ${delta}` });
+      else chips.push({ kind: 'replace', label: 'REPLACE' });
+    } else if (j.stepType === 'addMark') {
+      chips.push({ kind: 'mark', label: `+${j.mark?.type ?? 'MARK'}`.toUpperCase() });
+    } else if (j.stepType === 'removeMark') {
+      chips.push({ kind: 'mark', label: `-${j.mark?.type ?? 'MARK'}`.toUpperCase() });
+    } else {
+      chips.push({ kind: 'replace', label: (j.stepType ?? 'STEP').toUpperCase() });
+    }
+  }
+  return chips;
+}
+
+export function getSelSnapshot(
+  from: number,
+  to: number,
+  textBetween: (f: number, t: number) => string
+): SelectionSnapshot {
+  const text = from === to ? '' : textBetween(from, to).slice(0, 60);
+  return { selType: from === to ? 'Caret' : 'Range', from, to, text };
+}
+
+export function getLiveStateSnapshot(
+  docTextLength: number,
+  docChildCount: number,
+  version: number,
+  selFrom: number,
+  selTo: number,
+  selText: string,
+  storedMarkNames: string[],
+  counts: {
+    totalTx: number;
+    docChanges: number;
+    selChanges: number;
+    markChanges: number;
+    historyOps: number;
+  }
+): LiveState {
+  return {
+    charCount: docTextLength,
+    nodeCount: docChildCount,
+    version,
+    hasMarks: storedMarkNames.length > 0,
+    selType: selFrom === selTo ? 'Caret' : 'Range',
+    selCollapsed: selFrom === selTo,
+    selFrom,
+    selTo,
+    selText,
+    activeMarks: storedMarkNames,
+    ...counts,
   };
 }
 

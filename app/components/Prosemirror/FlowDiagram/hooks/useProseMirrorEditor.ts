@@ -10,8 +10,14 @@ import { schema } from 'prosemirror-schema-basic';
 import { history } from 'prosemirror-history';
 import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
-import { transactionToJSON } from '../utils';
-import type { TransactionEntry } from '../types';
+import {
+  transactionToJSON,
+  classifyTr,
+  extractStepChips,
+  getSelSnapshot,
+  getLiveStateSnapshot,
+} from '../utils';
+import type { TransactionEntry, LiveState } from '../types';
 import { DEBOUNCE_MS } from '../constants';
 
 const PLACEHOLDER_TEXT = 'Type here to see the flow…';
@@ -44,9 +50,12 @@ type FlushCallback = (
   latest: { id: number; afterDoc: object } | null
 ) => void;
 
+type LiveStateCallback = (state: LiveState) => void;
+
 export function useProseMirrorEditor(
   setDoc: (doc: object) => void,
-  onFlush: FlushCallback
+  onFlush: FlushCallback,
+  onLiveState: LiveStateCallback
 ) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastDomEventRef = useRef<string | null>(null);
@@ -55,6 +64,11 @@ export function useProseMirrorEditor(
   const txIdCounter = useRef(0);
   const onFlushRef = useRef(onFlush);
   onFlushRef.current = onFlush;
+  const onLiveStateRef = useRef(onLiveState);
+  onLiveStateRef.current = onLiveState;
+
+  // History stat counters (persisted across renders via ref)
+  const statsRef = useRef({ totalTx: 0, docChanges: 0, selChanges: 0, markChanges: 0, historyOps: 0 });
 
   const flushPending = useCallback(() => {
     const pending = pendingTxRef.current;
@@ -65,25 +79,9 @@ export function useProseMirrorEditor(
   }, []);
 
   const recordAndScheduleFlow = useCallback(
-    (
-      tr: object,
-      beforeDoc: object,
-      afterDoc: object,
-      beforeRendered: string,
-      afterRendered: string
-    ) => {
-      const id = ++txIdCounter.current;
-      const entry: TransactionEntry = {
-        id,
-        tr,
-        beforeDoc,
-        afterDoc,
-        beforeRendered,
-        afterRendered,
-        lastDomEvent: lastDomEventRef.current,
-      };
+    (entry: TransactionEntry) => {
       pendingTxRef.current.push(entry);
-      latestEntryRef.current = { id, afterDoc };
+      latestEntryRef.current = { id: entry.id, afterDoc: entry.afterDoc };
       if (debounceRef.current) clearTimeout(debounceRef.current);
       debounceRef.current = setTimeout(() => {
         debounceRef.current = null;
@@ -103,6 +101,7 @@ export function useProseMirrorEditor(
           keymap(baseKeymap),
         ],
       });
+
       const view = new EditorView(container, {
         state,
         handleDOMEvents: {
@@ -122,34 +121,96 @@ export function useProseMirrorEditor(
           },
         },
         dispatchTransaction(tr) {
-          const beforeDoc = view.state.doc.toJSON();
-          const newState = view.state.apply(tr);
+          const prevState = view.state;
+          const charsBefore = prevState.doc.textContent.length;
+          const selBeforeFrom = prevState.selection.from;
+          const selBeforeTo = prevState.selection.to;
+
+          const beforeDoc = prevState.doc.toJSON();
+          const newState = prevState.apply(tr);
+
+          // Capture beforeRendered HTML
           let beforeRendered = '';
           try {
-            const serializer = DOMSerializer.fromSchema(view.state.schema);
+            const serializer = DOMSerializer.fromSchema(prevState.schema);
             const beforeWrapper = document.createElement('div');
-            serializer.serializeFragment(view.state.doc.content, {}, beforeWrapper);
+            serializer.serializeFragment(prevState.doc.content, {}, beforeWrapper);
             beforeRendered = beforeWrapper.innerHTML;
           } catch {
             beforeRendered = JSON.stringify(beforeDoc, null, 2);
           }
+
           view.updateState(newState);
           const afterRendered = view.dom.innerHTML;
           const afterDoc = newState.doc.toJSON();
+          const charsAfter = newState.doc.textContent.length;
 
+          // Classify and build entry
+          const txType = classifyTr(tr as Parameters<typeof classifyTr>[0]);
+          const stepChips = extractStepChips(
+            tr.steps as Parameters<typeof extractStepChips>[0],
+            charsBefore,
+            charsAfter
+          );
+          const selBefore = getSelSnapshot(
+            selBeforeFrom,
+            selBeforeTo,
+            (f, t) => prevState.doc.textBetween(f, t)
+          );
+          const selAfter = getSelSnapshot(
+            newState.selection.from,
+            newState.selection.to,
+            (f, t) => newState.doc.textBetween(f, t)
+          );
+
+          // Update stats
+          const s = statsRef.current;
+          s.totalTx++;
+          if (txType === 'doc') s.docChanges++;
+          else if (txType === 'selection') s.selChanges++;
+          else if (txType === 'mark') s.markChanges++;
+          else if (txType === 'history') s.historyOps++;
+
+          // Build live state snapshot
+          const storedMarkNames = newState.storedMarks?.map((m) => m.type.name) ?? [];
+          const liveState = getLiveStateSnapshot(
+            charsAfter,
+            newState.doc.childCount,
+            s.totalTx,
+            newState.selection.from,
+            newState.selection.to,
+            selAfter.text,
+            storedMarkNames,
+            { ...s }
+          );
+          startTransition(() => onLiveStateRef.current(liveState));
+
+          // Only record + animate for non-trivial transactions
           if (tr.steps.length > 0) {
-            recordAndScheduleFlow(
-              transactionToJSON(tr),
+            const id = ++txIdCounter.current;
+            const entry: TransactionEntry = {
+              id,
+              tr: transactionToJSON(tr as Parameters<typeof transactionToJSON>[0]),
+              txType,
+              timestamp: new Date().toLocaleTimeString('en', { hour12: false }),
+              charsBefore,
+              charsAfter,
+              selBefore,
+              selAfter,
+              stepChips,
               beforeDoc,
               afterDoc,
               beforeRendered,
-              afterRendered
-            );
+              afterRendered,
+              lastDomEvent: lastDomEventRef.current,
+            };
+            recordAndScheduleFlow(entry);
           } else {
             setDoc(afterDoc);
           }
         },
       });
+
       startTransition(() => setDoc(state.doc.toJSON()));
 
       return () => {
