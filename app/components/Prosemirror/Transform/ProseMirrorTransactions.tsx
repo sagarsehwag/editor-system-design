@@ -58,7 +58,11 @@ export default function ProseMirrorTransactions() {
         newCompleted.add(i);
         const newArrows = new Set(prev.activeArrows);
         newArrows.add(i);
-        return { activeStep: null, completedSteps: newCompleted, activeArrows: newArrows };
+        return {
+          activeStep: null,
+          completedSteps: newCompleted,
+          activeArrows: newArrows,
+        };
       });
       await txSleep(delay / 3);
     }
@@ -89,222 +93,269 @@ export default function ProseMirrorTransactions() {
     `flow-arrow ${txStepState.activeArrows.has(step) ? 'active' : ''}`;
 
   return (
-    <div className="transactions-tab">
-      <div className="prosemirror-section transactions-intro">
-        <h3>What is a Transform?</h3>
-        <p>
-          A <strong>Transform</strong> is a sequence of steps applied to a document. A{' '}
-          <strong>Transaction</strong> extends it with selection, storedMarks, and metadata — it&apos;s
-          the full unit of change you create and apply. You never mutate state directly; you create a
-          transaction and apply it.
-        </p>
-        <div className="transactions-hierarchy">
-          <div className="tx-hierarchy-flow">
-            <div className="tx-hierarchy-pill">
-              <span className="tx-hierarchy-label">Step</span>
-              <span className="tx-hierarchy-hint">ReplaceStep, etc.</span>
-            </div>
-            <span className="tx-hierarchy-arrow">→</span>
-            <div className="tx-hierarchy-pill">
-              <span className="tx-hierarchy-label">Transform</span>
-              <span className="tx-hierarchy-hint">Step[]</span>
-            </div>
-            <span className="tx-hierarchy-arrow">→</span>
-            <div className="tx-hierarchy-pill tx-hierarchy-pill-final">
-              <span className="tx-hierarchy-label">Transaction</span>
-              <span className="tx-hierarchy-hint">Transform + selection, meta</span>
-            </div>
-          </div>
+    <div className='transactions-tab'>
+      <div className='demo-card prosemirror-section transactions-intro'>
+        <div className='card-header'>
+          <h3>What is a Transform?</h3>
         </div>
-      </div>
-
-      <div className="prosemirror-section">
-        <h4>The Update Loop</h4>
-        <p>
-          When the user types or pastes, the view creates a transaction, applies it to state, and
-          re-renders. This flow is the core of every edit.
-        </p>
-        <div className="update-loop-container">
-          <div className="update-loop-controls">
-            <button className="btn btn-primary" onClick={txRunAnimation} disabled={isRunning}>
-              {txButtonText}
-            </button>
-            <button className="btn btn-secondary" onClick={txReset}>
-              ↺ Reset
-            </button>
-            <span className="speed-control">
-              <label>Speed:</label>
-              <input
-                type="range"
-                min={1}
-                max={5}
-                value={txSpeed}
-                onChange={(e) => setTxSpeed(Number(e.target.value))}
-              />
-            </span>
-          </div>
-          <div className="update-loop-diagram">
-            <div className={getTxStepClass(1)}>
-              <div className="step-icon">⌨️</div>
-              <div className="step-content">
-                <h4>1. User Input</h4>
-                <p>Keypress, paste, etc.</p>
+        <div className='card-content'>
+          <p>
+            A <strong>Transform</strong> is a sequence of steps applied to a
+            document. A <strong>Transaction</strong> extends it with selection,
+            storedMarks, and metadata — it&apos;s the full unit of change you
+            create and apply. You never mutate state directly; you create a
+            transaction and apply it.
+          </p>
+          <div className='transactions-hierarchy'>
+            <div className='tx-hierarchy-flow'>
+              <div className='tx-hierarchy-pill'>
+                <span className='tx-hierarchy-label'>Step</span>
+                <span className='tx-hierarchy-hint'>ReplaceStep, etc.</span>
               </div>
-            </div>
-            <div className={getTxArrowClass(1)}>→</div>
-            <div className={getTxStepClass(2)}>
-              <div className="step-icon">📋</div>
-              <div className="step-content">
-                <h4>2. Transaction</h4>
-                <p>Create transaction with steps</p>
+              <span className='tx-hierarchy-arrow'>→</span>
+              <div className='tx-hierarchy-pill'>
+                <span className='tx-hierarchy-label'>Transform</span>
+                <span className='tx-hierarchy-hint'>Step[]</span>
               </div>
-            </div>
-            <div className={getTxArrowClass(2)}>→</div>
-            <div className={getTxStepClass(3)}>
-              <div className="step-icon">✏️</div>
-              <div className="step-content">
-                <h4>3. Apply Steps</h4>
-                <p>Transform doc via steps</p>
-              </div>
-            </div>
-            <div className={getTxArrowClass(3)}>→</div>
-            <div className={getTxStepClass(4)}>
-              <div className="step-icon">📑</div>
-              <div className="step-content">
-                <h4>4. New State</h4>
-                <p>Immutable state update</p>
-              </div>
-            </div>
-            <div className={getTxArrowClass(4)}>→</div>
-            <div className={getTxStepClass(5)}>
-              <div className="step-icon">🖥️</div>
-              <div className="step-content">
-                <h4>5. Update View</h4>
-                <p>Diff &amp; patch DOM</p>
+              <span className='tx-hierarchy-arrow'>→</span>
+              <div className='tx-hierarchy-pill tx-hierarchy-pill-final'>
+                <span className='tx-hierarchy-label'>Transaction</span>
+                <span className='tx-hierarchy-hint'>
+                  Transform + selection, meta
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="prosemirror-section">
-        <h4>Common Step Types</h4>
-        <p>
-          Steps describe low-level document changes. The most common is <code>ReplaceStep</code>,
-          which can insert, delete, or replace content. Higher-level APIs like <code>tr.insertText</code>
-          and <code>tr.delete</code> create steps for you.
-        </p>
-        <div className="tx-steps-grid">
-          <div className="tx-step-card">
-            <code>tr.insertText(text, pos)</code>
-            <p>Insert text at position</p>
-          </div>
-          <div className="tx-step-card">
-            <code>tr.delete(from, to)</code>
-            <p>Delete range</p>
-          </div>
-          <div className="tx-step-card">
-            <code>tr.replaceWith(from, to, node)</code>
-            <p>Replace range with node(s)</p>
-          </div>
-          <div className="tx-step-card">
-            <code>tr.setSelection(sel)</code>
-            <p>Update selection (no doc change)</p>
-          </div>
-          <div className="tx-step-card">
-            <code>tr.addMark(from, to, mark)</code>
-            <p>Add mark to range</p>
-          </div>
-          <div className="tx-step-card">
-            <code>tr.removeMark(from, to, mark)</code>
-            <p>Remove mark from range</p>
+      <div className='demo-card prosemirror-section'>
+        <div className='card-header'>
+          <h4>The Update Loop</h4>
+        </div>
+        <div className='card-content'>
+          <p>
+            When the user types or pastes, the view creates a transaction,
+            applies it to state, and re-renders. This flow is the core of every
+            edit.
+          </p>
+          <div className='update-loop-container'>
+            <div className='update-loop-controls'>
+              <button
+                className='btn btn-primary'
+                onClick={txRunAnimation}
+                disabled={isRunning}
+              >
+                {txButtonText}
+              </button>
+              <button className='btn btn-secondary' onClick={txReset}>
+                ↺ Reset
+              </button>
+              <span className='speed-control'>
+                <label>Speed:</label>
+                <input
+                  type='range'
+                  min={1}
+                  max={5}
+                  value={txSpeed}
+                  onChange={(e) => setTxSpeed(Number(e.target.value))}
+                />
+              </span>
+            </div>
+            <div className='update-loop-diagram'>
+              <div className={getTxStepClass(1)}>
+                <div className='step-icon'>⌨️</div>
+                <div className='step-content'>
+                  <h4>1. User Input</h4>
+                  <p>Keypress, paste, etc.</p>
+                </div>
+              </div>
+              <div className={getTxArrowClass(1)}>→</div>
+              <div className={getTxStepClass(2)}>
+                <div className='step-icon'>📋</div>
+                <div className='step-content'>
+                  <h4>2. Transaction</h4>
+                  <p>Create transaction with steps</p>
+                </div>
+              </div>
+              <div className={getTxArrowClass(2)}>→</div>
+              <div className={getTxStepClass(3)}>
+                <div className='step-icon'>✏️</div>
+                <div className='step-content'>
+                  <h4>3. Apply Steps</h4>
+                  <p>Transform doc via steps</p>
+                </div>
+              </div>
+              <div className={getTxArrowClass(3)}>→</div>
+              <div className={getTxStepClass(4)}>
+                <div className='step-icon'>📑</div>
+                <div className='step-content'>
+                  <h4>4. New State</h4>
+                  <p>Immutable state update</p>
+                </div>
+              </div>
+              <div className={getTxArrowClass(4)}>→</div>
+              <div className={getTxStepClass(5)}>
+                <div className='step-icon'>🖥️</div>
+                <div className='step-content'>
+                  <h4>5. Update View</h4>
+                  <p>Diff &amp; patch DOM</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="prosemirror-section">
-        <h4>Creating Transactions</h4>
-        <p>
-          Use <code>state.tr</code> (short for <code>Transaction.create(state)</code>) to create a
-          transaction. Chain methods to add steps and update selection.
-        </p>
-        <div className="code-snippet">
-          <CodeBlock
-            code={`const tr = state.tr
+      <div className='demo-card prosemirror-section'>
+        <div className='card-header'>
+          <h4>Common Step Types</h4>
+        </div>
+        <div className='card-content'>
+          <p>
+            Steps describe low-level document changes. The most common is{' '}
+            <code>ReplaceStep</code>, which can insert, delete, or replace
+            content. Higher-level APIs like <code>tr.insertText</code>
+            and <code>tr.delete</code> create steps for you.
+          </p>
+          <div className='tx-steps-grid'>
+            <div className='tx-step-card'>
+              <code>tr.insertText(text, pos)</code>
+              <p>Insert text at position</p>
+            </div>
+            <div className='tx-step-card'>
+              <code>tr.delete(from, to)</code>
+              <p>Delete range</p>
+            </div>
+            <div className='tx-step-card'>
+              <code>tr.replaceWith(from, to, node)</code>
+              <p>Replace range with node(s)</p>
+            </div>
+            <div className='tx-step-card'>
+              <code>tr.setSelection(sel)</code>
+              <p>Update selection (no doc change)</p>
+            </div>
+            <div className='tx-step-card'>
+              <code>tr.addMark(from, to, mark)</code>
+              <p>Add mark to range</p>
+            </div>
+            <div className='tx-step-card'>
+              <code>tr.removeMark(from, to, mark)</code>
+              <p>Remove mark from range</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='demo-card prosemirror-section'>
+        <div className='card-header'>
+          <h4>Creating Transactions</h4>
+        </div>
+        <div className='card-content'>
+          <p>
+            Use <code>state.tr</code> (short for{' '}
+            <code>Transaction.create(state)</code>) to create a transaction.
+            Chain methods to add steps and update selection.
+          </p>
+          <div className='code-snippet'>
+            <CodeBlock
+              code={`const tr = state.tr
   .insertText("hello", 0)
   .delete(5, 10)
   .setSelection(TextSelection.create(doc, 5));
 
 const newState = state.apply(tr);`}
-          />
-        </div>
-        <p className="transactions-callout">
-          <strong>Chaining</strong> — Each method returns the same transaction (mutated in place),
-          so you can chain <code>insertText</code>, <code>delete</code>, <code>setSelection</code>,{' '}
-          <code>setStoredMarks</code>, and more.
-        </p>
-      </div>
-
-      <div className="prosemirror-section">
-        <h4>What&apos;s in a Transaction</h4>
-        <p>
-          A transaction carries steps (document changes) plus metadata. Plugins read and extend it
-          via <code>tr.getMeta()</code> and <code>tr.setMeta()</code>.
-        </p>
-        <div className="transactions-structure">
-          <div className="tx-struct-row">
-            <span className="tx-struct-key">steps</span>
-            <span className="tx-struct-arrow">→</span>
-            <span className="tx-struct-value">Step[]</span>
-            <span className="tx-struct-desc">Document edits (replace, insert, delete)</span>
+            />
           </div>
-          <div className="tx-struct-row">
-            <span className="tx-struct-key">docChanged</span>
-            <span className="tx-struct-arrow">→</span>
-            <span className="tx-struct-value">boolean</span>
-            <span className="tx-struct-desc">True if steps modify the doc</span>
-          </div>
-          <div className="tx-struct-row">
-            <span className="tx-struct-key">selection</span>
-            <span className="tx-struct-arrow">→</span>
-            <span className="tx-struct-value">Selection</span>
-            <span className="tx-struct-desc">New selection after applying steps</span>
-          </div>
-          <div className="tx-struct-row">
-            <span className="tx-struct-key">storedMarks</span>
-            <span className="tx-struct-arrow">→</span>
-            <span className="tx-struct-value">Mark[] | null</span>
-            <span className="tx-struct-desc">Marks for next typed character</span>
-          </div>
-          <div className="tx-struct-row">
-            <span className="tx-struct-key">meta</span>
-            <span className="tx-struct-arrow">→</span>
-            <span className="tx-struct-value">Object</span>
-            <span className="tx-struct-desc">Plugin metadata (undo, addToHistory, etc.)</span>
-          </div>
+          <p className='transactions-callout'>
+            <strong>Chaining</strong> — Each method returns the same transaction
+            (mutated in place), so you can chain <code>insertText</code>,{' '}
+            <code>delete</code>, <code>setSelection</code>,{' '}
+            <code>setStoredMarks</code>, and more.
+          </p>
         </div>
       </div>
 
-      <div className="prosemirror-section">
-        <h4>Applying Transactions</h4>
-        <p>
-          <code>state.apply(tr)</code> returns a new EditorState. The view&apos;s{' '}
-          <code>dispatchTransaction</code> callback receives every transaction; you apply it and pass
-          the new state back.
-        </p>
-        <div className="code-snippet">
-          <CodeBlock
-            code={`dispatchTransaction(tr) {
+      <div className='demo-card prosemirror-section'>
+        <div className='card-header'>
+          <h4>What&apos;s in a Transaction</h4>
+        </div>
+        <div className='card-content'>
+          <p>
+            A transaction carries steps (document changes) plus metadata.
+            Plugins read and extend it via <code>tr.getMeta()</code> and{' '}
+            <code>tr.setMeta()</code>.
+          </p>
+          <div className='transactions-structure'>
+            <div className='tx-struct-row'>
+              <span className='tx-struct-key'>steps</span>
+              <span className='tx-struct-arrow'>→</span>
+              <span className='tx-struct-value'>Step[]</span>
+              <span className='tx-struct-desc'>
+                Document edits (replace, insert, delete)
+              </span>
+            </div>
+            <div className='tx-struct-row'>
+              <span className='tx-struct-key'>docChanged</span>
+              <span className='tx-struct-arrow'>→</span>
+              <span className='tx-struct-value'>boolean</span>
+              <span className='tx-struct-desc'>
+                True if steps modify the doc
+              </span>
+            </div>
+            <div className='tx-struct-row'>
+              <span className='tx-struct-key'>selection</span>
+              <span className='tx-struct-arrow'>→</span>
+              <span className='tx-struct-value'>Selection</span>
+              <span className='tx-struct-desc'>
+                New selection after applying steps
+              </span>
+            </div>
+            <div className='tx-struct-row'>
+              <span className='tx-struct-key'>storedMarks</span>
+              <span className='tx-struct-arrow'>→</span>
+              <span className='tx-struct-value'>Mark[] | null</span>
+              <span className='tx-struct-desc'>
+                Marks for next typed character
+              </span>
+            </div>
+            <div className='tx-struct-row'>
+              <span className='tx-struct-key'>meta</span>
+              <span className='tx-struct-arrow'>→</span>
+              <span className='tx-struct-value'>Object</span>
+              <span className='tx-struct-desc'>
+                Plugin metadata (undo, addToHistory, etc.)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='demo-card prosemirror-section'>
+        <div className='card-header'>
+          <h4>Applying Transactions</h4>
+        </div>
+        <div className='card-content'>
+          <p>
+            <code>state.apply(tr)</code> returns a new EditorState. The
+            view&apos;s <code>dispatchTransaction</code> callback receives every
+            transaction; you apply it and pass the new state back.
+          </p>
+          <div className='code-snippet'>
+            <CodeBlock
+              code={`dispatchTransaction(tr) {
   const newState = state.apply(tr);
   state = newState;
   view.updateState(newState);
 }`}
-          />
+            />
+          </div>
+          <p className='section-note'>
+            Transactions enable <strong>undo</strong> (history plugin stores
+            inverse steps) and <strong>collaborative editing</strong> (steps can
+            be sent over the wire and applied remotely).
+          </p>
         </div>
-        <p className="section-note">
-          Transactions enable <strong>undo</strong> (history plugin stores inverse steps) and{' '}
-          <strong>collaborative editing</strong> (steps can be sent over the wire and applied remotely).
-        </p>
       </div>
     </div>
   );

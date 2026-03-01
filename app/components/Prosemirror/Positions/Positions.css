@@ -36,13 +36,11 @@
 
 .positions-tab .prosemirror-section {
   margin-bottom: var(--gap-xl);
-  padding: var(--gap-lg);
 }
 
 .positions-tab .prosemirror-section:last-child {
   margin-bottom: 0;
 }
-
 
 .positions-tab .prosemirror-section h5 {
   font-size: 0.9rem;

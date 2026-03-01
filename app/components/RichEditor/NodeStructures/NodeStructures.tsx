@@ -7,8 +7,12 @@ function sleep(ms: number): Promise<void> {
 }
 
 export default function NodeStructures() {
-  const [arrayStepStates, setArrayStepStates] = useState<Record<number, string>>({});
-  const [linkedStepStates, setLinkedStepStates] = useState<Record<number, string>>({});
+  const [arrayStepStates, setArrayStepStates] = useState<
+    Record<number, string>
+  >({});
+  const [linkedStepStates, setLinkedStepStates] = useState<
+    Record<number, string>
+  >({});
   const [arrayDisabled, setArrayDisabled] = useState(false);
   const [linkedDisabled, setLinkedDisabled] = useState(false);
 
@@ -25,7 +29,10 @@ export default function NodeStructures() {
     setArrayStepStates({});
 
     const nodeMap = arrayDiagramRef.current?.querySelector('.node-map');
-    if (!nodeMap) { setArrayDisabled(false); return; }
+    if (!nodeMap) {
+      setArrayDisabled(false);
+      return;
+    }
 
     // Remove previous inserts
     nodeMap.querySelectorAll('.new-inserted').forEach((n) => n.remove());
@@ -54,7 +61,9 @@ export default function NodeStructures() {
 
     // Step 2: Splice into children array
     setArrayStepStates({ 1: 'completed', 2: 'active' });
-    const p1Entry = nodeMap.querySelector('[data-key="p1"] .children-arr') as HTMLElement;
+    const p1Entry = nodeMap.querySelector(
+      '[data-key="p1"] .children-arr',
+    ) as HTMLElement;
     const originalText = p1Entry?.textContent || '';
 
     if (p1Entry) {
@@ -124,17 +133,27 @@ export default function NodeStructures() {
     setLinkedStepStates({});
 
     const diagram = linkedDiagramRef.current;
-    if (!diagram) { setLinkedDisabled(false); return; }
+    if (!diagram) {
+      setLinkedDisabled(false);
+      return;
+    }
 
     const childrenRow = diagram.querySelector('.children-row');
     const t1 = diagram.querySelector('[data-key="t1"]') as HTMLElement;
     const b1 = diagram.querySelector('[data-key="b1"]') as HTMLElement;
-    const firstArrow = childrenRow?.querySelectorAll('.horizontal-pointer')[0] as HTMLElement;
+    const firstArrow = childrenRow?.querySelectorAll(
+      '.horizontal-pointer',
+    )[0] as HTMLElement;
 
-    if (!childrenRow || !t1 || !b1 || !firstArrow) { setLinkedDisabled(false); return; }
+    if (!childrenRow || !t1 || !b1 || !firstArrow) {
+      setLinkedDisabled(false);
+      return;
+    }
 
     // Reset
-    diagram.querySelectorAll('.linked-node').forEach((n) => (n as HTMLElement).classList.remove('highlight'));
+    diagram
+      .querySelectorAll('.linked-node')
+      .forEach((n) => (n as HTMLElement).classList.remove('highlight'));
     childrenRow.querySelectorAll('.new-inserted').forEach((n) => n.remove());
 
     linkedNodeCountRef.current++;
@@ -145,7 +164,8 @@ export default function NodeStructures() {
 
     const newNode = document.createElement('div');
     newNode.className = 'linked-node text new-inserted new-node';
-    newNode.style.cssText = 'border-color: var(--accent-orange); background: color-mix(in srgb, var(--accent-orange) 20%, transparent); color: var(--accent-orange);';
+    newNode.style.cssText =
+      'border-color: var(--accent-orange); background: color-mix(in srgb, var(--accent-orange) 20%, transparent); color: var(--accent-orange);';
     newNode.innerHTML = '<span>NEW</span><small>"inserted"</small>';
 
     const newArrow = document.createElement('div');
@@ -175,7 +195,12 @@ export default function NodeStructures() {
     b1.classList.remove('highlight');
 
     // Step 4: Done
-    setLinkedStepStates({ 1: 'completed', 2: 'completed', 3: 'completed', 4: 'active' });
+    setLinkedStepStates({
+      1: 'completed',
+      2: 'completed',
+      3: 'completed',
+      4: 'active',
+    });
     newNode.style.boxShadow = '0 0 15px var(--accent-green)';
     newNode.style.borderColor = 'var(--accent-green)';
     await sleep(1000);
@@ -191,7 +216,11 @@ export default function NodeStructures() {
     setLinkedDisabled(false);
   }, []);
 
-  const getOpStepClass = (stepStates: Record<number, string>, step: number, extraClass?: string): string => {
+  const getOpStepClass = (
+    stepStates: Record<number, string>,
+    step: number,
+    extraClass?: string,
+  ): string => {
     const classes = ['op-step'];
     if (extraClass) classes.push(extraClass);
     if (stepStates[step] === 'active') classes.push('active');
@@ -200,118 +229,144 @@ export default function NodeStructures() {
   };
 
   return (
-    <section id="node-structures" className="demo-section active">
-      <div className="demo-header">
+    <section id='node-structures' className='demo-section active'>
+      <div className='demo-header'>
         <h2>Node Data Structures</h2>
-        <p className="demo-subtitle">Comparing Map + Array vs Map + Linked List approaches</p>
+        <p className='demo-subtitle'>
+          Comparing Map + Array vs Map + Linked List approaches
+        </p>
       </div>
 
-      <div className="structure-comparison">
+      <div className='structure-comparison'>
         {/* Array Approach */}
-        <div className="structure-panel" id="array-structure">
-          <div className="panel-header">
+        <div className='demo-card' id='array-structure'>
+          <div className='card-header'>
             <h3>📚 Map with Child Array</h3>
-            <span className="badge badge-blue">Draft.js, Slate.js</span>
+            <span className='badge badge-blue'>Draft.js, Slate.js</span>
           </div>
-
-          <div className="code-snippet">
-            <pre>
-              <code>{`interface ElementNode {
+          <div className='card-content'>
+            <div className='code-snippet'>
+              <pre>
+                <code>{`interface ElementNode {
   children: Array<NodeKey>;
 }`}</code>
-            </pre>
-          </div>
-
-          <div className="node-diagram" id="array-diagram" ref={arrayDiagramRef}>
-            <div className="node-map">
-              <div className="map-title">NodeMap</div>
-              <div className="map-entry" data-key="root">
-                <span className="key">&quot;root&quot;</span>
-                <span className="arrow">→</span>
-                <div className="node-box element">
-                  <span className="node-type">ElementNode</span>
-                  <span className="children-arr">children: [&quot;p1&quot;]</span>
-                </div>
-              </div>
-              <div className="map-entry" data-key="p1">
-                <span className="key">&quot;p1&quot;</span>
-                <span className="arrow">→</span>
-                <div className="node-box element">
-                  <span className="node-type">ElementNode</span>
-                  <span className="children-arr">children: [&quot;t1&quot;, &quot;b1&quot;, &quot;t2&quot;]</span>
-                </div>
-              </div>
-              <div className="map-entry" data-key="t1">
-                <span className="key">&quot;t1&quot;</span>
-                <span className="arrow">→</span>
-                <div className="node-box text">
-                  <span className="node-type">TextNode</span>
-                  <span className="text-content">&quot;Hello &quot;</span>
-                </div>
-              </div>
-              <div className="map-entry" data-key="b1">
-                <span className="key">&quot;b1&quot;</span>
-                <span className="arrow">→</span>
-                <div className="node-box element">
-                  <span className="node-type">ElementNode (bold)</span>
-                  <span className="children-arr">children: [&quot;t3&quot;]</span>
-                </div>
-              </div>
-              <div className="map-entry" data-key="t2">
-                <span className="key">&quot;t2&quot;</span>
-                <span className="arrow">→</span>
-                <div className="node-box text">
-                  <span className="node-type">TextNode</span>
-                  <span className="text-content">&quot; Jane&quot;</span>
-                </div>
-              </div>
-              <div className="map-entry" data-key="t3">
-                <span className="key">&quot;t3&quot;</span>
-                <span className="arrow">→</span>
-                <div className="node-box text">
-                  <span className="node-type">TextNode</span>
-                  <span className="text-content">&quot;World&quot;</span>
-                </div>
-              </div>
+              </pre>
             </div>
-          </div>
 
-          <div className="operation-demo">
-            <h4>Insert Node Operation</h4>
-            <button
-              className="btn btn-sm"
-              onClick={runArrayInsert}
-              disabled={arrayDisabled}
+            <div
+              className='node-diagram'
+              id='array-diagram'
+              ref={arrayDiagramRef}
             >
-              ▶ Animate Insert
-            </button>
-            <div className="operation-steps" id="array-steps">
-              <div className={getOpStepClass(arrayStepStates, 1)} data-step="1">
-                1. Create new node in Map
-              </div>
-              <div className={getOpStepClass(arrayStepStates, 2)} data-step="2">
-                2. Update parent&apos;s children array
-              </div>
-              <div className={getOpStepClass(arrayStepStates, 3, 'highlight-bad')} data-step="3">
-                3. Shift all following indices ⚠️
+              <div className='node-map'>
+                <div className='map-title'>NodeMap</div>
+                <div className='map-entry' data-key='root'>
+                  <span className='key'>&quot;root&quot;</span>
+                  <span className='arrow'>→</span>
+                  <div className='node-box element'>
+                    <span className='node-type'>ElementNode</span>
+                    <span className='children-arr'>
+                      children: [&quot;p1&quot;]
+                    </span>
+                  </div>
+                </div>
+                <div className='map-entry' data-key='p1'>
+                  <span className='key'>&quot;p1&quot;</span>
+                  <span className='arrow'>→</span>
+                  <div className='node-box element'>
+                    <span className='node-type'>ElementNode</span>
+                    <span className='children-arr'>
+                      children: [&quot;t1&quot;, &quot;b1&quot;, &quot;t2&quot;]
+                    </span>
+                  </div>
+                </div>
+                <div className='map-entry' data-key='t1'>
+                  <span className='key'>&quot;t1&quot;</span>
+                  <span className='arrow'>→</span>
+                  <div className='node-box text'>
+                    <span className='node-type'>TextNode</span>
+                    <span className='text-content'>&quot;Hello &quot;</span>
+                  </div>
+                </div>
+                <div className='map-entry' data-key='b1'>
+                  <span className='key'>&quot;b1&quot;</span>
+                  <span className='arrow'>→</span>
+                  <div className='node-box element'>
+                    <span className='node-type'>ElementNode (bold)</span>
+                    <span className='children-arr'>
+                      children: [&quot;t3&quot;]
+                    </span>
+                  </div>
+                </div>
+                <div className='map-entry' data-key='t2'>
+                  <span className='key'>&quot;t2&quot;</span>
+                  <span className='arrow'>→</span>
+                  <div className='node-box text'>
+                    <span className='node-type'>TextNode</span>
+                    <span className='text-content'>&quot; Jane&quot;</span>
+                  </div>
+                </div>
+                <div className='map-entry' data-key='t3'>
+                  <span className='key'>&quot;t3&quot;</span>
+                  <span className='arrow'>→</span>
+                  <div className='node-box text'>
+                    <span className='node-type'>TextNode</span>
+                    <span className='text-content'>&quot;World&quot;</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="complexity-note">
-              <span className="bad">O(n)</span> - Array splice shifts elements
+
+            <div className='operation-demo'>
+              <h4>Insert Node Operation</h4>
+              <button
+                className='btn btn-sm'
+                onClick={runArrayInsert}
+                disabled={arrayDisabled}
+              >
+                ▶ Animate Insert
+              </button>
+              <div className='operation-steps' id='array-steps'>
+                <div
+                  className={getOpStepClass(arrayStepStates, 1)}
+                  data-step='1'
+                >
+                  1. Create new node in Map
+                </div>
+                <div
+                  className={getOpStepClass(arrayStepStates, 2)}
+                  data-step='2'
+                >
+                  2. Update parent&apos;s children array
+                </div>
+                <div
+                  className={getOpStepClass(
+                    arrayStepStates,
+                    3,
+                    'highlight-bad',
+                  )}
+                  data-step='3'
+                >
+                  3. Shift all following indices ⚠️
+                </div>
+              </div>
+              <div className='complexity-note'>
+                <span className='bad'>O(n)</span> - Array splice shifts elements
+              </div>
             </div>
           </div>
         </div>
 
         {/* Linked List Approach */}
-        <div className="structure-panel" id="linked-structure">
-          <div className="panel-header">
+        <div className='demo-card' id='linked-structure'>
+          <div className='card-header'>
             <h3>🔗 Map with Linked List</h3>
-            <span className="badge badge-green">Lexical</span>
+            <span className='badge badge-green'>Lexical</span>
           </div>
-
-          <div className="code-snippet">
-            <pre>
-              <code>{`interface EditorNode {
+          <div className='card-content'>
+            <div className='code-snippet'>
+              <pre>
+                <code>{`interface EditorNode {
   parent: NodeKey | null;
   prev: NodeKey | null;
   next: NodeKey | null;
@@ -320,131 +375,174 @@ interface ElementNode {
   firstChild: NodeKey | null;
   lastChild: NodeKey | null;
 }`}</code>
-            </pre>
-          </div>
-
-          <div className="node-diagram" id="linked-diagram" ref={linkedDiagramRef}>
-            <div className="linked-visual">
-              <div className="linked-row">
-                <div className="linked-node root" data-key="root">root</div>
-              </div>
-              <div className="vertical-pointer">↓ firstChild</div>
-              <div className="linked-row">
-                <div className="linked-node element" data-key="p1">p1</div>
-              </div>
-              <div className="vertical-pointer">↓ firstChild</div>
-              <div className="linked-row children-row">
-                <div className="linked-node text" data-key="t1">
-                  <span>t1</span>
-                  <small>&quot;Hello &quot;</small>
-                </div>
-                <div className="horizontal-pointer">↔</div>
-                <div className="linked-node element" data-key="b1">
-                  <span>b1</span>
-                  <small>bold</small>
-                </div>
-                <div className="horizontal-pointer">↔</div>
-                <div className="linked-node text" data-key="t2">
-                  <span>t2</span>
-                  <small>&quot; Jane&quot;</small>
-                </div>
-              </div>
-              <div className="parent-pointers">
-                <span>↑ parent</span>
-                <span>↑ parent</span>
-                <span>↑ parent</span>
-              </div>
+              </pre>
             </div>
-          </div>
 
-          <div className="operation-demo">
-            <h4>Insert Node Operation</h4>
-            <button
-              className="btn btn-sm btn-green"
-              onClick={runLinkedInsert}
-              disabled={linkedDisabled}
+            <div
+              className='node-diagram'
+              id='linked-diagram'
+              ref={linkedDiagramRef}
             >
-              ▶ Animate Insert
-            </button>
-            <div className="operation-steps" id="linked-steps">
-              <div className={getOpStepClass(linkedStepStates, 1)} data-step="1">
-                1. Create new node in Map
-              </div>
-              <div className={getOpStepClass(linkedStepStates, 2)} data-step="2">
-                2. Update prev.next pointer
-              </div>
-              <div className={getOpStepClass(linkedStepStates, 3)} data-step="3">
-                3. Update next.prev pointer
-              </div>
-              <div className={getOpStepClass(linkedStepStates, 4, 'highlight-good')} data-step="4">
-                4. Done! No shifting needed ✅
+              <div className='linked-visual'>
+                <div className='linked-row'>
+                  <div className='linked-node root' data-key='root'>
+                    root
+                  </div>
+                </div>
+                <div className='vertical-pointer'>↓ firstChild</div>
+                <div className='linked-row'>
+                  <div className='linked-node element' data-key='p1'>
+                    p1
+                  </div>
+                </div>
+                <div className='vertical-pointer'>↓ firstChild</div>
+                <div className='linked-row children-row'>
+                  <div className='linked-node text' data-key='t1'>
+                    <span>t1</span>
+                    <small>&quot;Hello &quot;</small>
+                  </div>
+                  <div className='horizontal-pointer'>↔</div>
+                  <div className='linked-node element' data-key='b1'>
+                    <span>b1</span>
+                    <small>bold</small>
+                  </div>
+                  <div className='horizontal-pointer'>↔</div>
+                  <div className='linked-node text' data-key='t2'>
+                    <span>t2</span>
+                    <small>&quot; Jane&quot;</small>
+                  </div>
+                </div>
+                <div className='parent-pointers'>
+                  <span>↑ parent</span>
+                  <span>↑ parent</span>
+                  <span>↑ parent</span>
+                </div>
               </div>
             </div>
-            <div className="complexity-note">
-              <span className="good">O(1)</span> - Just update pointers
+
+            <div className='operation-demo'>
+              <h4>Insert Node Operation</h4>
+              <button
+                className='btn btn-sm btn-green'
+                onClick={runLinkedInsert}
+                disabled={linkedDisabled}
+              >
+                ▶ Animate Insert
+              </button>
+              <div className='operation-steps' id='linked-steps'>
+                <div
+                  className={getOpStepClass(linkedStepStates, 1)}
+                  data-step='1'
+                >
+                  1. Create new node in Map
+                </div>
+                <div
+                  className={getOpStepClass(linkedStepStates, 2)}
+                  data-step='2'
+                >
+                  2. Update prev.next pointer
+                </div>
+                <div
+                  className={getOpStepClass(linkedStepStates, 3)}
+                  data-step='3'
+                >
+                  3. Update next.prev pointer
+                </div>
+                <div
+                  className={getOpStepClass(
+                    linkedStepStates,
+                    4,
+                    'highlight-good',
+                  )}
+                  data-step='4'
+                >
+                  4. Done! No shifting needed ✅
+                </div>
+              </div>
+              <div className='complexity-note'>
+                <span className='good'>O(1)</span> - Just update pointers
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="comparison-table-container">
-        <h3>📊 Comparison</h3>
-        <table className="comparison-table">
-          <thead>
-            <tr>
-              <th>Operation</th>
-              <th>Array</th>
-              <th>Linked List</th>
-              <th>Winner</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Access node by key</td>
-              <td className="good">O(1)</td>
-              <td className="good">O(1)</td>
-              <td>🤝 Tie</td>
-            </tr>
-            <tr>
-              <td>Insert/Delete child</td>
-              <td className="bad">O(n)</td>
-              <td className="good">O(1)</td>
-              <td>🔗 Linked</td>
-            </tr>
-            <tr>
-              <td>Get children count</td>
-              <td className="good">O(1)</td>
-              <td className="bad">O(n)*</td>
-              <td>📚 Array</td>
-            </tr>
-            <tr>
-              <td>Clone state</td>
-              <td className="good">O(1) shallow</td>
-              <td className="good">O(1) shallow</td>
-              <td>🤝 Tie</td>
-            </tr>
-            <tr>
-              <td>Reparent node</td>
-              <td className="bad">O(n)</td>
-              <td className="good">O(1)</td>
-              <td>🔗 Linked</td>
-            </tr>
-          </tbody>
-        </table>
-        <p className="table-note">* Can be mitigated with cached size field</p>
+      <div className='demo-card'>
+        <div className='card-header'>
+          <h3>📊 Comparison</h3>
+        </div>
+        <div className='card-content'>
+          <table className='comparison-table'>
+            <thead>
+              <tr>
+                <th>Operation</th>
+                <th>Array</th>
+                <th>Linked List</th>
+                <th>Winner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Access node by key</td>
+                <td className='good'>O(1)</td>
+                <td className='good'>O(1)</td>
+                <td>🤝 Tie</td>
+              </tr>
+              <tr>
+                <td>Insert/Delete child</td>
+                <td className='bad'>O(n)</td>
+                <td className='good'>O(1)</td>
+                <td>🔗 Linked</td>
+              </tr>
+              <tr>
+                <td>Get children count</td>
+                <td className='good'>O(1)</td>
+                <td className='bad'>O(n)*</td>
+                <td>📚 Array</td>
+              </tr>
+              <tr>
+                <td>Clone state</td>
+                <td className='good'>O(1) shallow</td>
+                <td className='good'>O(1) shallow</td>
+                <td>🤝 Tie</td>
+              </tr>
+              <tr>
+                <td>Reparent node</td>
+                <td className='bad'>O(n)</td>
+                <td className='good'>O(1)</td>
+                <td>🔗 Linked</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className='table-note'>
+            * Can be mitigated with cached size field
+          </p>
+        </div>
       </div>
 
-      <div className="key-insight">
-        <h3>🎯 Why Lexical Uses Linked Lists</h3>
-        <ul>
-          <li><strong>Rich text editing = frequent inserts/deletes</strong> - O(1) wins</li>
-          <li><strong>Parent pointers</strong> enable easy traversal up the tree</li>
-          <li><strong>Sibling navigation</strong> is instant (next/prev)</li>
-          <li>
-            <strong>API abstraction</strong> - Lexical hid this complexity, allowing migration from arrays
-            to linked lists without breaking changes
-          </li>
-        </ul>
+      <div className='demo-card insight'>
+        <div className='card-header'>
+          <h3>🎯 Why Lexical Uses Linked Lists</h3>
+        </div>
+        <div className='card-content'>
+          <ul>
+            <li>
+              <strong>Rich text editing = frequent inserts/deletes</strong> -
+              O(1) wins
+            </li>
+            <li>
+              <strong>Parent pointers</strong> enable easy traversal up the tree
+            </li>
+            <li>
+              <strong>Sibling navigation</strong> is instant (next/prev)
+            </li>
+            <li>
+              <strong>API abstraction</strong> - Lexical hid this complexity,
+              allowing migration from arrays to linked lists without breaking
+              changes
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
   );

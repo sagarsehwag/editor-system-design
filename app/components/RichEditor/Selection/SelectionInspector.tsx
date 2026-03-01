@@ -22,7 +22,9 @@ function getNodeDescription(node: Node | null): string {
 function isSelectionBackwards(selection: Selection): boolean {
   if (!selection.anchorNode || !selection.focusNode) return false;
 
-  const position = selection.anchorNode.compareDocumentPosition(selection.focusNode);
+  const position = selection.anchorNode.compareDocumentPosition(
+    selection.focusNode,
+  );
 
   if (position === 0) {
     return selection.anchorOffset > selection.focusOffset;
@@ -68,9 +70,15 @@ export default function SelectionInspector() {
     const backwards = isSelectionBackwards(selection);
 
     updateElement(typeRef.current, type);
-    updateElement(anchorNodeRef.current, getNodeDescription(selection.anchorNode));
+    updateElement(
+      anchorNodeRef.current,
+      getNodeDescription(selection.anchorNode),
+    );
     updateElement(anchorOffsetRef.current, selection.anchorOffset.toString());
-    updateElement(focusNodeRef.current, getNodeDescription(selection.focusNode));
+    updateElement(
+      focusNodeRef.current,
+      getNodeDescription(selection.focusNode),
+    );
     updateElement(focusOffsetRef.current, selection.focusOffset.toString());
     updateElement(backwardsRef.current, backwards.toString());
   }, []);
@@ -98,12 +106,17 @@ export default function SelectionInspector() {
     };
 
     document.addEventListener('selectionchange', handleSelectionChange);
-    return () => document.removeEventListener('selectionchange', handleSelectionChange);
+    return () =>
+      document.removeEventListener('selectionchange', handleSelectionChange);
   }, [updateSelectionState]);
 
   function getTextNodes(element: HTMLElement): Text[] {
     const textNodes: Text[] = [];
-    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT,
+      null,
+    );
     let node: Node | null;
     while ((node = walker.nextNode())) {
       if (node.textContent?.trim()) {
@@ -155,7 +168,10 @@ export default function SelectionInspector() {
         const startTarget = startNode.firstChild || startNode;
         const endTarget = endNode.firstChild || endNode;
         range.setStart(startTarget, 0);
-        range.setEnd(endTarget, Math.min(4, (endTarget.textContent || '').length));
+        range.setEnd(
+          endTarget,
+          Math.min(4, (endTarget.textContent || '').length),
+        );
         selection.addRange(range);
       }
 
@@ -165,105 +181,133 @@ export default function SelectionInspector() {
   };
 
   return (
-    <section id="selection" className="demo-section active">
-      <div className="demo-header">
+    <section id='selection' className='demo-section active'>
+      <div className='demo-header'>
         <h2>Selection Inspector</h2>
-        <p className="demo-subtitle">Real-time visualization of the browser&apos;s Selection object</p>
+        <p className='demo-subtitle'>
+          Real-time visualization of the browser&apos;s Selection object
+        </p>
       </div>
 
-      <div className="demo-grid two-cols">
-        <div className="demo-card large">
-          <div className="card-header">
+      <div className='demo-grid two-cols'>
+        <div className='demo-card large'>
+          <div className='card-header'>
             <h3>Select Text Here</h3>
-            <span className="badge badge-blue">Click and drag</span>
+            <span className='badge badge-blue'>Click and drag</span>
           </div>
-          <div className="card-content">
+          <div className='card-content'>
             <div
-              id="selection-editor"
+              id='selection-editor'
               ref={editorRef}
-              className="demo-contenteditable large"
+              className='demo-contenteditable large'
               contentEditable
               suppressContentEditableWarning
             />
-            <div className="selection-actions">
-              <button className="btn btn-secondary" onClick={handleBackwardsSelection}>
+            <div className='selection-actions'>
+              <button
+                className='btn btn-secondary'
+                onClick={handleBackwardsSelection}
+              >
                 Demo Backwards Selection
               </button>
-              <button className="btn btn-secondary" onClick={handleCrossNodeSelection}>
+              <button
+                className='btn btn-secondary'
+                onClick={handleCrossNodeSelection}
+              >
                 Demo Cross-Node Selection
               </button>
             </div>
           </div>
         </div>
 
-        <div className="demo-card large">
-          <div className="card-header">
+        <div className='demo-card large'>
+          <div className='card-header'>
             <h3>Selection Object State</h3>
-            <span className="badge badge-green live-badge">LIVE</span>
+            <span className='badge badge-green live-badge'>LIVE</span>
           </div>
-          <div className="card-content">
-            <div className="state-display">
-              <div className="state-row">
-                <span className="state-label">type:</span>
-                <span className="state-value" ref={typeRef}>&quot;None&quot;</span>
+          <div className='card-content'>
+            <div className='state-display'>
+              <div className='state-row'>
+                <span className='state-label'>type:</span>
+                <span className='state-value' ref={typeRef}>
+                  &quot;None&quot;
+                </span>
               </div>
-              <div className="state-row">
-                <span className="state-label">anchorNode:</span>
-                <span className="state-value" ref={anchorNodeRef}>null</span>
+              <div className='state-row'>
+                <span className='state-label'>anchorNode:</span>
+                <span className='state-value' ref={anchorNodeRef}>
+                  null
+                </span>
               </div>
-              <div className="state-row">
-                <span className="state-label">anchorOffset:</span>
-                <span className="state-value" ref={anchorOffsetRef}>0</span>
+              <div className='state-row'>
+                <span className='state-label'>anchorOffset:</span>
+                <span className='state-value' ref={anchorOffsetRef}>
+                  0
+                </span>
               </div>
-              <div className="state-row">
-                <span className="state-label">focusNode:</span>
-                <span className="state-value" ref={focusNodeRef}>null</span>
+              <div className='state-row'>
+                <span className='state-label'>focusNode:</span>
+                <span className='state-value' ref={focusNodeRef}>
+                  null
+                </span>
               </div>
-              <div className="state-row">
-                <span className="state-label">focusOffset:</span>
-                <span className="state-value" ref={focusOffsetRef}>0</span>
+              <div className='state-row'>
+                <span className='state-label'>focusOffset:</span>
+                <span className='state-value' ref={focusOffsetRef}>
+                  0
+                </span>
               </div>
-              <div className="state-row highlight">
-                <span className="state-label">isBackwards:</span>
-                <span className="state-value" ref={backwardsRef}>false</span>
+              <div className='state-row highlight'>
+                <span className='state-label'>isBackwards:</span>
+                <span className='state-value' ref={backwardsRef}>
+                  false
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="visual-diagram">
-        <h3>📐 Selection Direction Matters!</h3>
-        <div className="direction-demo">
-          <div className="direction-example">
-            <h4>Forward Selection (Left → Right)</h4>
-            <div className="text-with-markers">
-              <span className="marker anchor">anchor</span>
-              <span className="selected-text">Selected Text</span>
-              <span className="marker focus">focus</span>
+      <div className='demo-card'>
+        <div className='card-header'>
+          <h3>📐 Selection Direction Matters!</h3>
+        </div>
+        <div className='card-content'>
+          <div className='direction-demo'>
+            <div className='direction-example'>
+              <h4>Forward Selection (Left → Right)</h4>
+              <div className='text-with-markers'>
+                <span className='marker anchor'>anchor</span>
+                <span className='selected-text'>Selected Text</span>
+                <span className='marker focus'>focus</span>
+              </div>
+              <p>Shift + → extends selection</p>
             </div>
-            <p>Shift + → extends selection</p>
-          </div>
-          <div className="direction-example">
-            <h4>Backward Selection (Right → Left)</h4>
-            <div className="text-with-markers">
-              <span className="marker focus">focus</span>
-              <span className="selected-text">Selected Text</span>
-              <span className="marker anchor">anchor</span>
+            <div className='direction-example'>
+              <h4>Backward Selection (Right → Left)</h4>
+              <div className='text-with-markers'>
+                <span className='marker focus'>focus</span>
+                <span className='selected-text'>Selected Text</span>
+                <span className='marker anchor'>anchor</span>
+              </div>
+              <p>Shift + → shrinks selection!</p>
             </div>
-            <p>Shift + → shrinks selection!</p>
           </div>
         </div>
       </div>
 
-      <div className="key-insight">
-        <h3>🎯 Why This Matters</h3>
-        <p>Rich text editors need to:</p>
-        <ul>
-          <li>Track selection to know WHERE to apply formatting</li>
-          <li>Handle backwards selection for proper keyboard navigation</li>
-          <li>Map browser selection to their internal state model</li>
-        </ul>
+      <div className='demo-card insight'>
+        <div className='card-header'>
+          <h3>🎯 Why This Matters</h3>
+        </div>
+        <div className='card-content'>
+          <p>Rich text editors need to:</p>
+          <ul>
+            <li>Track selection to know WHERE to apply formatting</li>
+            <li>Handle backwards selection for proper keyboard navigation</li>
+            <li>Map browser selection to their internal state model</li>
+          </ul>
+        </div>
       </div>
     </section>
   );

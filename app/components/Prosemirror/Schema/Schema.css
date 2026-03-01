@@ -4,7 +4,6 @@
 
 .schema-tab .prosemirror-section {
     margin-bottom: var(--gap-xl);
-    padding: var(--gap-lg);
 }
 
 .schema-tab .prosemirror-section:last-child {

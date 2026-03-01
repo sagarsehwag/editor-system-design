@@ -38,26 +38,6 @@ export default function ProseMirrorVisualizer() {
 
   return (
     <div className={`viz-root${fullscreen ? ' viz-fullscreen' : ''}`}>
-      {fullscreen && (
-        <button
-          className='viz-fullscreen-close'
-          onClick={exitFullscreen}
-          title='Exit fullscreen (Esc)'
-        >
-          <svg
-            width='20'
-            height='20'
-            viewBox='0 0 20 20'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-          >
-            <line x1='5' y1='5' x2='15' y2='15' />
-            <line x1='15' y1='5' x2='5' y2='15' />
-          </svg>
-        </button>
-      )}
       <Header
         animationEnabled={viz.animationEnabled}
         onToggleAnimation={viz.toggleAnimation}
@@ -66,6 +46,11 @@ export default function ProseMirrorVisualizer() {
         fullscreen={fullscreen}
         onToggleFullscreen={() => setFullscreen((f) => !f)}
       />
+      <p className='viz-subtitle'>
+        Every edit follows the same cycle: a DOM event is intercepted by the
+        EditorView, translated into a Transaction, applied to produce a new
+        immutable EditorState, and rendered back to the DOM.
+      </p>
       <div className='viz-main'>
         <EditorPane
           onEditorReady={onEditorReady}

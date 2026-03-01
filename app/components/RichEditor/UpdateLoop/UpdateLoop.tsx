@@ -114,164 +114,197 @@ export default function UpdateLoop() {
   };
 
   return (
-    <section id="update-loop" className="demo-section active">
-      <div className="demo-header">
+    <section id='update-loop' className='demo-section active'>
+      <div className='demo-header'>
         <h2>Update Loop &amp; Reconciliation</h2>
-        <p className="demo-subtitle">How editors efficiently update the DOM (like React&apos;s Virtual DOM)</p>
+        <p className='demo-subtitle'>
+          How editors efficiently update the DOM (like React&apos;s Virtual DOM)
+        </p>
       </div>
 
-      <div className="update-loop-container">
-        <div className="update-loop-controls">
-          <button
-            className="btn btn-primary"
-            onClick={runAnimation}
-            disabled={isRunning}
-          >
-            {buttonText}
-          </button>
-          <button className="btn btn-secondary" onClick={resetAnimation}>
-            ↺ Reset
-          </button>
-          <span className="speed-control">
-            <label>Speed:</label>
-            <input
-              type="range"
-              min={1}
-              max={5}
-              value={speed}
-              onChange={(e) => setSpeed(Number(e.target.value))}
-            />
-          </span>
+      <div className='demo-card update-loop-container'>
+        <div className='card-header'>
+          <h3>Update Loop Animation</h3>
         </div>
-
-        <div className="update-loop-diagram">
-          {/* Step 1 */}
-          <div className={getStepClass(1)} data-step="1">
-            <div className="step-icon">⌨️</div>
-            <div className="step-content">
-              <h4>1. Intercept Event</h4>
-              <p>User presses a key</p>
-              <div className="step-detail">
-                <code>keydown: &apos;a&apos;</code>
-              </div>
-            </div>
+        <div className='card-content'>
+          <div className='update-loop-controls'>
+            <button
+              className='btn btn-primary'
+              onClick={runAnimation}
+              disabled={isRunning}
+            >
+              {buttonText}
+            </button>
+            <button className='btn btn-secondary' onClick={resetAnimation}>
+              ↺ Reset
+            </button>
+            <span className='speed-control'>
+              <label>Speed:</label>
+              <input
+                type='range'
+                min={1}
+                max={5}
+                value={speed}
+                onChange={(e) => setSpeed(Number(e.target.value))}
+              />
+            </span>
           </div>
 
-          <div className={getArrowClass(1)} data-step="1">→</div>
-
-          {/* Step 2 */}
-          <div className={getStepClass(2)} data-step="2">
-            <div className="step-icon">📋</div>
-            <div className="step-content">
-              <h4>2. Convert to Command</h4>
-              <p>Map event to operation</p>
-              <div className="step-detail">
-                <code>INSERT_TEXT(&apos;a&apos;)</code>
+          <div className='update-loop-diagram'>
+            {/* Step 1 */}
+            <div className={getStepClass(1)} data-step='1'>
+              <div className='step-icon'>⌨️</div>
+              <div className='step-content'>
+                <h4>1. Intercept Event</h4>
+                <p>User presses a key</p>
+                <div className='step-detail'>
+                  <code>keydown: &apos;a&apos;</code>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className={getArrowClass(2)} data-step="2">→</div>
+            <div className={getArrowClass(1)} data-step='1'>
+              →
+            </div>
 
-          {/* Step 3 */}
-          <div className={getStepClass(3)} data-step="3">
-            <div className="step-icon">📑</div>
-            <div className="step-content">
-              <h4>3. Clone State</h4>
-              <p>Copy current state</p>
-              <div className="step-detail clone-visual">
-                <div className="state-box original">Current</div>
-                <span className="clone-arrow">→</span>
-                <div className="state-box pending">Pending</div>
+            {/* Step 2 */}
+            <div className={getStepClass(2)} data-step='2'>
+              <div className='step-icon'>📋</div>
+              <div className='step-content'>
+                <h4>2. Convert to Command</h4>
+                <p>Map event to operation</p>
+                <div className='step-detail'>
+                  <code>INSERT_TEXT(&apos;a&apos;)</code>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className={getArrowClass(3)} data-step="3">→</div>
+            <div className={getArrowClass(2)} data-step='2'>
+              →
+            </div>
 
-          {/* Step 4 */}
-          <div className={getStepClass(4)} data-step="4">
-            <div className="step-icon">✏️</div>
-            <div className="step-content">
-              <h4>4. Modify Clone</h4>
-              <p>Apply command to pending state</p>
-              <div className="step-detail">
-                <code>&quot;Hello&quot; → &quot;Helloa&quot;</code>
+            {/* Step 3 */}
+            <div className={getStepClass(3)} data-step='3'>
+              <div className='step-icon'>📑</div>
+              <div className='step-content'>
+                <h4>3. Clone State</h4>
+                <p>Copy current state</p>
+                <div className='step-detail clone-visual'>
+                  <div className='state-box original'>Current</div>
+                  <span className='clone-arrow'>→</span>
+                  <div className='state-box pending'>Pending</div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div className="update-loop-diagram row-2">
-          {/* Step 5 */}
-          <div className={getStepClass(5)} data-step="5">
-            <div className="step-icon">🔍</div>
-            <div className="step-content">
-              <h4>5. Reconcile (Diff)</h4>
-              <p>Compare states to find minimum changes</p>
-              <div className="step-detail diff-visual">
-                <div className="diff-box">
-                  <div className="diff-line unchanged">{'{ type: "text",'}</div>
-                  <div className="diff-line removed">{' text: "Hello"'}</div>
-                  <div className="diff-line added">{' text: "Helloa"'}</div>
-                  <div className="diff-line unchanged">{'}'}</div>
+            <div className={getArrowClass(3)} data-step='3'>
+              →
+            </div>
+
+            {/* Step 4 */}
+            <div className={getStepClass(4)} data-step='4'>
+              <div className='step-icon'>✏️</div>
+              <div className='step-content'>
+                <h4>4. Modify Clone</h4>
+                <p>Apply command to pending state</p>
+                <div className='step-detail'>
+                  <code>&quot;Hello&quot; → &quot;Helloa&quot;</code>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className={getArrowClass(5)} data-step="5">→</div>
+          <div className='update-loop-diagram row-2'>
+            {/* Step 5 */}
+            <div className={getStepClass(5)} data-step='5'>
+              <div className='step-icon'>🔍</div>
+              <div className='step-content'>
+                <h4>5. Reconcile (Diff)</h4>
+                <p>Compare states to find minimum changes</p>
+                <div className='step-detail diff-visual'>
+                  <div className='diff-box'>
+                    <div className='diff-line unchanged'>
+                      {'{ type: "text",'}
+                    </div>
+                    <div className='diff-line removed'>{' text: "Hello"'}</div>
+                    <div className='diff-line added'>{' text: "Helloa"'}</div>
+                    <div className='diff-line unchanged'>{'}'}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          {/* Step 6 */}
-          <div className={getStepClass(6)} data-step="6">
-            <div className="step-icon">🖥️</div>
-            <div className="step-content">
-              <h4>6. Update DOM</h4>
-              <p>Apply only the necessary changes</p>
-              <div className="step-detail dom-update-visual">
-                <div className="dom-node">
-                  textNode.<span className="highlight">textContent</span> = &quot;Helloa&quot;
+            <div className={getArrowClass(5)} data-step='5'>
+              →
+            </div>
+
+            {/* Step 6 */}
+            <div className={getStepClass(6)} data-step='6'>
+              <div className='step-icon'>🖥️</div>
+              <div className='step-content'>
+                <h4>6. Update DOM</h4>
+                <p>Apply only the necessary changes</p>
+                <div className='step-detail dom-update-visual'>
+                  <div className='dom-node'>
+                    textNode.<span className='highlight'>textContent</span> =
+                    &quot;Helloa&quot;
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="update-loop-comparison">
-          <h3>Why Not Just Replace Everything?</h3>
-          <div className="comparison-grid">
-            <div className="comparison-bad">
-              <h4>❌ Naive Approach</h4>
-              <code>container.innerHTML = newHTML</code>
-              <ul>
-                <li>Destroys all nodes</li>
-                <li>Loses selection/focus</li>
-                <li>Slow for large documents</li>
-              </ul>
-            </div>
-            <div className="comparison-good">
-              <h4>✅ Reconciliation</h4>
-              <code>node.textContent = &quot;Helloa&quot;</code>
-              <ul>
-                <li>Minimal DOM changes</li>
-                <li>Preserves selection</li>
-                <li>Fast &amp; efficient</li>
-              </ul>
+          <div className='update-loop-comparison'>
+            <h3>Why Not Just Replace Everything?</h3>
+            <div className='comparison-grid'>
+              <div className='comparison-bad'>
+                <h4>❌ Naive Approach</h4>
+                <code>container.innerHTML = newHTML</code>
+                <ul>
+                  <li>Destroys all nodes</li>
+                  <li>Loses selection/focus</li>
+                  <li>Slow for large documents</li>
+                </ul>
+              </div>
+              <div className='comparison-good'>
+                <h4>✅ Reconciliation</h4>
+                <code>node.textContent = &quot;Helloa&quot;</code>
+                <ul>
+                  <li>Minimal DOM changes</li>
+                  <li>Preserves selection</li>
+                  <li>Fast &amp; efficient</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="key-insight">
-        <h3>🎯 Just Like React!</h3>
-        <p>This update flow is exactly how React&apos;s Virtual DOM works:</p>
-        <ul>
-          <li><strong>State change</strong> triggers an update</li>
-          <li><strong>New virtual tree</strong> is created</li>
-          <li><strong>Diff algorithm</strong> compares old vs new</li>
-          <li><strong>Minimal patches</strong> applied to real DOM</li>
-        </ul>
-        <p className="solution">Lexical implements its own DOM reconciliation that&apos;s independent of React!</p>
+      <div className='demo-card insight'>
+        <div className='card-header'>
+          <h3>🎯 Just Like React!</h3>
+        </div>
+        <div className='card-content'>
+          <p>This update flow is exactly how React&apos;s Virtual DOM works:</p>
+          <ul>
+            <li>
+              <strong>State change</strong> triggers an update
+            </li>
+            <li>
+              <strong>New virtual tree</strong> is created
+            </li>
+            <li>
+              <strong>Diff algorithm</strong> compares old vs new
+            </li>
+            <li>
+              <strong>Minimal patches</strong> applied to real DOM
+            </li>
+          </ul>
+          <p className='solution'>
+            Lexical implements its own DOM reconciliation that&apos;s
+            independent of React!
+          </p>
+        </div>
       </div>
     </section>
   );

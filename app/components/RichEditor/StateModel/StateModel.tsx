@@ -23,10 +23,22 @@ function syntaxHighlight(json: string): string {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"([^"]+)":/g, '<span style="color: var(--accent-purple)">"$1"</span>:')
-    .replace(/: "([^"]*)"/g, ': <span style="color: var(--accent-green)">"$1"</span>')
-    .replace(/: (\d+)/g, ': <span style="color: var(--accent-orange)">$1</span>')
-    .replace(/: (true|false)/g, ': <span style="color: var(--accent-blue)">$1</span>')
+    .replace(
+      /"([^"]+)":/g,
+      '<span style="color: var(--accent-purple)">"$1"</span>:',
+    )
+    .replace(
+      /: "([^"]*)"/g,
+      ': <span style="color: var(--accent-green)">"$1"</span>',
+    )
+    .replace(
+      /: (\d+)/g,
+      ': <span style="color: var(--accent-orange)">$1</span>',
+    )
+    .replace(
+      /: (true|false)/g,
+      ': <span style="color: var(--accent-blue)">$1</span>',
+    )
     .replace(/\[\]/g, '<span style="color: var(--text-muted)">[]</span>');
 }
 
@@ -40,7 +52,15 @@ export default function StateModel() {
   const parseContentToState = useCallback((): RootNode => {
     const editor = editorRef.current;
     if (!editor) {
-      return { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', text: '', format: [] }] }] };
+      return {
+        type: 'root',
+        children: [
+          {
+            type: 'paragraph',
+            children: [{ type: 'text', text: '', format: [] }],
+          },
+        ],
+      };
     }
 
     const state: RootNode = { type: 'root', children: [] };
@@ -156,44 +176,46 @@ export default function StateModel() {
   };
 
   return (
-    <section id="state" className="demo-section active">
-      <div className="demo-header">
+    <section id='state' className='demo-section active'>
+      <div className='demo-header'>
         <h2>State Model &amp; Formatting</h2>
-        <p className="demo-subtitle">How editors represent content internally (not as raw HTML)</p>
+        <p className='demo-subtitle'>
+          How editors represent content internally (not as raw HTML)
+        </p>
       </div>
 
-      <div className="demo-grid two-cols">
-        <div className="demo-card large">
-          <div className="card-header">
+      <div className='demo-grid two-cols'>
+        <div className='demo-card large'>
+          <div className='card-header'>
             <h3>Editor (Type here)</h3>
-            <div className="toolbar">
+            <div className='toolbar'>
               <button
                 className={`toolbar-btn ${boldActive ? 'active' : ''}`}
-                title="Bold"
+                title='Bold'
                 onClick={handleBold}
               >
                 B
               </button>
               <button
                 className={`toolbar-btn ${italicActive ? 'active' : ''}`}
-                title="Italic"
+                title='Italic'
                 onClick={handleItalic}
               >
                 <em>I</em>
               </button>
               <button
                 className={`toolbar-btn ${underlineActive ? 'active' : ''}`}
-                title="Underline"
+                title='Underline'
                 onClick={handleUnderline}
               >
                 <u>U</u>
               </button>
             </div>
           </div>
-          <div className="card-content">
+          <div className='card-content'>
             <div
               ref={editorRef}
-              className="demo-contenteditable large"
+              className='demo-contenteditable large'
               contentEditable
               suppressContentEditableWarning
               onInput={handleInput}
@@ -204,90 +226,119 @@ export default function StateModel() {
           </div>
         </div>
 
-        <div className="demo-card large">
-          <div className="card-header">
+        <div className='demo-card large'>
+          <div className='card-header'>
             <h3>Internal State Model</h3>
-            <span className="badge badge-green live-badge">LIVE</span>
+            <span className='badge badge-green live-badge'>LIVE</span>
           </div>
-          <div className="card-content">
-            <pre className="code-output json">
+          <div className='card-content'>
+            <pre className='code-output json'>
               <code dangerouslySetInnerHTML={{ __html: stateHtml }} />
             </pre>
           </div>
         </div>
       </div>
 
-      <div className="formatting-demo-section">
-        <h3>🎨 How Formatting Works</h3>
-        <div className="format-example">
-          <p>
-            For the text: <strong>Tarzan</strong> <strong><u>and</u></strong> <u>Jane</u>
-          </p>
+      <div className='demo-card'>
+        <div className='card-header'>
+          <h3>🎨 How Formatting Works</h3>
+        </div>
+        <div className='card-content'>
+          <div className='format-example'>
+            <p>
+              For the text: <strong>Tarzan</strong>{' '}
+              <strong>
+                <u>and</u>
+              </strong>{' '}
+              <u>Jane</u>
+            </p>
 
-          <div className="approach-comparison">
-            <div className="approach">
-              <h4>❌ Nested Tags (Complex)</h4>
-              <pre>
-                <code>
-                  {`<strong>Tarzan <u>and</u></strong><u> Jane</u>`}
-                </code>
-              </pre>
-              <p className="con">Hard to edit - need to manage nesting!</p>
-            </div>
-            <div className="approach preferred">
-              <h4>✅ Flat Text Nodes (Lexical&apos;s Approach)</h4>
-              <pre>
-                <code>
-{`[
+            <div className='approach-comparison'>
+              <div className='approach'>
+                <h4>❌ Nested Tags (Complex)</h4>
+                <pre>
+                  <code>
+                    {`<strong>Tarzan <u>and</u></strong><u> Jane</u>`}
+                  </code>
+                </pre>
+                <p className='con'>Hard to edit - need to manage nesting!</p>
+              </div>
+              <div className='approach preferred'>
+                <h4>✅ Flat Text Nodes (Lexical&apos;s Approach)</h4>
+                <pre>
+                  <code>
+                    {`[
   { text: "Tarzan ", format: ["bold"] },
   { text: "and", format: ["bold", "underline"] },
   { text: " Jane", format: ["underline"] }
 ]`}
-                </code>
-              </pre>
-              <p className="pro">Easy to edit - just update format arrays!</p>
+                  </code>
+                </pre>
+                <p className='pro'>Easy to edit - just update format arrays!</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="tree-visualization">
-        <h3>🌳 Node Tree Structure</h3>
-        <div className="tree">
-          <div className="tree-node root">
-            <span>Root</span>
-            <div className="tree-children">
-              <div className="tree-node element">
-                <span>Paragraph</span>
-                <div className="tree-children">
-                  <div className="tree-node text">
-                    <span>&quot;Hello &quot;</span>
-                    <span className="format-tag">bold</span>
-                  </div>
-                  <div className="tree-node text">
-                    <span>&quot;World&quot;</span>
+      <div className='demo-card'>
+        <div className='card-header'>
+          <h3>🌳 Node Tree Structure</h3>
+        </div>
+        <div className='card-content'>
+          <div className='tree'>
+            <div className='tree-node root'>
+              <span>Root</span>
+              <div className='tree-children'>
+                <div className='tree-node element'>
+                  <span>Paragraph</span>
+                  <div className='tree-children'>
+                    <div className='tree-node text'>
+                      <span>&quot;Hello &quot;</span>
+                      <span className='format-tag'>bold</span>
+                    </div>
+                    <div className='tree-node text'>
+                      <span>&quot;World&quot;</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <p className='tree-legend'>
+            <span className='legend-item root'>Root Node</span>
+            <span className='legend-item element'>Element Node</span>
+            <span className='legend-item text'>Text Node (leaf)</span>
+          </p>
         </div>
-        <p className="tree-legend">
-          <span className="legend-item root">Root Node</span>
-          <span className="legend-item element">Element Node</span>
-          <span className="legend-item text">Text Node (leaf)</span>
-        </p>
       </div>
 
-      <div className="key-insight">
-        <h3>🎯 Why Use a Custom State Model?</h3>
-        <ul>
-          <li><strong>Portability:</strong> Same data can render on web, mobile, etc.</li>
-          <li><strong>Safety:</strong> No raw HTML = no XSS vulnerabilities</li>
-          <li><strong>Undo/Redo:</strong> Easy to snapshot and restore states</li>
-          <li><strong>Testing:</strong> Can test logic without a browser (headless)</li>
-          <li><strong>Tamper-proof:</strong> Browser extensions can&apos;t corrupt your source of truth</li>
-        </ul>
+      <div className='demo-card insight'>
+        <div className='card-header'>
+          <h3>🎯 Why Use a Custom State Model?</h3>
+        </div>
+        <div className='card-content'>
+          <ul>
+            <li>
+              <strong>Portability:</strong> Same data can render on web, mobile,
+              etc.
+            </li>
+            <li>
+              <strong>Safety:</strong> No raw HTML = no XSS vulnerabilities
+            </li>
+            <li>
+              <strong>Undo/Redo:</strong> Easy to snapshot and restore states
+            </li>
+            <li>
+              <strong>Testing:</strong> Can test logic without a browser
+              (headless)
+            </li>
+            <li>
+              <strong>Tamper-proof:</strong> Browser extensions can&apos;t
+              corrupt your source of truth
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
   );

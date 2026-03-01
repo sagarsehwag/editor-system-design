@@ -1,21 +1,14 @@
 /* Plugins tab - unified formatting */
 .plugins-tab {
-  font-family:
-    'Inter',
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
 }
 
 .plugins-tab .prosemirror-section {
   margin-bottom: var(--gap-xl);
-  padding: var(--gap-lg);
 }
 
 .plugins-tab .prosemirror-section:last-child {
   margin-bottom: 0;
 }
-
 
 .plugins-tab .prosemirror-section p {
   font-size: 0.9rem;
@@ -214,10 +207,6 @@
 }
 
 @media (max-width: 768px) {
-  .plugins-tab .prosemirror-section {
-    padding: var(--gap-md);
-  }
-
   .plugins-tab .plugins-spec-grid,
   .plugins-tab .plugins-list {
     grid-template-columns: 1fr;

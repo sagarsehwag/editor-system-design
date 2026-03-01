@@ -1,17 +1,14 @@
 /* Transform tab - unified formatting (matches State, View tabs) */
 .transactions-tab {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .transactions-tab .prosemirror-section {
   margin-bottom: var(--gap-xl);
-  padding: var(--gap-lg);
 }
 
 .transactions-tab .prosemirror-section:last-child {
   margin-bottom: 0;
 }
-
 
 .transactions-tab .prosemirror-section p {
   font-size: 0.9rem;
@@ -128,7 +125,7 @@
   color: var(--text-secondary);
 }
 
-.transactions-tab .update-loop-controls .speed-control input[type="range"] {
+.transactions-tab .update-loop-controls .speed-control input[type='range'] {
   width: 80px;
   accent-color: var(--accent-blue);
 }
@@ -280,10 +277,6 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .transactions-tab .prosemirror-section {
-    padding: var(--gap-md);
-  }
-
   .transactions-tab .update-loop-diagram {
     flex-direction: column;
     align-items: center;
@@ -313,7 +306,7 @@
   }
 
   .transactions-tab .flow-arrow::before {
-    content: "↓";
+    content: '↓';
     font-size: 1.25rem;
     color: inherit;
     opacity: inherit;

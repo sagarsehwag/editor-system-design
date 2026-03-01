@@ -4,12 +4,16 @@ import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import type { ProseMirrorTab } from '../Prosemirror';
-import { useTheme } from '../ThemeProvider';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 const ICON_SRC = `${BASE_PATH}/prosemirror-icon.svg`;
 
-const PROSEMIRROR_SECTIONS: { id: ProseMirrorTab; icon: string; label: string; badge?: string }[] = [
+const PROSEMIRROR_SECTIONS: {
+  id: ProseMirrorTab;
+  icon: string;
+  label: string;
+  badge?: string;
+}[] = [
   { id: 'overview', icon: '📋', label: 'Overview' },
   { id: 'schema', icon: '📄', label: 'Model' },
   { id: 'state', icon: '📦', label: 'State' },
@@ -34,8 +38,10 @@ interface UnifiedSidebarProps {
   onToggle: () => void;
 }
 
-export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps) {
-  const { theme, toggleTheme } = useTheme();
+export default function UnifiedSidebar({
+  isOpen,
+  onToggle,
+}: UnifiedSidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -53,7 +59,7 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
         onToggle();
       }
     },
-    [router, onToggle]
+    [router, onToggle],
   );
 
   useEffect(() => {
@@ -74,81 +80,96 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
         aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={isOpen}
       >
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
+        <span className='hamburger-line' />
+        <span className='hamburger-line' />
+        <span className='hamburger-line' />
       </button>
 
-      {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
+      {isOpen && <div className='sidebar-overlay' onClick={onToggle} />}
 
       <nav
         className={`sidebar unified-sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}
       >
-        <div className="sidebar-header">
-          <button className="sidebar-collapsed-logo" onClick={onToggle} aria-label="Expand sidebar">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="18" x2="21" y2="18" />
+        <div className='sidebar-header'>
+          <button
+            className='sidebar-collapsed-logo'
+            onClick={onToggle}
+            aria-label='Expand sidebar'
+          >
+            <svg
+              width='20'
+              height='20'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            >
+              <line x1='3' y1='6' x2='21' y2='6' />
+              <line x1='3' y1='12' x2='21' y2='12' />
+              <line x1='3' y1='18' x2='21' y2='18' />
             </svg>
           </button>
-          <div className="sidebar-header-content">
+          <div className='sidebar-header-content'>
             <h1>Editor · ProseMirror</h1>
-            <p className="subtitle">How ProseMirror and rich text editors work</p>
+            <p className='subtitle'>
+              How ProseMirror and rich text editors work
+            </p>
           </div>
           <button
-            className="sidebar-collapse-btn"
+            className='sidebar-collapse-btn'
             onClick={onToggle}
             aria-label={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
             title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
             {isOpen ? (
               <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
                 aria-hidden
               >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
+                <line x1='18' y1='6' x2='6' y2='18' />
+                <line x1='6' y1='6' x2='18' y2='18' />
               </svg>
             ) : (
               <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='2'
+                strokeLinecap='round'
+                strokeLinejoin='round'
                 aria-hidden
               >
-                <polyline points="9 18 15 12 9 6" />
+                <polyline points='9 18 15 12 9 6' />
               </svg>
             )}
           </button>
         </div>
 
-        <div className="unified-nav-sections">
+        <div className='unified-nav-sections'>
           {/* ProseMirror - Main nav */}
-          <div className="nav-section">
+          <div className='nav-section'>
             <Link
               href={prosemirrorBase}
               className={`nav-section-header ${isProseMirror ? 'active' : ''}`}
             >
-              <span className="nav-icon nav-icon-img">
-                <img src={ICON_SRC} alt="" width={20} height={20} />
+              <span className='nav-icon nav-icon-img'>
+                <img src={ICON_SRC} alt='' width={20} height={20} />
               </span>
               <span>Prosemirror</span>
             </Link>
             {isProseMirror && (
-              <ul className="nav-list nav-sublist">
+              <ul className='nav-list nav-sublist'>
                 {PROSEMIRROR_SECTIONS.map((item) => (
                   <li
                     key={item.id}
@@ -157,15 +178,17 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
                     }`}
                   >
                     <button
-                      type="button"
-                      className="nav-link"
+                      type='button'
+                      className='nav-link'
                       onClick={() =>
                         handleNavItemClick(`${prosemirrorBase}?tab=${item.id}`)
                       }
                     >
-                      <span className="nav-icon">{item.icon}</span>
+                      <span className='nav-icon'>{item.icon}</span>
                       <span>{item.label}</span>
-                      {item.badge && <span className="nav-badge">{item.badge}</span>}
+                      {item.badge && (
+                        <span className='nav-badge'>{item.badge}</span>
+                      )}
                     </button>
                   </li>
                 ))}
@@ -174,29 +197,29 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
           </div>
 
           {/* Rich Text Editor - Tab */}
-          <div className="nav-section">
+          <div className='nav-section'>
             <Link
-              href="/rich-text-editor?tab=rendering"
+              href='/rich-text-editor?tab=rendering'
               className={`nav-section-header ${isRichTextEditor ? 'active' : ''}`}
             >
-              <span className="nav-icon">📝</span>
+              <span className='nav-icon'>📝</span>
               <span>Rich Text Editor</span>
             </Link>
             {isRichTextEditor && (
-              <ul className="nav-list nav-sublist">
+              <ul className='nav-list nav-sublist'>
                 {RICH_TEXT_DEMOS.map((item) => (
                   <li
                     key={item.id}
                     className={`nav-item ${activeDemo === item.id ? 'active' : ''}`}
                   >
                     <button
-                      type="button"
-                      className="nav-link"
+                      type='button'
+                      className='nav-link'
                       onClick={() =>
                         handleNavItemClick(`/rich-text-editor?tab=${item.id}`)
                       }
                     >
-                      <span className="nav-icon">{item.icon}</span>
+                      <span className='nav-icon'>{item.icon}</span>
                       <span>{item.label}</span>
                     </button>
                   </li>
@@ -204,25 +227,6 @@ export default function UnifiedSidebar({ isOpen, onToggle }: UnifiedSidebarProps
               </ul>
             )}
           </div>
-        </div>
-
-        <div className="sidebar-footer">
-          <button className="theme-toggle-btn" onClick={toggleTheme} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
-            {theme === 'dark' ? (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="5" />
-                <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </svg>
-            ) : (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
-            )}
-            <span>{ theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
         </div>
       </nav>
     </>

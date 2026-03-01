@@ -5,20 +5,10 @@
    Root — gradient card container matching pm-flow-diagram
    ============================================================ */
 .viz-root {
-  background: linear-gradient(
-    180deg,
-    var(--bg-tertiary) 0%,
-    var(--gradient-end) 100%
-  );
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
   color: var(--text-primary);
-  font-family:
-    'Inter',
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
@@ -37,6 +27,7 @@
   max-height: 100vh;
   overflow-y: auto;
 }
+
 
 .viz-fullscreen-close {
   position: absolute;
@@ -68,9 +59,8 @@
    Header — matches pm-flow-header
    ============================================================ */
 .viz-header {
-  padding: var(--gap-md);
-  padding-bottom: var(--gap-sm);
-  margin-bottom: var(--gap-md);
+  padding: var(--card-padding);
+  border-bottom: 1px solid var(--border-color);
   min-width: 0;
 }
 
@@ -245,11 +235,10 @@ button.viz-hdr-chip {
 }
 
 .viz-title {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: var(--gap-sm);
-  letter-spacing: -0.02em;
+  margin: 0;
 }
 
 .viz-title-accent {
@@ -260,9 +249,8 @@ button.viz-hdr-chip {
   font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.5;
-  display: flex;
-  align-items: center;
-  gap: var(--gap-sm);
+  margin: 0;
+  padding: var(--card-padding);
 }
 
 /* (viz-badge removed — status is now in header controls) */
@@ -344,7 +332,6 @@ button.viz-hdr-chip {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   border-radius: var(--radius-sm);
@@ -753,8 +740,16 @@ button.viz-hdr-chip {
 .viz-state-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2px;
+  padding-bottom: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+  border-bottom: 1px solid var(--border-color);
   gap: var(--gap-sm);
+}
+
+.viz-state-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .viz-k {
@@ -1362,7 +1357,6 @@ button.viz-hdr-chip {
   margin-left: auto;
   flex-shrink: 0;
   padding: 0.25rem 0.6rem;
-  font-family: 'Inter', sans-serif;
   font-size: 0.7rem;
   font-weight: 500;
   border: 1px solid var(--border-color);
@@ -1690,7 +1684,6 @@ button.viz-hdr-chip {
    Responsive: Small mobile (480px)
    ============================================================ */
 @media (max-width: 480px) {
-
   .viz-lc-card {
     flex: 0 0 100%;
     padding: var(--gap-sm);
