@@ -411,6 +411,31 @@
     margin-bottom: 0;
 }
 
+.overview-libraries .demo-card .card-header {
+    padding: 0.85rem 1rem;
+}
+
+.overview-libraries .demo-card .card-header h3 {
+    font-size: 0.9rem;
+}
+
+.overview-libraries .demo-card .card-content {
+    padding: 0.85rem 1rem;
+}
+
+.overview-libraries .demo-card .card-content p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.overview-libraries .demo-card .card-footer {
+    padding: 0.7rem 1rem;
+}
+
+.overview-libraries .demo-card .card-footer li {
+    font-size: 0.8rem;
+}
+
 .overview-libraries-header {
     margin-bottom: var(--gap-lg);
 }
