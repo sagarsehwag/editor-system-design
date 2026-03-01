@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
+import { Keyboard, Clipboard, Pencil, Copy, Monitor } from 'lucide-react';
 import { CodeBlock, Code, Card, CardHeader, CardContent, Button } from '../../ui';
 
 export default function ProseMirrorTransactions() {
@@ -164,7 +165,7 @@ export default function ProseMirrorTransactions() {
             </div>
             <div className='update-loop-diagram'>
               <div className={getTxStepClass(1)}>
-                <div className='step-icon'>⌨️</div>
+                <div className='step-icon'><Keyboard size={18} strokeWidth={2} /></div>
                 <div className='step-content'>
                   <h4>1. User Input</h4>
                   <p>Keypress, paste, etc.</p>
@@ -172,7 +173,7 @@ export default function ProseMirrorTransactions() {
               </div>
               <div className={getTxArrowClass(1)}>→</div>
               <div className={getTxStepClass(2)}>
-                <div className='step-icon'>📋</div>
+                <div className='step-icon'><Clipboard size={18} strokeWidth={2} /></div>
                 <div className='step-content'>
                   <h4>2. Transaction</h4>
                   <p>Create transaction with steps</p>
@@ -180,7 +181,7 @@ export default function ProseMirrorTransactions() {
               </div>
               <div className={getTxArrowClass(2)}>→</div>
               <div className={getTxStepClass(3)}>
-                <div className='step-icon'>✏️</div>
+                <div className='step-icon'><Pencil size={18} strokeWidth={2} /></div>
                 <div className='step-content'>
                   <h4>3. Apply Steps</h4>
                   <p>Transform doc via steps</p>
@@ -188,7 +189,7 @@ export default function ProseMirrorTransactions() {
               </div>
               <div className={getTxArrowClass(3)}>→</div>
               <div className={getTxStepClass(4)}>
-                <div className='step-icon'>📑</div>
+                <div className='step-icon'><Copy size={18} strokeWidth={2} /></div>
                 <div className='step-content'>
                   <h4>4. New State</h4>
                   <p>Immutable state update</p>
@@ -196,7 +197,7 @@ export default function ProseMirrorTransactions() {
               </div>
               <div className={getTxArrowClass(4)}>→</div>
               <div className={getTxStepClass(5)}>
-                <div className='step-icon'>🖥️</div>
+                <div className='step-icon'><Monitor size={18} strokeWidth={2} /></div>
                 <div className='step-content'>
                   <h4>5. Update View</h4>
                   <p>Diff &amp; patch DOM</p>

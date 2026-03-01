@@ -139,7 +139,7 @@ const COMPARISON_ROWS: TableRow[] = [
   {
     approach: <Code>DOM + Fake Cursor</Code>,
     richFormatting: '✅ Yes',
-    cursors: '⚙️ Custom',
+    cursors: 'Custom',
     implementation: 'High',
     usedBy: 'Rarely used',
     _cellClassNames: {
@@ -164,7 +164,7 @@ const COMPARISON_ROWS: TableRow[] = [
   {
     approach: <Code>&lt;canvas&gt;</Code>,
     richFormatting: '✅ Custom',
-    cursors: '⚙️ Custom',
+    cursors: 'Custom',
     implementation: 'Very High',
     usedBy: 'Google Docs',
     _cellClassNames: {

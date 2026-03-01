@@ -2,7 +2,7 @@
 
 import React from 'react';
 import type { TransactionRecord } from './types';
-import { describeTransaction } from './utils';
+import { describeTransaction, TX_ICON_MAP } from './utils';
 import { StepChips } from './StepChips';
 import { JsonHighlight, DocDiffView, DomDiffView } from '../../ui';
 import { useFlash } from './hooks/useFlash';
@@ -27,9 +27,12 @@ const STEP_TO_PANEL: Record<number, PanelId> = {
 
 function WhatHappened({ tx }: { tx: TransactionRecord }) {
   const desc = describeTransaction(tx);
+  const Icon = TX_ICON_MAP[desc.iconKey];
   return (
     <div className={`viz-what-happened viz-what-${desc.color}`}>
-      <span className='viz-what-icon'>{desc.icon}</span>
+      <span className='viz-what-icon'>
+        <Icon size={18} strokeWidth={2} />
+      </span>
       <div className='viz-what-text'>
         <span className='viz-what-action'>{desc.action}</span>
         <span className='viz-what-detail'>{desc.detail}</span>

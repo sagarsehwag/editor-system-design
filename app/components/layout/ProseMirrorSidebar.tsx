@@ -2,17 +2,33 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import {
+  LayoutList,
+  FileJson,
+  Package,
+  RefreshCw,
+  Eye,
+  Crosshair,
+  Puzzle,
+  Paperclip,
+  X,
+  ChevronLeft,
+  Menu,
+  type LucideIcon,
+} from 'lucide-react';
 import type { ProseMirrorTab } from '../Prosemirror';
 
-const SECTIONS: { id: ProseMirrorTab; icon: string; label: string; badge?: string }[] = [
-  { id: 'overview', icon: '📋', label: 'Overview' },
-  { id: 'schema', icon: '📄', label: 'Model' },
-  { id: 'state', icon: '📦', label: 'State' },
-  { id: 'transform', icon: '🔄', label: 'Transform' },
-  { id: 'view', icon: '👁', label: 'View' },
-  { id: 'positions', icon: '📍', label: 'Positions & Selection' },
-  { id: 'plugins', icon: '🧩', label: 'Plugins' },
-  { id: 'immutable', icon: '📎', label: 'Miscellaneous' },
+const ICON_SIZE = 18;
+
+const SECTIONS: { id: ProseMirrorTab; icon: LucideIcon; label: string; badge?: string }[] = [
+  { id: 'overview', icon: LayoutList, label: 'Overview' },
+  { id: 'schema', icon: FileJson, label: 'Model' },
+  { id: 'state', icon: Package, label: 'State' },
+  { id: 'transform', icon: RefreshCw, label: 'Transform' },
+  { id: 'view', icon: Eye, label: 'View' },
+  { id: 'positions', icon: Crosshair, label: 'Positions & Selection' },
+  { id: 'plugins', icon: Puzzle, label: 'Plugins' },
+  { id: 'immutable', icon: Paperclip, label: 'Miscellaneous' },
 ];
 
 interface ProseMirrorSidebarProps {
@@ -50,21 +66,25 @@ export default function ProseMirrorSidebar({
         aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={isOpen}
       >
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
+        {isOpen ? (
+          <X size={20} strokeWidth={2} aria-hidden />
+        ) : (
+          <Menu size={20} strokeWidth={2} aria-hidden />
+        )}
       </button>
 
       {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
 
       <nav className={`sidebar prosemirror-sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
         <div className="sidebar-header">
-          <span className="sidebar-collapsed-logo" aria-hidden>📦</span>
+          <span className="sidebar-collapsed-logo" aria-hidden>
+            <Package size={20} strokeWidth={2} />
+          </span>
           <div className="sidebar-header-content">
             <Link href="/" className="prosemirror-back-link">
               ← Back to demos
             </Link>
-            <h1>📦 Prosemirror</h1>
+            <h1>Prosemirror</h1>
             <p className="subtitle">Core concepts</p>
           </div>
           <button
@@ -74,14 +94,9 @@ export default function ProseMirrorSidebar({
             title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
             {isOpen ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <X size={16} strokeWidth={2} aria-hidden />
             ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <ChevronLeft size={16} strokeWidth={2} aria-hidden />
             )}
           </button>
         </div>
@@ -93,7 +108,9 @@ export default function ProseMirrorSidebar({
               onClick={handleLinkClick}
             >
               <Link href={`/prosemirror?tab=${item.id}`} className="nav-link">
-                <span className="nav-icon">{item.icon}</span>
+                <span className="nav-icon">
+                  <item.icon size={ICON_SIZE} strokeWidth={2} />
+                </span>
                 <span>{item.label}</span>
                 {item.badge && <span className="nav-badge">{item.badge}</span>}
               </Link>

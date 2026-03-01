@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useRef, useState } from 'react';
+import { Keyboard, Clipboard, Copy, Pencil, Search, Monitor } from 'lucide-react';
 import {
   SectionHeader,
   Card,
@@ -159,7 +160,7 @@ export default function UpdateLoop() {
           <div className='update-loop-diagram'>
             {/* Step 1 */}
             <div className={getStepClass(1)} data-step='1'>
-              <div className='step-icon'>⌨️</div>
+              <div className='step-icon'><Keyboard size={18} strokeWidth={2} /></div>
               <div className='step-content'>
                 <h4>1. Intercept Event</h4>
                 <p>User presses a key</p>
@@ -175,7 +176,7 @@ export default function UpdateLoop() {
 
             {/* Step 2 */}
             <div className={getStepClass(2)} data-step='2'>
-              <div className='step-icon'>📋</div>
+              <div className='step-icon'><Clipboard size={18} strokeWidth={2} /></div>
               <div className='step-content'>
                 <h4>2. Convert to Command</h4>
                 <p>Map event to operation</p>
@@ -191,7 +192,7 @@ export default function UpdateLoop() {
 
             {/* Step 3 */}
             <div className={getStepClass(3)} data-step='3'>
-              <div className='step-icon'>📑</div>
+              <div className='step-icon'><Copy size={18} strokeWidth={2} /></div>
               <div className='step-content'>
                 <h4>3. Clone State</h4>
                 <p>Copy current state</p>
@@ -209,7 +210,7 @@ export default function UpdateLoop() {
 
             {/* Step 4 */}
             <div className={getStepClass(4)} data-step='4'>
-              <div className='step-icon'>✏️</div>
+              <div className='step-icon'><Pencil size={18} strokeWidth={2} /></div>
               <div className='step-content'>
                 <h4>4. Modify Clone</h4>
                 <p>Apply command to pending state</p>
@@ -223,7 +224,7 @@ export default function UpdateLoop() {
           <div className='update-loop-diagram row-2'>
             {/* Step 5 */}
             <div className={getStepClass(5)} data-step='5'>
-              <div className='step-icon'>🔍</div>
+              <div className='step-icon'><Search size={18} strokeWidth={2} /></div>
               <div className='step-content'>
                 <h4>5. Reconcile (Diff)</h4>
                 <p>Compare states to find minimum changes</p>
@@ -246,7 +247,7 @@ export default function UpdateLoop() {
 
             {/* Step 6 */}
             <div className={getStepClass(6)} data-step='6'>
-              <div className='step-icon'>🖥️</div>
+              <div className='step-icon'><Monitor size={18} strokeWidth={2} /></div>
               <div className='step-content'>
                 <h4>6. Update DOM</h4>
                 <p>Apply only the necessary changes</p>

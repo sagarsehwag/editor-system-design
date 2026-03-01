@@ -28,11 +28,6 @@
   overflow-y: auto;
 }
 
-.viz-root.viz-fullscreen .viz-header-controls {
-  right: calc(1rem + 44px + 0.5rem);
-}
-
-
 .viz-fullscreen-close {
   position: absolute;
   top: var(--gap-md);
@@ -63,28 +58,25 @@
    Header — matches pm-flow-header
    ============================================================ */
 .viz-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
   padding: var(--card-padding);
   border-bottom: 1px solid var(--border-color);
   min-width: 0;
 }
 
-.viz-header-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--gap-md);
-  position: relative;
-}
-
-/* Header controls — pill group */
+/* Header controls — pill group, wraps to next line when needed */
 .viz-header-controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  flex-shrink: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
+  flex: 1;
+  min-width: 0;
+  justify-content: flex-end;
 }
 
 .viz-hdr-chip {
@@ -190,6 +182,11 @@ button.viz-hdr-chip {
   margin-left: 2px;
   opacity: 0.5;
   transition: opacity 0.15s;
+  display: inline-flex;
+  align-items: center;
+}
+.viz-hdr-chip-dismiss svg {
+  color: inherit;
 }
 
 .viz-hdr-chip-tx:hover .viz-hdr-chip-dismiss {
@@ -243,6 +240,7 @@ button.viz-hdr-chip {
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
   margin: 0;
+  flex-shrink: 0;
 }
 
 .viz-title-accent {
@@ -1070,6 +1068,9 @@ button.viz-hdr-chip {
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--text-primary) 4%, transparent);
 }
+.viz-what-icon svg {
+  color: inherit;
+}
 
 .viz-what-purple .viz-what-icon {
   color: var(--accent-purple);
@@ -1602,17 +1603,14 @@ button.viz-hdr-chip {
     overflow: visible;
   }
 
-  .viz-header-row {
-    flex-wrap: wrap;
-    gap: var(--gap-sm);
+  .viz-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--gap-md);
   }
   .viz-header-controls {
     width: 100%;
     justify-content: flex-end;
-  }
-
-  .viz-header {
-    padding: var(--gap-md);
   }
 
   .viz-main {

@@ -2,22 +2,39 @@
 
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import {
+  Palette,
+  Pencil,
+  MousePointer,
+  GitBranch,
+  RefreshCw,
+  Link2,
+  Package,
+  FileText,
+  Lightbulb,
+  X,
+  ChevronLeft,
+  Menu,
+  type LucideIcon,
+} from 'lucide-react';
+
+const ICON_SIZE = 18;
 
 interface NavItem {
   id: string;
-  icon: string;
+  icon: LucideIcon;
   label: string;
   href: string;
 }
 
 const navItems: NavItem[] = [
-  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches', href: '/rich-text-editor?tab=rendering' },
-  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive', href: '/rich-text-editor?tab=contenteditable' },
-  { id: 'selection', icon: '📍', label: 'Selection Inspector', href: '/rich-text-editor?tab=selection' },
-  { id: 'state', icon: '🏗️', label: 'State Model & Formatting', href: '/rich-text-editor?tab=state' },
-  { id: 'update-loop', icon: '🔄', label: 'Update Loop', href: '/rich-text-editor?tab=update-loop' },
-  { id: 'node-structures', icon: '🔗', label: 'Node Structures', href: '/rich-text-editor?tab=node-structures' },
-  { id: 'prosemirror', icon: '📦', label: 'Prosemirror', href: '/prosemirror' },
+  { id: 'rendering', icon: Palette, label: 'Rendering Approaches', href: '/rich-text-editor?tab=rendering' },
+  { id: 'contenteditable', icon: Pencil, label: 'ContentEditable Deep Dive', href: '/rich-text-editor?tab=contenteditable' },
+  { id: 'selection', icon: MousePointer, label: 'Selection Inspector', href: '/rich-text-editor?tab=selection' },
+  { id: 'state', icon: GitBranch, label: 'State Model & Formatting', href: '/rich-text-editor?tab=state' },
+  { id: 'update-loop', icon: RefreshCw, label: 'Update Loop', href: '/rich-text-editor?tab=update-loop' },
+  { id: 'node-structures', icon: Link2, label: 'Node Structures', href: '/rich-text-editor?tab=node-structures' },
+  { id: 'prosemirror', icon: Package, label: 'Prosemirror', href: '/prosemirror' },
 ];
 
 interface SidebarProps {
@@ -59,18 +76,22 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
         aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={isOpen}
       >
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
-        <span className="hamburger-line" />
+        {isOpen ? (
+          <X size={20} strokeWidth={2} aria-hidden />
+        ) : (
+          <Menu size={20} strokeWidth={2} aria-hidden />
+        )}
       </button>
 
       {isOpen && <div className="sidebar-overlay" onClick={onToggle} />}
 
       <nav className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
         <div className="sidebar-header">
-          <span className="sidebar-collapsed-logo" aria-hidden>📝</span>
+          <span className="sidebar-collapsed-logo" aria-hidden>
+            <FileText size={20} strokeWidth={2} />
+          </span>
           <div className="sidebar-header-content">
-            <h1>📝 Rich Text Editor</h1>
+            <h1>Rich Text Editor</h1>
             <p className="subtitle">Interactive demos for schema, state, transforms & more</p>
           </div>
           <button
@@ -80,14 +101,9 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
             title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
             {isOpen ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              <X size={16} strokeWidth={2} aria-hidden />
             ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
+              <ChevronLeft size={16} strokeWidth={2} aria-hidden />
             )}
           </button>
         </div>
@@ -100,12 +116,16 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
             >
               {useRouter ? (
                 <Link href={item.href} className="nav-link">
-                  <span className="nav-icon">{item.icon}</span>
+                  <span className="nav-icon">
+                    <item.icon size={ICON_SIZE} strokeWidth={2} />
+                  </span>
                   <span>{item.label}</span>
                 </Link>
               ) : (
                 <>
-                  <span className="nav-icon">{item.icon}</span>
+                  <span className="nav-icon">
+                    <item.icon size={ICON_SIZE} strokeWidth={2} />
+                  </span>
                   <span>{item.label}</span>
                 </>
               )}
@@ -113,7 +133,10 @@ export default function Sidebar({ activeDemo, onNavigate, isOpen, onToggle, useR
           ))}
         </ul>
         <div className="sidebar-footer">
-          <p className="tip">💡 Open DevTools (F12) to inspect elements!</p>
+          <p className="tip">
+            <Lightbulb size={14} strokeWidth={2} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
+            Open DevTools (F12) to inspect elements!
+          </p>
         </div>
       </nav>
     </>

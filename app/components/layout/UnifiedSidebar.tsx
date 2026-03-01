@@ -3,34 +3,55 @@
 import React, { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import {
+  LayoutList,
+  FileJson,
+  Package,
+  RefreshCw,
+  Eye,
+  Crosshair,
+  Puzzle,
+  Paperclip,
+  Palette,
+  Pencil,
+  MousePointer,
+  GitBranch,
+  Link2,
+  FileText,
+  X,
+  Menu,
+  type LucideIcon,
+} from 'lucide-react';
 import type { ProseMirrorTab } from '../Prosemirror';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 const ICON_SRC = `${BASE_PATH}/prosemirror-icon.svg`;
 
+const ICON_SIZE = 18;
+
 const PROSEMIRROR_SECTIONS: {
   id: ProseMirrorTab;
-  icon: string;
+  icon: LucideIcon;
   label: string;
   badge?: string;
 }[] = [
-  { id: 'overview', icon: '📋', label: 'Overview' },
-  { id: 'schema', icon: '📄', label: 'Model' },
-  { id: 'state', icon: '📦', label: 'State' },
-  { id: 'transform', icon: '🔄', label: 'Transform' },
-  { id: 'view', icon: '👁', label: 'View' },
-  { id: 'positions', icon: '📍', label: 'Positions & Selection' },
-  { id: 'plugins', icon: '🧩', label: 'Plugins' },
-  { id: 'immutable', icon: '📎', label: 'Miscellaneous' },
+  { id: 'overview', icon: LayoutList, label: 'Overview' },
+  { id: 'schema', icon: FileJson, label: 'Model' },
+  { id: 'state', icon: Package, label: 'State' },
+  { id: 'transform', icon: RefreshCw, label: 'Transform' },
+  { id: 'view', icon: Eye, label: 'View' },
+  { id: 'positions', icon: Crosshair, label: 'Positions & Selection' },
+  { id: 'plugins', icon: Puzzle, label: 'Plugins' },
+  { id: 'immutable', icon: Paperclip, label: 'Miscellaneous' },
 ];
 
-const RICH_TEXT_DEMOS: { id: string; icon: string; label: string }[] = [
-  { id: 'rendering', icon: '🎨', label: 'Rendering Approaches' },
-  { id: 'contenteditable', icon: '✏️', label: 'ContentEditable Deep Dive' },
-  { id: 'selection', icon: '📍', label: 'Selection Inspector' },
-  { id: 'state', icon: '🏗️', label: 'State Model & Formatting' },
-  { id: 'update-loop', icon: '🔄', label: 'Update Loop' },
-  { id: 'node-structures', icon: '🔗', label: 'Node Structures' },
+const RICH_TEXT_DEMOS: { id: string; icon: LucideIcon; label: string }[] = [
+  { id: 'rendering', icon: Palette, label: 'Rendering Approaches' },
+  { id: 'contenteditable', icon: Pencil, label: 'ContentEditable Deep Dive' },
+  { id: 'selection', icon: MousePointer, label: 'Selection Inspector' },
+  { id: 'state', icon: GitBranch, label: 'State Model & Formatting' },
+  { id: 'update-loop', icon: RefreshCw, label: 'Update Loop' },
+  { id: 'node-structures', icon: Link2, label: 'Node Structures' },
 ];
 
 interface UnifiedSidebarProps {
@@ -80,9 +101,11 @@ export default function UnifiedSidebar({
         aria-label={isOpen ? 'Close navigation' : 'Open navigation'}
         aria-expanded={isOpen}
       >
-        <span className='hamburger-line' />
-        <span className='hamburger-line' />
-        <span className='hamburger-line' />
+        {isOpen ? (
+          <X size={20} strokeWidth={2} aria-hidden />
+        ) : (
+          <Menu size={20} strokeWidth={2} aria-hidden />
+        )}
       </button>
 
       {isOpen && <div className='sidebar-overlay' onClick={onToggle} />}
@@ -104,25 +127,9 @@ export default function UnifiedSidebar({
             title={isOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
             {isOpen ? (
-              <svg
-                width='18'
-                height='18'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='currentColor'
-                strokeWidth='2'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                aria-hidden
-              >
-                <path d='M18 6L6 18M6 6l12 12' />
-              </svg>
+              <X size={18} strokeWidth={2} aria-hidden />
             ) : (
-              <span className='sidebar-collapse-btn-hamburger'>
-                <span className='hamburger-line' />
-                <span className='hamburger-line' />
-                <span className='hamburger-line' />
-              </span>
+              <Menu size={18} strokeWidth={2} aria-hidden />
             )}
           </button>
         </div>
@@ -155,7 +162,9 @@ export default function UnifiedSidebar({
                         handleNavItemClick(`${prosemirrorBase}?tab=${item.id}`)
                       }
                     >
-                      <span className='nav-icon'>{item.icon}</span>
+                      <span className='nav-icon'>
+                        <item.icon size={ICON_SIZE} strokeWidth={2} />
+                      </span>
                       <span>{item.label}</span>
                       {item.badge && (
                         <span className='nav-badge'>{item.badge}</span>
@@ -173,7 +182,9 @@ export default function UnifiedSidebar({
               href='/rich-text-editor?tab=rendering'
               className={`nav-section-header ${isRichTextEditor ? 'active' : ''}`}
             >
-              <span className='nav-icon'>📝</span>
+              <span className='nav-icon'>
+                <FileText size={ICON_SIZE} strokeWidth={2} />
+              </span>
               <span>Rich Text Editor</span>
             </Link>
             {isRichTextEditor && (
@@ -190,7 +201,9 @@ export default function UnifiedSidebar({
                         handleNavItemClick(`/rich-text-editor?tab=${item.id}`)
                       }
                     >
-                      <span className='nav-icon'>{item.icon}</span>
+                      <span className='nav-icon'>
+                        <item.icon size={ICON_SIZE} strokeWidth={2} />
+                      </span>
                       <span>{item.label}</span>
                     </button>
                   </li>

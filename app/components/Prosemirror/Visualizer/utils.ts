@@ -1,5 +1,34 @@
 import type { TransactionRecord, EditorStats, SelectionInfo, StepInfo, StepType } from './types';
 import { EMPTY_SELECTION } from './types';
+import {
+  Undo2,
+  Redo2,
+  Sparkles,
+  Keyboard,
+  Clipboard,
+  Plus,
+  Delete,
+  ArrowLeftRight,
+  Square,
+  Minus,
+  Diamond,
+} from 'lucide-react';
+
+export const TX_ICON_MAP = {
+  undo: Undo2,
+  redo: Redo2,
+  mark: Sparkles,
+  type: Keyboard,
+  paste: Clipboard,
+  insert: Plus,
+  delete: Delete,
+  replace: ArrowLeftRight,
+  select: Square,
+  cursor: Minus,
+  meta: Diamond,
+} as const;
+
+export type TxIconKey = keyof typeof TX_ICON_MAP;
 
 export function transactionToJSON(tr: {
   steps: Array<{ toJSON: () => Record<string, unknown> }>;
@@ -19,7 +48,7 @@ export function statsFromTx(tx: TransactionRecord): EditorStats {
 }
 
 export type TxDescription = {
-  icon: string;
+  iconKey: TxIconKey;
   action: string;
   detail: string;
   color: string;
@@ -34,7 +63,7 @@ export function describeTransaction(tx: TransactionRecord): TxDescription {
       ? ` · ${Math.abs(delta)} char${Math.abs(delta) !== 1 ? 's' : ''} ${delta > 0 ? 'restored' : 'removed'}`
       : '';
     return {
-      icon: isRedo ? '↪' : '↩',
+      iconKey: isRedo ? 'redo' : 'undo',
       action: isRedo ? 'Redo' : 'Undo',
       detail: `Reverted via ${tx.source}${charNote}`,
       color: 'green',
@@ -44,7 +73,7 @@ export function describeTransaction(tx: TransactionRecord): TxDescription {
   if (tx.type === 'mark') {
     const cmds = tx.steps.filter(s => s.type === 'mark').map(s => s.cmd).filter(Boolean);
     return {
-      icon: '✦',
+      iconKey: 'mark',
       action: `Toggle ${cmds.join(', ') || 'formatting'}`,
       detail: `Triggered by ${tx.source}`,
       color: 'orange',
@@ -55,28 +84,28 @@ export function describeTransaction(tx: TransactionRecord): TxDescription {
     if (delta > 0) {
       const key = tx.lastDomEvent?.match(/key="(.+?)"/)?.[1];
       if (key && key.length === 1) {
-        return { icon: '⌨', action: `Typed "${key}"`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes · +${delta}`, color: 'blue' };
+        return { iconKey: 'type', action: `Typed "${key}"`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes · +${delta}`, color: 'blue' };
       }
       if (tx.lastDomEvent?.includes('paste')) {
-        return { icon: '📋', action: `Pasted ${delta} char${delta !== 1 ? 's' : ''}`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
+        return { iconKey: 'paste', action: `Pasted ${delta} char${delta !== 1 ? 's' : ''}`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
       }
-      return { icon: '＋', action: `Inserted ${delta} char${delta !== 1 ? 's' : ''}`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
+      return { iconKey: 'insert', action: `Inserted ${delta} char${delta !== 1 ? 's' : ''}`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
     }
     if (delta < 0) {
-      return { icon: '⌫', action: `Deleted ${Math.abs(delta)} char${Math.abs(delta) !== 1 ? 's' : ''}`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
+      return { iconKey: 'delete', action: `Deleted ${Math.abs(delta)} char${Math.abs(delta) !== 1 ? 's' : ''}`, detail: `${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
     }
-    return { icon: '↔', action: 'Replaced content', detail: `Same length · ${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
+    return { iconKey: 'replace', action: 'Replaced content', detail: `Same length · ${tx.charsAfter} chars · ${tx.nodesAfter} nodes`, color: 'blue' };
   }
 
   if (tx.type === 'selection') {
     const sel = tx.selAfter;
     if (sel && !sel.empty) {
-      return { icon: '▋', action: `Selected ${sel.to - sel.from} chars`, detail: `Range ${sel.from}→${sel.to} via ${tx.source}`, color: 'purple' };
+      return { iconKey: 'select', action: `Selected ${sel.to - sel.from} chars`, detail: `Range ${sel.from}→${sel.to} via ${tx.source}`, color: 'purple' };
     }
-    return { icon: '│', action: `Cursor → ${sel?.anchor ?? 0}`, detail: `Moved via ${tx.source}`, color: 'purple' };
+    return { iconKey: 'cursor', action: `Cursor → ${sel?.anchor ?? 0}`, detail: `Moved via ${tx.source}`, color: 'purple' };
   }
 
-  return { icon: '◆', action: 'Meta transaction', detail: `From ${tx.source}`, color: 'blue' };
+  return { iconKey: 'meta', action: 'Meta transaction', detail: `From ${tx.source}`, color: 'blue' };
 }
 
 const CHIP_COLOR: Record<StepType, string> = {

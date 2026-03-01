@@ -291,6 +291,12 @@ li.ProseMirror-selectednode::after {
         display: block;
     }
 
+    .sidebar-collapsed-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .sidebar.sidebar-collapsed .nav-item {
         margin: 0;
         border-radius: 0;
@@ -405,6 +411,13 @@ li.ProseMirror-selectednode::after {
 
 .nav-icon {
     font-size: var(--font-size-xl);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.nav-icon svg {
+    color: inherit;
 }
 
 .nav-icon-img,
@@ -449,7 +462,7 @@ li.ProseMirror-selectednode::after {
     gap: 0.75rem;
     padding: 0.875rem 1.25rem;
     margin: 0 0.5rem;
-    border-radius: var(--radius-md);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
     color: var(--text-secondary);
     text-decoration: none;
     transition: all var(--transition-fast);
@@ -1891,6 +1904,11 @@ kbd {
 .step-icon {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--gap-sm);
+    display: flex;
+    align-items: center;
+}
+.step-icon svg {
+    color: inherit;
 }
 
 .step-content h4 {

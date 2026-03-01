@@ -247,7 +247,7 @@ export default function NodeStructures() {
       operation: 'Insert/Delete child',
       array: 'O(n)',
       linkedList: 'O(1)',
-      winner: '🔗 Linked',
+      winner: 'Linked',
       _cellClassNames: { array: 'bad', linkedList: 'good' },
     },
     {
@@ -268,7 +268,7 @@ export default function NodeStructures() {
       operation: 'Reparent node',
       array: 'O(n)',
       linkedList: 'O(1)',
-      winner: '🔗 Linked',
+      winner: 'Linked',
       _cellClassNames: { array: 'bad', linkedList: 'good' },
     },
   ];
@@ -416,7 +416,7 @@ export default function NodeStructures() {
         {/* Linked List Approach */}
         <Card id='linked-structure'>
           <CardHeader>
-            <h3>🔗 Map with Linked List</h3>
+            <h3>Map with Linked List</h3>
             <Badge variant='green'>Lexical</Badge>
           </CardHeader>
           <CardContent>

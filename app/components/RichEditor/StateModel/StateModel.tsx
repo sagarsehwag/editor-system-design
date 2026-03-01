@@ -252,7 +252,7 @@ export default function StateModel() {
 
       <Card>
         <CardHeader>
-          <h3>🎨 How Formatting Works</h3>
+          <h3>How Formatting Works</h3>
         </CardHeader>
         <CardContent>
           <div className='format-example'>

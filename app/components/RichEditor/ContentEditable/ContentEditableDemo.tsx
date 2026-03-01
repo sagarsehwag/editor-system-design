@@ -122,7 +122,7 @@ export default function ContentEditableDemo() {
       <Grid cols={2}>
         <Card>
           <CardHeader>
-            <h3>🧩 Understanding Text Nodes</h3>
+            <h3>Understanding Text Nodes</h3>
           </CardHeader>
           <CardContent>
             <div className='text-node-demo'>
@@ -164,7 +164,7 @@ export default function ContentEditableDemo() {
 
         <Card>
           <CardHeader>
-            <h3>📍 Cursor Behavior</h3>
+            <h3>Cursor Behavior</h3>
           </CardHeader>
           <CardContent>
             <div className='cursor-demo-area'>
