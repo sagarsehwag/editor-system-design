@@ -12,7 +12,6 @@ import ProseMirrorImmutable from './Immutable/ProseMirrorImmutable';
 import ProseMirrorPlugins from './Plugins/ProseMirrorPlugins';
 
 import './shared.css';
-import './Overview/Overview.css';
 import './Schema/Schema.css';
 import './State/State.css';
 import './Transform/Transform.css';

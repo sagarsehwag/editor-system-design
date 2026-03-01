@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import ProseMirrorFlowDiagram from './ProseMirrorFlowDiagram';
+import { ProseMirrorFlowDiagram } from '../FlowDiagram';
 
 export default function ProseMirrorOverview() {
   return (

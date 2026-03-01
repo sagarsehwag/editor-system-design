@@ -5,12 +5,13 @@ import React from 'react';
 export default function ProseMirrorPlugins() {
   return (
     <div className='plugins-tab'>
+      {/* 1. Intro */}
       <div className='prosemirror-section plugins-intro'>
         <h3>What is a Plugin?</h3>
         <p>
-          <strong>Plugins</strong> extend Prosemirror with custom state, props,
-          and behavior. Each plugin can store its own state, react to
-          transactions, add keybindings, and attach UI. They&apos;re passed to{' '}
+          <strong>Plugins</strong> extend ProseMirror with custom state, props,
+          and behavior. They hook into the editor lifecycle: filter transactions,
+          store state, add keybindings, and attach UI. Pass them to{' '}
           <code>{`EditorState.create({ plugins: [...] })`}</code>.
         </p>
         <div className='plugins-intro-tagline'>
@@ -18,11 +19,12 @@ export default function ProseMirrorPlugins() {
         </div>
       </div>
 
+      {/* 2. Plugin Spec — one section, one example */}
       <div className='prosemirror-section'>
         <h4>Plugin Spec</h4>
         <p>
-          A plugin is created with <code>new Plugin(spec)</code>. The spec
-          defines how the plugin participates in the editor lifecycle.
+          A plugin is <code>new Plugin(spec)</code>. The spec defines how it
+          participates in the editor lifecycle.
         </p>
         <div className='plugins-spec-grid'>
           <div className='plugins-spec-card'>
@@ -31,47 +33,44 @@ export default function ProseMirrorPlugins() {
           </div>
           <div className='plugins-spec-card'>
             <code>props</code>
-            <p>Add handlers to the view (keymap, nodeViews)</p>
+            <p>Add handlers to the view (handleDOMEvents, decorations, etc.)</p>
           </div>
           <div className='plugins-spec-card'>
             <code>view</code>
-            <p>Optional EditorView extension (e.g. tooltip, menu)</p>
+            <p>Optional EditorView extension (tooltip, menu, DOM overlay)</p>
           </div>
           <div className='plugins-spec-card'>
             <code>filterTransaction</code>
             <p>Reject or modify transactions before they&apos;re applied</p>
           </div>
         </div>
-      </div>
-
-      <div className='prosemirror-section'>
-        <h4>Plugin State</h4>
-        <p>
-          Plugins store immutable state. When a transaction is applied, each
-          plugin&apos;s <code>state.apply(tr, oldState, newState)</code> is
-          called to produce new plugin state. Access it via{' '}
-          <code>state.pluginState(plugin)</code>.
-        </p>
-        <div className='code-snippet'>
-          <pre>
-            <code>{`const myPlugin = new Plugin({
+        <details className='plugins-spec-accordion'>
+          <summary>Example: word count plugin</summary>
+          <div className='code-snippet'>
+            <pre>
+              <code>{`const wordCountPlugin = new Plugin({
   state: {
-    init() { return { count: 0 }; },
+    init() { return { words: 0 }; },
     apply(tr, value) {
-      return tr.docChanged ? { count: value.count + 1 } : value;
-    }
-  }
+      if (!tr.docChanged) return value;
+      const text = tr.doc.textBetween(0, tr.doc.content.size);
+      return { words: text.trim() ? text.trim().split(/\\s+/).length : 0 };
+    },
+  },
+  filterTransaction(tr) { return true; },
 });
 
-const count = state.pluginState(myPlugin)?.count;`}</code>
-          </pre>
-        </div>
+// Access: state.pluginState(wordCountPlugin)?.words`}</code>
+            </pre>
+          </div>
+        </details>
       </div>
 
+      {/* 3. Common Plugins */}
       <div className='prosemirror-section'>
         <h4>Common Plugins</h4>
         <p>
-          Prosemirror ships with core plugins. Import from{' '}
+          ProseMirror ships with core plugins. Import from{' '}
           <code>prosemirror-history</code>, <code>prosemirror-keymap</code>, and
           similar packages.
         </p>
@@ -107,6 +106,7 @@ const count = state.pluginState(myPlugin)?.count;`}</code>
         </div>
       </div>
 
+      {/* 4. Commands */}
       <div className='prosemirror-section'>
         <h4>Commands</h4>
         <p>
@@ -125,17 +125,17 @@ const count = state.pluginState(myPlugin)?.count;`}</code>
   return true;
 };
 
-// Bind to Ctrl+B
 keymap({ "Mod-b": boldCommand });`}</code>
           </pre>
         </div>
         <p className='plugins-callout'>
           <strong>Mod</strong> — Cross-platform modifier: <code>Cmd</code> on
           Mac, <code>Ctrl</code> elsewhere. <code>undo</code> and{' '}
-          <code>redo</code> from history plugin are commands.
+          <code>redo</code> from history are commands.
         </p>
       </div>
 
+      {/* 5. Wiring it up */}
       <div className='prosemirror-section'>
         <h4>Creating an Editor with Plugins</h4>
         <p>
