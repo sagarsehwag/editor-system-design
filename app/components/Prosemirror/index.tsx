@@ -28,7 +28,7 @@ const TAB_HEADINGS: Record<
   overview: {
     title: 'Prosemirror Overview',
     subtitle:
-      'The schema-based editor toolkit — document model, positions, transforms, and why it enables undo & collaborative editing',
+      'Build rich text editors with a structured document model. State flows through transactions — schema enforces structure, and undo & collaboration come built-in.',
   },
   schema: {
     title: 'Document Model',
