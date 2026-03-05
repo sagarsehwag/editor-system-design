@@ -1,38 +1,38 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import "./components/ui/ui.css";
-import { ThemeProvider } from "./components/ThemeProvider";
+import type { Metadata } from 'next';
+import './globals.css';
+import './components/ui/ui.css';
+import { ThemeProvider } from './components/ThemeProvider';
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sagarsehwag.github.io/prosemirror-mechanics"),
+  metadataBase: new URL('https://sagarsehwag.github.io/prosemirror-mechanics'),
   icons: {
-    icon: "/prosemirror-icon.svg",
-    shortcut: "/prosemirror-icon.svg",
-    apple: "/prosemirror-icon.svg",
+    icon: '/prosemirror-icon.svg',
+    shortcut: '/prosemirror-icon.svg',
+    apple: '/prosemirror-icon.svg',
   },
-  title: "Editor · ProseMirror",
+  title: 'Editor · ProseMirror',
   description:
-    "Interactive demos for ProseMirror and rich text editors. Explore schema, state, transforms, view, positions, plugins, contentEditable, selection, and more.",
+    'Interactive demos for ProseMirror and rich text editors. Explore schema, state, transforms, view, positions, plugins, contentEditable, selection, and more.',
   openGraph: {
-    title: "Editor · ProseMirror",
-      description:
-        "Interactive demos for ProseMirror and rich text editors. Explore schema, state, transforms, and more.",
+    title: 'Editor · ProseMirror',
+    description:
+      'Interactive demos for ProseMirror and rich text editors. Explore schema, state, transforms, and more.',
     images: [
       {
-        url: "/editor-mechanics-og.png",
+        url: '/editor-mechanics-og.png',
         width: 1200,
         height: 630,
-        alt: "Editor · ProseMirror - Interactive demos for schema, state, transforms & more",
+        alt: 'Editor · ProseMirror - Interactive demos for schema, state, transforms & more',
       },
     ],
-    type: "website",
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Editor · ProseMirror",
-      description:
-        "Interactive demos for ProseMirror and rich text editors. Explore schema, state, transforms, and more.",
-    images: ["/editor-mechanics-og.png"],
+    card: 'summary_large_image',
+    title: 'Editor · ProseMirror',
+    description:
+      'Interactive demos for ProseMirror and rich text editors. Explore schema, state, transforms, and more.',
+    images: ['/editor-mechanics-og.png'],
   },
 };
 
@@ -44,9 +44,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#0f0f0f" />
+        <meta name='theme-color' content='#0f0f0f' />
         <script dangerouslySetInnerHTML={{ __html: ANTI_FLASH_SCRIPT }} />
       </head>
       <body>
